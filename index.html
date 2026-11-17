@@ -1,0 +1,1362 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estatística para Pesquisadores · AIMS Camaleão</title>
+<style>
+  :root {
+    --bg: #f7f6f2; --card: #ffffff; --ink: #1d1d1f; --muted: #5f6368; --line: #e3e1da;
+    --accent: #3b5bdb; --accent-soft: #e8edff;
+    --emo: #d9480f; --emo-soft: #fff0e6;
+    --spk: #2b8a3e; --spk-soft: #e6f6ea;
+    --gold: #d08c00; --gold-soft: #fff4d6;
+    --pur: #ae3ec9; --code: #f1efe8;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #16171a; }
+  body { color: var(--ink); font: 20px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  p { margin: 10px 0; }
+
+  /* ===== Diapositivas (mesmo motor da Expo 1) ===== */
+  .slide { display: none; position: absolute; left: 50%; top: 50%; width: 1280px; height: 720px; box-sizing: border-box;
+    transform: translate(-50%, -50%) scale(var(--s, 1)); background: var(--bg); color: var(--ink);
+    padding: 34px 52px 30px; overflow: hidden; line-height: 1.5; border-radius: 4px; }
+  .slide.active { display: flex; flex-direction: column; }
+  .sh { margin-bottom: 12px; flex: none; }
+  .kick { color: var(--accent); font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; }
+  .sh h2 { font-size: 36px; line-height: 1.15; margin: 2px 0 0; }
+  .lead { margin: 4px 0 16px; font-size: 25px; }
+  .lead.sm { font-size: 22px; margin-bottom: 12px; }
+  .snum { display: inline-grid; place-items: center; min-width: 46px; height: 46px; margin-right: 14px; border-radius: 12px; background: var(--accent); color: #fff; font-size: 28px; font-weight: 800; vertical-align: 3px; }
+  .title-slide { justify-content: center; align-items: flex-start; padding: 70px 90px; }
+  .title-slide h1 { font-size: 84px; line-height: 1; margin: 10px 0 18px; }
+  .t-kicker { color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 16px; }
+  .t-sub { font-size: 30px; line-height: 1.35; margin: 0 0 22px; max-width: 1000px; }
+  .t-ref { font-size: 17px; color: var(--muted); margin: 0 0 6px; max-width: 1050px; }
+  .t-presenters { margin-top: 26px; padding-top: 18px; border-top: 2px solid var(--line); display: flex; gap: 34px; align-items: baseline; flex-wrap: wrap; }
+  .t-presenters span { color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: .06em; font-size: 15px; }
+  .t-presenters b { font-size: 26px; }
+  .t-hint { position: absolute; bottom: 26px; left: 90px; font-size: 14px; color: var(--muted); }
+  .t-brand { display: flex; align-items: center; gap: 18px; }
+  .t-brand .t-kicker { line-height: 1.35; }
+  .slide:not(.title-slide)::after, .aims-logo { background: #000 url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAIAAAAiOjnJAAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAyKADAAQAAAABAAAAyAAAAACbWz2VAAAal0lEQVR4Ae1deXgbx3XH4iQIgARIgvcp3iJ1UidFWSJlWbZlR5LtNlKcxomVxFacpImPpkmar3X+SJO4dmM7Ud1+cWPn9Jc2cZrDiuxIpGNHtqTo5iXrJCmS4g0eAAHi6luAhIDdWZwLYJd+q/2o2Tezb9785uHNm3MlErwQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRCCpCBSmK5Oaf/SZS6N/Fd+MMwIapfTvlxTEOZN4sUfFiheysfPdZEzbnmGInU9SOKBiJQX2sDJtzk7PV6iqDClhpRZYIlQsgVWInzjrMtIoGbXOkOZHE00QFUugVZWhkS3X6iRSamuOXqAiBhVLHjQWI5OGwDqjlqIoiUyyPhMtVtJqYRFm3JyrB62CO0+lqslQi66E2BQKtMpa8vWUTOK9aSUT24WKJcQaKzHIl6RovBYL/jbniW/QARVLiIrVXKgHt92nWI05aSoZJURBuWVCxeLGJkkxaqWkpeBWOwitYapCtiFPZC48KlaS1Ic726Yi3eZ8gwRMlN/dUiCy1hAVi7uGkxQD7WC6TOVrB72B5iKR+e+oWElSH+5s10OrB9USeC/N1GgVYqosMcnKXReLJyZVRdXBHA4MjQbeUkq6NldMbhYqlrCUcnOJTknJGebK+9giqtYQFUtYitVcbKCkEuLdUiwm/x0VS1iK1VJikFBu4l1r1OSkKoQlLrc0qFjc2CQ8pihTXqXTUlKKeEullIiMFipWwtWHO8PmUmjsKLfMBbcERtr9bhdtxiQtJaIZdEDF4q7nhMe0lBlslOPJ9ztPjZkY/vt3TvT2zVi3lhjEMrODipVw9eHIUCqVbChO+/gbHYe6p1yQBmrG775ust79y/Nmp3N5poaDgbDIqFhCqY/aYvWB33/w1sUpN1wglF876A33Tdl2vna+RCeOJfC4glQoitXZM9vhnp2XxmurWKL1m+cGzGMsshAJqFhCqRWPmaKFAXM1b7H8RVvwregoMVyoWEKsJXo6R+ROCiqW4BQLTJebdrAWbJRXwMAnwQnNEggViwWJAAh0e4cWSwAVsahEmHewxGaiGHWw2CxWaVNjxbatGmOWeXT08pG26+8cYxRY+I+gWHRTyLBYYtOzRaVYDQ89WH3XHV7V0WRlZtdUV7Rs/fOzz8/NmIWvTyChLl1ZWK5bUq4ZrdYdz5Q7aN2i5C63yiGx6kVWUyITN4h+ZNfWVN25nZEgu7Z6xUcfOPnyqwy6oB7LatNXN+XWNWRlF6TSu58lkmnP7S/kbLbK/1H44cWjWCWN67y1wgC9eON6YSqWTE5tuD2/eVdJXpGWIfMieFw8ipWiJ8/8q7QaqUJhyFKPDU4lrMLSDQoY5Zw02blyNBhTHv3GysIlYlptzFUWIp3hIhLTiIPI5UjZrVZFqvoTX1idyGL8zd9VFBST7ZBKLdv7WO1XX9iwiLUKoF48itV/6gxRdQZOny1t2njHPUWVNQkyD2UVurt3FxOFKSjT/uPzGzbfVaTRifVwUWK52MTFo1iD59r7Tp5ilHB6aPiDw3+q3/MRWH554Ml6RmycHg88UScj7YhfuibziWfWZeeLY91LjOAsEh9LnZbdeOCxs7/68cT13srbm1P06VbTJIxjDXV2r/vswyot3Spt2pq7oiHz3Kn4rg6oW2nYsj3/Zr+FUTHL1hs//dUVcnnYv2S3W+aWuCgY0xLbEJan5ItCsSiqsuE+rdG4/emv97x3/PRPX3NYZ9V6fXHj+vr7d/m6ihD43FN1j+z9M6PK+X38/FP1vhx9nJfUpu//yvLgWmWZsV84MfLBufGpoenv7Cjdmp8Bq5FhsHROJplSUkeGrT5uoggsBsUqqGzSZRQB3FKZrKypEW4u6FetNYLd+kvbTa4EMdI3bM5p2JDNYJKmV376qysVSjhGjXwN9s68+T/XTr875LDTS0f1Wonb6qTtFKxxkEhUbonR5lbOOMkvC5UqesXSZZYUL90WPrwHnqw79vZN3+Kn8F8MmRJU4XNP1rGTfewLS9MzyMObNqvzt69e+vMf+lwueobw1uXRqluPIgyF3eQLsmxqbVZd00NSWQS77apq9dvvKYxHaW6/u7CmnrmndPkG47L1TBvmzX1k0PLM4++3/a6XoVX0shn4x9xdGA+R48hT1IpFVTTcJ5OTjUEQzB75Up1czrNHDMPojzy+lJEp2LBdD1UyiN7HoRvm5/7hxGAv1yQmS7GIXARMFLFiZRbUpWWVRIFtUam2qSUviheDvLK5Oa+4VMdIsGSpPpc0XXOzb+a/nzk/NTHHSO99vLW6ASrHd/P8QyDmzCdRrIollcmL626PGol9D1dE/S7xxX37CQwbNueyE0PD9/MXO29cgYlmzsvrYvn/5Uwq1AixKlbx0ttTdcaoUYXuYePWnKhfZ7wIPU1gyCDCovXVTYQsjr1540qniZHY/9GzNJndFAZ69/4vCDIsSsXSGoryKzfFiOfnnqiHPaKxX+BIQU+Tzae4Il2nZ/p/Tqfrj69dZScmUPztldjaQSgOH9ASUIkjiZLKK9fcB+dmxJhH1VL9I18mKESkbO+4twh6muy3YFCUTew+MzYxamPT/SnzFkvqlvjfYtOtWKvHH5HEhItrW1LTyB34SAX45IHquhXMAYKImEDv8pEvMzuDXg55pNUNcCpD2PxpJ97vDvs9YSQUmWJpDQUFVZv5go6e5IltZnr33rJCkgKp1HJDFmEvfP+1YD67t1wwVkr/g5rxv/kqc6L4iEmxKKmsouF+ihfPaAHftY3Z6zZFaf9S1LL9n69d4BTwf0qqDHQrgOR5mDKRhxiYKekjSGH2+dZNj5eK6hKTYhXVNGvSCf2sGAEnzsOE5Ak++75PVWQaCWYp5LvBE3hG3lmHggR/R3ixolEsjT6/sPq2eAC4dHlGy535kXLevrPw45+p4nrLanFaZx3s2DRDeOv7mPM5IjNXUHDRKFZJ/Q5oCtlVxQtl36fIEy9BmO97uFKXxqkltlnHtInQ+zPmpwbh6Y3CucKQEPGWQJ9Tqc8u540di9HyhsylyyPoHq5oyAiZfuwmYQVVWTVhDIIljoeA41hkXPijypWaitW72avn+MsBPGXqsaciWLj82FPLQsrTc2mSLeGKjTkKZYhWwtvsgQ8XcLN5CZsSopBJFx4WL9Tftl+VShiB5Fe2NRuNazcxp2WIWWxqzl25NosY5U+83DHhsDNX52l0isYdBf7JyGHwsfxHRyGMvUIyUtFSS5fdGY+eIFsc2miFMaYFViTMXqRt1tl5mjAceve+cp2e0zkDwcg+FltiYVMEbbHSs8tzytYmDEDoHjaH6h7u+AhsIwvXfB473M8WXpumfOjx+qzcoJ95ZjhYYpvPgVILV7GkcmXF6j0hXRl2zcVCefTxOilp55aXp1xBPfIl8gQOMdP2kyOwnp0dVbs667GnV3OtVyZbLLHplnAVq7R+R4omgp4au/6ioJSVp+3cQ95rCtz27C3j2t9MzAtU5P9euUSMyi7QPPHM2vxS8m5p2mD5DbtDmMhEyESBKlZaVlnukvVJAe7TX6xVkjpu6lTZwxwTOEHkhB1d594bIibIzEl96tn12/aUMGwkbbFAq6QBd+zO+/o83d5qY32WJjG2T4iKBZsjYDF7ghtBX93nFWjuf3CJ79EXgEHUTNK8si8BV+AX3+80jRHGtCC9UiW7b3/1Px1s3Lg9P3AYAkwU4+ZiHy79+OD0mty0Pz2wsuuT6/+jpepvK43Z6gg2oYSbzUK6eI1lL/CP5v/S5Xdl5HLOlnBxTC1SK7mHwldmX1MrOM9+YfCsqTP8+udX7Z5dft6odL3yWy+uAz1gpOR6nJmyHznUPzJE69OczXW1y7R2a56MYxs0uPPLN2RvuacYTnZI1SnAotyxSleVo4IeqO8zAr85PtneN8uVXZj0t3om2kfNe6tzVhh195RmPras4J6SzFL4IoHbPWiZc/La3hJm4MOUMk7JFCqNsWhFnJiHydaQqVrflN16eMCXvqklVxvhMR5S+Fg4fHkQWFBU/+WpU20DG3fQu2q5LrVGvmZLXsNtuWNDs1Ma6qiKUrjdcBgS/FW5XZl1GdVmyQjs3Dc7vBtZab4eXp4sPBl59HCe7tnsCvELabypJJ1j5nf6TduKMugoiqrP0NYbtA+W57T1T7QOmDomLOfHZ+hdszFf3nyjZ/Ptp4t3tKRR4Be46HMGPH9dnqEYl8QFR2nCV6voRzqK/uslesO0qaezBzr8t5Dmu4d2dw5XRyFQdmOGuoBzJu6h+iMGtTl8tnKLtbzrKj0XTLdJ0kv1S5wpwQafGJwVVkdR53jqlN3ToHlKL5G8l6a6qI2ACYOn91Fld+tsriyzO3/SmTNJn+8AoNIX/PV+LCWAQktP33Ql0Ku8aPdtnuJ5hBFceHRK3LAKzBMem7W/PWhqvWlqGzINWMNb5OOVLPBvrBartES1cpkG9OnWDZoEO1G8FDrsBA0DwaFk9N9bYXj0lA2IcNFh95GOqs5hQiOoV1vS1Jbe8WDj3fO/38DiRf3kSE2x5Ogzx6cA9+FMQ0RaRcwUFHTj5JzW4T6drozlnA+bgrIpZKNaSXeOXO50F407y4edOdOenygx4wiJmSrFnmLjngKj2+m+ODnbOjTRNmo6NjY1CxUayRWrYkWSV4i0E+bU7x3etmC8AxJ/YuNf3uzkYX16ANNQDzezs5Q2e6rFNpSbGSptuPHLZuzGOdc7GSozh78VLiNPOoeMumaUw22Yca3sc+SPM2eQIuLGSAwNZbUutVqjfrQ032p3tZvMJ03TbWOmd02Tc7TRC3EJpVcIov77H5tNFkJbVpl9c/eqsyHKEYdou1I5mGscNhqccj5/frk21+5B65YRq86vcxCj+BNaaWuN4u0ahZVPSW8JNT5n77fZ+q02+BuOVsGb8RHklkjhht7urmztIrhWqUrbt+57XSHj87fIkEkKe7Jk5O6eRZNqSeWYe3G75XanQxkNgAq3pMziKrFYe9WyKxrZgFrmBFc/xouibmTKx7XS2j5Hdb8zZnaSWafz2PBU67CpbcTUPWOJVLpocAnIw+sJ+v6CS+Lxljyu4oIXRRPnvagFv8pL8RIlw1Pa5w61EBvBvetO5KTRn/ALyJTXB43V7KSkllTyIPhC34uZpXZqVjc5O1gcpJX0+NJewT1/6ULQ3Zj5skPdl5idJTNOByUZUUqHU2QjKdIxldQKSh6tw2hRSU+VKy1K+6qrnrEVOseF2wP2fO7znUVmoUDiDpOllXbeJ94fnbKBQxztFatmAwJRgrAgs1ypXtZ8IEVDqKE56/SZw8+6nDRG9VsP6DKCnRKTtdGgKdRw4RCkVwinGr38QucP/7c5/CFZqIBP3Xe0uEz3zefWEXMcvGH+2hePd52fIMYGJ6q1iu9/Of+2NRmzEqlNIrVLpA6KeuuCdWSOyinSZGarw5ETDtz63Y8Js0lKKfWTO5duK87w9KLm+4OdY5ajN2C4YaLTZBm2hjvaF7wUsVosj3kKnkWI2JJlO4laBa/1dR11OPgpZ3AhLpyd+NMbN7bvLAqezBfberi/87ypiHUKiC8BBACZ6H7w5mm70mYrkvgNh7olBw8N/vwdeuWgNk2RW6ytX5u1rjmfaxobkm1/oHR4wPzeW7eG4oBYoVd/s7F0W0kGmLHh2bm2PlNr30Rbv2loln+QY1UsEDeWy5BbbSxeSeQwOz06dO2vxKh4EA8+07GVnlchO1v+OYJL9tJzHf6UOIQ9C/1IfGFM/3L7BNy//8nlxh2FOz9Wrk0njI2BVfvogdrrH0wN9swvryhLT3l5R/XErONfjl1tvWGCIfiFNoOUTcy0JPcK8ysauQz76I0Lbu8QV8yFDIdBf5/53F8J6/LY73a3m65fISyGYaeMnhK4tIFe3cDyWRwONxwF+NrBrulJwq4NyBp+JFv8bHBGivzr717b/2b3C2f7L8RZqyD3ZCoWLOLT51QQ0bfbzP0fvEOMih/x+W9fYByuR8zr4L+1E+k8Ej22BAYk/W+yfTnzl6F//eL7vZfJH91ourOwuGL+dPtTQzPv9k+OWQmb0niU3McqaYqlVKfDsmOfHIxAX/fbTgf5h8hIyePjxQ7T4d/2Bmd44tjQyWMjwdPEHgvzLsw179xMJ8dsz3/t5LWLJnYSSkrd+wnyT5edmF9K0hSromGPXEHeRmw1T9y8epzfcobJ7eCzHTbu3zR0BsEVC5NVbMmg7XMF3mSL5c0F9se+9M0zE6OExTm1qzK5lhPGJmGIt5OjWNmlDYYczj2ivV1H3K4EWWwGPEMDs6+9coVB9D22vTnQGdUIgo9D2AEXRQXcIV+cmbT/9HvtoPqMlODCbtxewCAm4DEJiqVMSStbdhdX2cyTN0d6kjCB45Pn1Ze6TeOEVtjpdMe/M7ggBd0UugJuoIS6us+Owyp7dqqVjVGeesJmFT4lCYpVvno3DIpyidjT8ZZnqJgrPu70mWnHD1/sYmdz6Dc91y6HPoSI/WIUFI/h8ffcw11ZcOT1HvZq1Qyj2pjPCXgU4oXzSqIVy1i8KiOPMCfolXVy9PrEYHc4csc1DSwf7b0eoENzc87/ep6gbfESg+C8h7ZYIMyl9omzx4bZUsG5lWxiXCkJVSxFim7Jip1c5YGfac+Fw1yxiaTDENEPvhswpgCqxv7uUvxEomcTGc57mJm5JVc6CPNIxrxFbbEqVu0K0giOD3ZPj/eGCWC8k8G65HOnRr25WMz2Hx28GO8cA/nDWsBA5z0MH8vLYXiAsBIBPmMeyD/uT4mzWGlZpXBoTJACjfQm02dnC/bG673eM65OHBueGCO48+xX+KLQ41iMO2zWc1bCEiO5InEV7ZU0QXOFcMjx0k3w0RvO7GAJA5wvqjVwHoCmUifo+6i+GvztL6/n5qkferTmpWc7fcTEBcI2UQyRYFCUQYFH1igEOwnPFM6a5jMfiqpa91GZPJg1hr2EcTqwL+qCwPjCq//5Acy4Xb1EnjCJmnPIFz0+VqC3HraeEZc8zMLensReiVCs/IpNWYX1iS0XP7lZzI4Xvn2BH16RcfE475G9Mp+6qIL5SR+IGB/xW4QTFdtIX4q7YqVos2L56E2k5Vkc6WmLBQOkAVegAQuIuvUAByTVrzHeel4I+RbPLBDi/n+8FYv+qK4sku8Jxr3EosjAO9bgL2p4TWHjHQWVrG8m2u3OnoS35vFVrLyKjUG+/AYDVzYLrIoM67eoVKdJ43a4rX8NCiFM+9rhaZK/tKlaecvuErbzfun8uH2OYf/834tLOI6KlaLJKKnbHkRq0/DlzndfCZLAP2r1jsfVWsK6eP80H/LwA5+tgWMg2CCciNs3sNl5+ShxHN7wfP6UUE5v3rA69Pr5Qz45MOCPQFg23P8FiWTLvUXrWwiDNVMTtjPvDgWmTcRTvBQrt3xDurEsSAmGrp+2TCWhwEFEElBUhJrVdFfhA5+pIcr/1q+uOfjbGUvMgkiMS1MIJ/3nLSHvi/IKAd7VcM9pokBIBATmdx6Gh0XlMsM9H6+QksZFYdFiUswVCB4XxSqiv/yWEwSWsf6O6bGeIAk+9FGwXTN0Y6JSy+7et6RlVynjTEAfen/42ZWQn0f0JeY3wL9i0R+9qbotiJQul6OnXRCrGIIImdyokDMwMF7VuL2geVdJkJO9u86MHf1N0n69PCsWNIKVa0J8+W3w8nGreTy5NSfw3LucBe+b1Ub5TLrMqpbapRJXSpqquEKVXZBaWp1eUKorr9PL4Fg37mu43/yj754PqaDcDGKN4Vmximq2atJzgwhln7Pc6G4NkgCjAAGTW3N2Ns8fiob9kgb/56DhseHZF79xCnZUB00V30g+FUufU1VQvSW4vH1drQ57ouetgou0yGIHeqZ/8M+nTaG+PB3vUvOmWPAN8NqNDwYfHIdd8zevHI93kT60/O1zzl+/fPH40UH42krSQeBHsWC5Fa1V3MutvOW83n7Y7U5+mZMOejwEuNZt+tmLHYM9EZyzGg8xfDz5UazC6i2GUAdoD/eeHR9Ixoo5X1kXaWBkwPzGL66ebBtMoqvOhpYHxYIhq8LarWzW/hSYwLl86nV/CoZjRAAOvek+MwbfgTp3fDiBh6eEKzUPigVfvBm7EWLj+ZxtJsbNzeODXUoVYQmbr6BWlUZ1XeV7ZASO9lzTKAk70CHZpS7CFysZrxMf4XS1P3Kc9QBbXicnoj/LmpidlwiTFpYZ+iSj9pOj594bTm7XL4icVJA4jEoWAs98Jf3+XRkzTqXVBUdu03X0q0O2d/5qhm8LwJI9wSqTP1w8WCx/dhjmBYFUqb1UHWBHv3969vgRMQ3ToGLxogk8M6EXNzCOdhVb04KKxbNO8MSOfWawyDQLFYsnTeCVDcFi8co/AcxQsRIAcuRZQDsoDZxjFpnBis96rMiBxDcCEIBdhUwfi326bcAbgntAiyW4KpkXCJ13odaMiOWiLRajKUSLJeL6FI7o4FExLJZwZAtPEmwKw8Mpsalgg72EsTtXbHqGipVYlQkzN+wVhgkUJosIAY+Pxfiqj8jGG9BiRVTjiUoMe7+wKUwU2B+ifGDkncJe4YeowhNWVPCxGLu7RNYS4sh7wnQlkoywVxgJWpg2fARoixXo/uJwQ/joYUouBOCUd6bzjiPvXGAhPQIEaMVirG4QmZMVaG8jKDomjSMC5y5YfvnrUQmsdqdvyIjquZHQLxjEsWzIGhFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABRAARQAQQAUQAEUAEEAFEABFABBABNgL/DwKm6niCAPQ+AAAAAElFTkSuQmCC) center / contain no-repeat; border-radius: 8px; }
+  .slide:not(.title-slide)::after { content: ""; position: absolute; left: 14px; bottom: 10px; width: 28px; height: 28px; border-radius: 6px; opacity: .9; }
+  .aims-logo { width: 84px; height: 84px; flex: none; border-radius: 14px; }
+
+  /* agenda */
+  .agenda { font-size: 25px; line-height: 1.4; margin: 6px 0 0; padding-left: 34px; }
+  .agenda li { margin: 4px 0; }
+  .agenda li.done { color: var(--muted); opacity: .5; }
+  .agenda li.now { color: var(--accent); background: var(--accent-soft); border-radius: 10px; width: fit-content; padding-right: 16px; box-shadow: -44px 0 0 0 var(--accent-soft); }
+  .agenda li.now::marker { font-weight: 700; }
+  .agenda li.part { list-style: none; margin: 10px 0 2px -34px; font-size: 14px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+  .agenda li.part.done { opacity: .5; color: var(--muted); }
+
+  /* cartões, tabelas, notas */
+  .cards { display: grid; gap: 16px; margin: 10px 0 14px; }
+  .cards.c2 { grid-template-columns: 1fr 1fr; }
+  .cards.c3 { grid-template-columns: 1fr 1fr 1fr; }
+  .cards.c4 { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .card2 { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; font-size: 22px; line-height: 1.45; }
+  .card2 > b:first-child { display: block; color: var(--accent); margin-bottom: 6px; font-size: 21px; }
+  .card2 small { display: block; color: var(--muted); font-size: 15px; margin-top: 6px; }
+  .card2 ul { margin: 4px 0 0; padding-left: 22px; }
+  .card2 li { margin: 3px 0; }
+  .card2.warn { border-left: 5px solid var(--emo); }
+  .card2.warn > b:first-child { color: var(--emo); }
+  .card2.ok { border-left: 5px solid var(--spk); }
+  .card2.ok > b:first-child { color: var(--spk); }
+  .cards.sm .card2 { font-size: 18px; padding: 12px 16px; }
+  .cards.map .card2 { font-size: 20px; padding: 16px 18px; }
+  .cards.map .card2 > b:first-child { font-size: 21px; }
+  .cards.map .tag { font-size: 14px; margin-top: 10px; }
+  .cards.sm .card2 > b:first-child { font-size: 19px; margin-bottom: 2px; }
+  .tag { display: inline-block; font-size: 13px; font-weight: 700; padding: 1px 9px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); margin-top: 6px; }
+  .tbl { width: 100%; border-collapse: collapse; margin: 6px 0 14px; font-size: 20px; }
+  .tbl th { text-align: left; color: var(--muted); font-size: 13px; text-transform: uppercase; letter-spacing: .04em; padding: 6px 10px; border-bottom: 2px solid var(--line); }
+  .tbl td { padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .tbl.myth td { font-size: 19.5px; padding: 11px 14px; width: 50%; }
+  .tbl.myth th { font-size: 15px; }
+  .tbl.myth th.yes { color: var(--spk); } .tbl.myth th.no { color: var(--emo); }
+  .tbl.myth td:first-child { background: var(--spk-soft); } .tbl.myth td:last-child { background: var(--emo-soft); }
+  .tbl.tests th, .tbl.tests td { text-align: center; font-size: 20px; }
+  .tbl.tests td:first-child, .tbl.tests th:first-child { text-align: left; font-weight: 700; }
+  .tbl.tests td.np { color: var(--spk); font-weight: 600; }
+  .tbl.tests td.pm { color: var(--accent); font-weight: 600; }
+  .tbl.tests th.grp { text-align: center; color: var(--ink); font-size: 15px; border-bottom: 1px solid var(--line); }
+  .note { border-left: 4px solid var(--accent); background: var(--accent-soft); border-radius: 8px; padding: 14px 20px; margin: 12px 0; font-size: 21px; }
+  .note.warn { border-left-color: var(--emo); background: var(--emo-soft); }
+  .vide { flex: none; margin: 10px 0 0 30px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 7px; line-height: 1.4; }
+  .vide b { color: var(--ink); }
+  .grow { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 10px; }
+  .split { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: center; }
+  .col { display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+  .big-q { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 18px; }
+  .big-q p { font-size: 56px; line-height: 1.15; font-weight: 700; margin: 0; max-width: 1050px; }
+  .big-q .kick { font-size: 16px; }
+  .big-q .bq-sub { font-size: 24px; color: var(--muted); max-width: 900px; }
+  .agenda-wrap { display: grid; grid-template-columns: 1fr 330px; gap: 30px; align-items: center; flex: 1; min-height: 0; }
+  .icards .card2 { display: grid; grid-template-columns: 96px 1fr; gap: 18px; align-items: center; }
+  .icards .card2 svg { width: 96px; height: 64px; }
+  .icards .card2 b { display: block; color: var(--accent); font-size: 22px; margin-bottom: 2px; }
+
+  /* fluxo do pesquisador */
+  .flow4 { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr 34px 1fr; align-items: stretch; gap: 6px; margin: 8px 0 12px; }
+  .flow4 .arr { display: grid; place-items: center; font-size: 30px; color: var(--accent); font-weight: 700; }
+  .flow4 .card2 { font-size: 21px; padding: 18px 18px; }
+  .flow4 .card2 small { font-size: 16px; }
+  .flow4 .card2 .stp { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 800; font-size: 18px; margin-bottom: 6px; }
+  .flow4 .card2 > b { display: block; color: var(--accent); font-size: 24px; margin-bottom: 6px; }
+
+  /* botões de opção (mesmo estilo dos controles da Expo 1) */
+  .opt { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 0; }
+  .opt button { font: inherit; font-size: 17px; padding: 6px 14px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+  .opt button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .ax { margin-bottom: 14px; }
+  .ax > b { font-size: 19px; }
+  .ax > b span { color: var(--accent); }
+  .chooser { grid-template-columns: 1fr 1fr; align-items: stretch; }
+  .res { display: flex; flex-direction: column; justify-content: center; border: 2px solid var(--accent); }
+  .res .fam { align-self: flex-start; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 2px 10px; border-radius: 999px; }
+  .res .fam.pm { background: var(--accent-soft); color: var(--accent); }
+  .res .fam.np { background: var(--spk-soft); color: var(--spk); }
+  .res .fam.ct { background: var(--gold-soft); color: var(--gold); }
+  .res .tn { display: block; font-size: 36px; line-height: 1.15; margin: 10px 0 8px; color: var(--ink); }
+  .res p { margin: 6px 0; font-size: 20px; }
+  .res .ex { color: var(--muted); font-size: 18px; }
+  .res .alt { font-size: 17px; border-top: 1px solid var(--line); padding-top: 8px; margin-top: 10px; }
+  .res .path { font-size: 14px; color: var(--muted); font-family: ui-monospace, Menlo, monospace; }
+
+  /* animações passo a passo (motor da Expo 1) */
+  .anim.astack { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .ecchips { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 8px; flex: none; }
+  .ecchips button { font: inherit; font-size: 13px; padding: 4px 11px; border-radius: 999px; cursor: pointer; border: 1px solid var(--line); background: transparent; color: var(--muted); }
+  .ecchips button.done { color: var(--accent); border-color: var(--accent); }
+  .ecchips button.on { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  .slide .anim.astack > svg { flex: 1; min-height: 0; width: 100%; height: 100%; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+  .a-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; margin-top: 8px; flex: none; }
+  .ectext { font-size: 19px; line-height: 1.5; margin: 0; max-height: 128px; min-height: 86px; overflow: auto; }
+  .ectext b { color: var(--accent); }
+  .ecctrl { display: flex; gap: 4px; flex-direction: column; justify-content: flex-start; margin-right: 70px; }
+  .ecctrl button { font: inherit; font-size: 12.5px; padding: 3px 12px; border-radius: 999px; cursor: pointer; border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); }
+
+  /* gráficos SVG */
+  .st text { font-family: inherit; font-size: 15px; fill: var(--muted); }
+  .st .axis line { stroke: #868e96; stroke-width: 1.2; }
+  .st .axis line.grid { stroke: var(--line); stroke-width: 1; }
+  .st .albl { font-style: italic; }
+  .st .bar { fill: #d3d7de; }
+  .st .rug { stroke: #495057; stroke-width: 1.5; }
+  .st text.lbl { font-size: 17px; font-weight: 700; }
+  .st text.lg { font-size: 15.5px; fill: var(--ink); }
+  .st text.big { font-size: 26px; font-weight: 800; }
+  .st text.mid { font-size: 20px; font-weight: 700; fill: var(--ink); }
+  .st text.ttl { font-size: 17px; font-weight: 700; fill: var(--ink); }
+  .st .in { animation: fin .55s ease both; }
+  @keyframes fin { from { opacity: 0; } }
+  svg.fig-svg { width: 100%; display: block; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); flex: none; }
+
+  /* HUD */
+  .hud { opacity: .35; transition: opacity .2s; position: fixed; right: 14px; bottom: 10px; display: flex; gap: 8px; align-items: center; font: 13px -apple-system, system-ui, sans-serif; color: #b9bcc3; z-index: 10; }
+  .hud:hover { opacity: 1; }
+  .hud button { font: inherit; background: #2a2c31; color: #e6e7ea; border: 1px solid #3a3d44; border-radius: 6px; padding: 3px 9px; cursor: pointer; }
+  .progress { position: fixed; top: 0; left: 0; height: 3px; background: #6c8cff; z-index: 10; transition: width .2s; }
+</style>
+</head>
+<body>
+<div class="progress"></div>
+
+<!-- Capa -->
+<section class="slide title-slide">
+  <div class="t-brand"><div class="aims-logo" role="img" aria-label="Logo AIMS"></div><div class="t-kicker">[AIMS] Artificial Intelligence through<br>Multimodal Signal Processing</div></div>
+  <h1>Estatística para Pesquisadores</h1>
+  <p class="t-sub">Da filosofia dos dados às metodologias aplicadas: inferência, testes, regressão, classificação, agrupamento e fatoração</p>
+  <p class="t-ref">Aula de 60 minutos · público multidisciplinar · abordagem intuitiva e rigorosa</p>
+  <div class="t-presenters"><span>Apresentação</span><b>Johsac Isbac Gomez Sanchez</b></div>
+  <p class="t-hint">→ / espaço: avançar · ← voltar · F: tela cheia</p>
+</section>
+
+<!-- Conteúdo -->
+<section class="slide">
+  <header class="sh"><h2>Conteúdo</h2></header>
+  <div class="agenda-wrap">
+    <ol class="agenda" start="0" id="agenda-full"></ol>
+    <div class="col">
+      <div class="card2"><b>Parte I · ~17 min</b>Fundamentos conceituais<small>Blocos 0–3: filosofia, descrição, probabilidade e distribuições</small></div>
+      <div class="card2"><b>Parte II · ~43 min</b>Estatística aplicada à pesquisa<small>Blocos 4–8: inferência, testes, regressão, classificação, agrupamento e PCA</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- Parte I -->
+<section class="slide">
+  <div class="big-q"><span class="kick">Parte I · ~17 min</span><p>Fundamentos conceituais</p><span class="bq-sub">O que é olhar para dados “como um estatístico” — e as ferramentas mínimas para isso</span></div>
+</section>
+
+<!-- 0 · Estatística × Computação -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 0 · Filosofia</span><h2><span class="snum">0</span>Estatística × Computação: duas perguntas diferentes</h2></header>
+  <div class="cards c2">
+    <div class="card2"><b>Computação / Machine Learning</b>Foco no <b>modelo como máquina de prever</b>.
+      <ul><li>Pergunta: <i>quão bem prevejo dados novos?</i></li><li>Avaliação: erro / acurácia no <b>conjunto de teste</b></li><li>Modelos flexíveis, muitos parâmetros (às vezes caixa-preta)</li></ul></div>
+    <div class="card2"><b>Estatística</b>Foco no <b>mecanismo gerador dos dados</b> e na <b>incerteza</b>.
+      <ul><li>Pergunta: <i>que processo gerou estes dados? o efeito é real?</i></li><li>Avaliação: <b>intervalos de confiança</b>, testes de hipótese, significância dos parâmetros</li><li>Modelos parcimoniosos e interpretáveis</li></ul></div>
+  </div>
+  <div class="note">Não são rivais: a mesma regressão pode servir para <b>prever</b> (olhar computacional) ou para <b>explicar</b> (olhar estatístico). O que muda é a pergunta — e, com ela, a forma de avaliar o modelo.</div>
+  <p class="vide"><b>Vide</b> L. Breiman. <i>Statistical Modeling: The Two Cultures.</i> Statistical Science 16(3), 2001.</p>
+</section>
+
+<!-- 0 · Paramétrico × não-paramétrico -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 0 · Tipos de modelos</span><h2><span class="snum">0</span>Paramétrico (global) × não-paramétrico (postos e kernels locais)</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="par-chips"></div>
+    <svg id="par-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Modelo paramétrico e não-paramétrico sobre os mesmos dados"></svg>
+    <div class="a-row"><div class="ectext" id="par-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="par-prev">◀</button><button type="button" id="par-play">▶ Reproduzir tudo</button><button type="button" id="par-next">▶</button></div></div>
+  </div>
+</section>
+
+<section class="slide" data-agenda="1"></section>
+
+<!-- 1 · As 4 famílias -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 1 · Estatística descritiva</span><h2><span class="snum">1</span>O retrato dos dados: as 4 famílias descritivas</h2></header>
+  <p class="lead sm">Descrever dados vai muito além da média: quatro famílias <b>complementares</b> resumem o comportamento de uma amostra.</p>
+  <div class="grow">
+    <div class="cards c2 icards" style="width:100%">
+      <div class="card2"><svg data-mini="tend" viewBox="0 0 96 64"></svg><div><b>1 · Tendência central</b>Onde os dados se concentram?<small>média · mediana · moda</small></div></div>
+      <div class="card2"><svg data-mini="disp" viewBox="0 0 96 64"></svg><div><b>2 · Dispersão</b>Quanto os dados variam?<small>variância · desvio padrão (DP) · intervalo interquartil (IQR)</small></div></div>
+      <div class="card2"><svg data-mini="skew" viewBox="0 0 96 64"></svg><div><b>3 · Assimetria (<i>skewness</i>)</b>Para que lado a distribuição “puxa”?<small>simétrica · cauda à direita · cauda à esquerda</small></div></div>
+      <div class="card2"><svg data-mini="kurt" viewBox="0 0 96 64"></svg><div><b>4 · Forma (curtose / <i>kurtosis</i>)</b>Pico concentrado? Caudas pesadas?<small>mais ou menos eventos extremos</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 1 · Tendência central -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 1 · Tendência central</span><h2><span class="snum">1</span>Média × mediana: o efeito de um <i>outlier</i></h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="tend-chips"></div>
+    <svg id="tend-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Média e mediana com e sem outlier"></svg>
+    <div class="a-row"><div class="ectext" id="tend-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="tend-prev">◀</button><button type="button" id="tend-play">▶ Reproduzir tudo</button><button type="button" id="tend-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 1 · Dispersão, assimetria, curtose -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 1 · Dispersão, assimetria e forma</span><h2><span class="snum">1</span>Mesma média, histórias diferentes</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="forma-chips"></div>
+    <svg id="forma-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Dispersão, assimetria e curtose"></svg>
+    <div class="a-row"><div class="ectext" id="forma-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="forma-prev">◀</button><button type="button" id="forma-play">▶ Reproduzir tudo</button><button type="button" id="forma-next">▶</button></div></div>
+  </div>
+</section>
+
+<section class="slide" data-agenda="2"></section>
+
+<!-- 2 · Variável aleatória -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 2 · Probabilidade</span><h2><span class="snum">2</span>Da amostra à variável aleatória</h2></header>
+  <p class="lead sm">Uma <b>variável aleatória</b> descreve um fenômeno cujo resultado varia; sua <b>distribuição de probabilidade</b> diz quais valores são mais ou menos prováveis.</p>
+  <svg id="va-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Distribuição discreta e contínua" style="height:300px"></svg>
+  <div class="cards c2 sm" style="margin-bottom:0">
+    <div class="card2"><b>População → parâmetros</b>μ, σ: valores verdadeiros, em geral <b>desconhecidos</b>.</div>
+    <div class="card2"><b>Amostra → estatísticas</b>x̄, s: calculadas dos dados, <b>estimam</b> os parâmetros (com incerteza).</div>
+  </div>
+</section>
+
+<!-- 2 · LGN -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 2 · Lei dos Grandes Números</span><h2><span class="snum">2</span>LGN: mais dados, média mais estável</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="lgn-chips"></div>
+    <svg id="lgn-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Média acumulada de lançamentos de dado"></svg>
+    <div class="a-row"><div class="ectext" id="lgn-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="lgn-prev">◀</button><button type="button" id="lgn-play">▶ Reproduzir tudo</button><button type="button" id="lgn-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 2 · TCL -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 2 · Teorema Central do Limite</span><h2><span class="snum">2</span>TCL: por que a Normal aparece em toda parte</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="tcl-chips"></div>
+    <svg id="tcl-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Distribuição das médias amostrais convergindo para a Normal"></svg>
+    <div class="a-row"><div class="ectext" id="tcl-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="tcl-prev">◀</button><button type="button" id="tcl-play">▶ Reproduzir tudo</button><button type="button" id="tcl-next">▶</button></div></div>
+  </div>
+</section>
+
+<section class="slide" data-agenda="3"></section>
+
+<!-- 3 · Distribuições -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 3 · Distribuições da inferência</span><h2><span class="snum">3</span>As quatro distribuições que sustentam os testes</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="dist-chips"></div>
+    <svg id="dist-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Distribuições Z, t, qui-quadrado e F"></svg>
+    <div class="a-row"><div class="ectext" id="dist-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="dist-prev">◀</button><button type="button" id="dist-play">▶ Reproduzir tudo</button><button type="button" id="dist-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 3 · Mapa das metodologias -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 3 · Mapa das metodologias</span><h2><span class="snum">3</span>Cada pergunta científica leva a uma família de métodos</h2></header>
+  <p class="lead sm">A essência da inferência: usar uma <b>amostra</b> para dizer algo sobre a <b>população</b>, quantificando a incerteza.</p>
+  <div class="grow">
+    <div class="cards c4 map" style="width:100%">
+      <div class="card2"><b>Comparação de grupos</b>Os grupos diferem?<br><span class="tag">t · ANOVA · Mann-Whitney · Bloco 5</span></div>
+      <div class="card2"><b>Independência</b>Duas categorias estão associadas?<br><span class="tag">χ² · Fisher · Bloco 5</span></div>
+      <div class="card2"><b>Associação</b>Duas variáveis andam juntas?<br><span class="tag">Pearson · Spearman · Bloco 6</span></div>
+      <div class="card2"><b>Predição / regressão</b>Quanto y muda com x?<br><span class="tag">regressão linear · Bloco 6</span></div>
+      <div class="card2"><b>Classificação</b>Qual a probabilidade de cada classe?<br><span class="tag">regressão logística · Bloco 6</span></div>
+      <div class="card2"><b>Agrupamento</b>Existem subgrupos sem rótulo?<br><span class="tag">K-Means · hierárquico · Bloco 7</span></div>
+      <div class="card2"><b>Fatoração</b>Dá para resumir muitas variáveis?<br><span class="tag">PCA · análise fatorial · Bloco 8</span></div>
+      <div class="card2" style="border:2px dashed var(--accent)"><b>A lógica comum</b>Hipóteses, p-valor, IC e tamanho de efeito<br><span class="tag">Bloco 4</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Parte II -->
+<section class="slide">
+  <div class="big-q"><span class="kick">Parte II · ~43 min</span><p>Estatística aplicada à pesquisa</p><span class="bq-sub">Inferência, testes, regressão, classificação, agrupamento e fatoração</span></div>
+</section>
+
+<section class="slide" data-agenda="4"></section>
+
+<!-- 4 · Estrutura de um teste -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · Lógica da inferência</span><h2><span class="snum">4</span>A estrutura de um teste de hipótese, passo a passo</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="teste-chips"></div>
+    <svg id="teste-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Teste t passo a passo"></svg>
+    <div class="a-row"><div class="ectext" id="teste-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="teste-prev">◀</button><button type="button" id="teste-play">▶ Reproduzir tudo</button><button type="button" id="teste-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 4 · p-valor: mitos -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · p-valor</span><h2><span class="snum">4</span>O que o p-valor realmente diz (e o que não diz)</h2></header>
+  <table class="tbl myth">
+    <tr><th class="yes">✓ O p-valor é…</th><th class="no">✗ O p-valor não é…</th></tr>
+    <tr><td>A probabilidade de obter dados <b>tão ou mais extremos</b> que os observados, <b>supondo H₀ verdadeira</b>: P(dados | H₀).</td><td>A probabilidade de H₀ ser verdadeira: P(H₀ | dados).</td></tr>
+    <tr><td>Uma medida de <b>compatibilidade</b> entre os dados e H₀: quanto menor, menos compatíveis.</td><td>Uma medida do <b>tamanho</b> ou da importância prática do efeito.</td></tr>
+    <tr><td>Sensível ao <b>tamanho amostral</b>: com n enorme, efeitos mínimos geram p minúsculo.</td><td>Prova de que H₀ é verdadeira quando p &gt; 0,05 (ausência de evidência ≠ evidência de ausência).</td></tr>
+    <tr><td>Comparado a um limiar <b>convencional</b> (α = 0,05) definido <b>antes</b> da análise.</td><td>Uma fronteira mágica: p = 0,049 e p = 0,051 contam praticamente a mesma história.</td></tr>
+  </table>
+  <p class="vide"><b>Vide</b> R. L. Wasserstein, N. A. Lazar. <i>The ASA Statement on p-Values: Context, Process, and Purpose.</i> The American Statistician 70(2), 2016.</p>
+</section>
+
+<!-- 4 · Erros e poder -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · Erros e poder</span><h2><span class="snum">4</span>Erro tipo I (α), erro tipo II (β) e poder (1 − β)</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="poder-chips"></div>
+    <svg id="poder-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Erros tipo I e II e poder estatístico"></svg>
+    <div class="a-row"><div class="ectext" id="poder-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="poder-prev">◀</button><button type="button" id="poder-play">▶ Reproduzir tudo</button><button type="button" id="poder-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 4 · IC 95% -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · Além do “sim/não”</span><h2><span class="snum">4</span>Intervalo de confiança de 95%: o que significa “95%”?</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="ic-chips"></div>
+    <svg id="ic-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Simulação de intervalos de confiança"></svg>
+    <div class="a-row"><div class="ectext" id="ic-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="ic-prev">◀</button><button type="button" id="ic-play">▶ Reproduzir tudo</button><button type="button" id="ic-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 4 · Tamanho de efeito -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · Tamanho de efeito</span><h2><span class="snum">4</span>Significância estatística ≠ relevância científica</h2></header>
+  <p class="lead sm"><b>Tamanho de efeito</b> (ex.: <i>d</i> de Cohen = diferença de médias ÷ desvio padrão) mede <b>quanto</b>; o p-valor mede só a <b>compatibilidade com H₀</b>.</p>
+  <div class="grow"><div class="cards c2" style="width:100%">
+    <div class="card2 warn"><b>Estudo A · significativo, irrelevante</b>n = 50.000 por grupo · diferença de <b>0,3 ponto</b> (DP = 10)<br><i>d</i> = 0,03 · <b>p &lt; 0,001</b><small>Com n gigante, qualquer diferença minúscula vira “significativa”.</small></div>
+    <div class="card2 ok"><b>Estudo B · relevante, não significativo</b>n = 10 por grupo · diferença de <b>8 pontos</b> (DP = 10)<br><i>d</i> = 0,8 · <b>p ≈ 0,09</b><small>Efeito grande, mas estudo sem poder: não é “prova de ausência”.</small></div>
+  </div>
+  <div class="note">Reporte sempre o trio: <b>tamanho de efeito + IC 95% + p-valor</b>. Referência de Cohen para <i>d</i>: 0,2 pequeno · 0,5 médio · 0,8 grande — mas o que é “relevante” depende da sua área.</div></div>
+  <p class="vide"><b>Vide</b> J. Cohen. <i>Statistical Power Analysis for the Behavioral Sciences.</i> 2ª ed., 1988.</p>
+</section>
+
+<section class="slide" data-agenda="5"></section>
+
+<!-- 5 · Seletor de testes -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 5 · Escolhendo o teste</span><h2><span class="snum">5</span>Três perguntas escolhem o teste</h2></header>
+  <div class="split chooser">
+    <div class="col">
+      <div class="ax"><b><span>1 ·</span> Distribuição / tipo de dado</b>
+        <div class="opt" data-ax="tipo"><button type="button" data-v="norm" aria-pressed="true">Contínuo ≈ Normal</button><button type="button" data-v="rank" aria-pressed="false">Assimétrico ou ordinal</button><button type="button" data-v="cat" aria-pressed="false">Categórico (contagens)</button></div></div>
+      <div class="ax"><b><span>2 ·</span> Número de grupos</b>
+        <div class="opt" data-ax="grupos"><button type="button" data-v="2" aria-pressed="true">2 grupos</button><button type="button" data-v="3" aria-pressed="false">3 ou mais</button></div></div>
+      <div class="ax"><b><span>3 ·</span> Desenho experimental</b>
+        <div class="opt" data-ax="desenho"><button type="button" data-v="ind" aria-pressed="true">Grupos independentes</button><button type="button" data-v="par" aria-pressed="false">Pareados / medidas repetidas</button></div></div>
+      <div class="note" style="font-size:17px;margin:4px 0 0">Pareado = as mesmas unidades medidas mais de uma vez (antes × depois, mesmo paciente em 3 condições).</div>
+    </div>
+    <div class="card2 res" id="ch-res" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- 5 · Tabela resumo + comparações múltiplas -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 5 · Resumo</span><h2><span class="snum">5</span>Paramétrico × não-paramétrico e comparações múltiplas</h2></header>
+  <table class="tbl tests">
+    <tr><th></th><th class="grp" colspan="2">2 grupos</th><th class="grp" colspan="2">3 ou mais grupos</th></tr>
+    <tr><th>Desenho</th><th>Paramétrico</th><th>Não-paramétrico</th><th>Paramétrico</th><th>Não-paramétrico</th></tr>
+    <tr><td>Independentes</td><td class="pm">t de Welch</td><td class="np">Mann-Whitney</td><td class="pm">ANOVA</td><td class="np">Kruskal-Wallis</td></tr>
+    <tr><td>Pareados</td><td class="pm">t pareado</td><td class="np">Wilcoxon</td><td class="pm">ANOVA med. repetidas</td><td class="np">Friedman</td></tr>
+  </table>
+  <p style="font-size:20px;margin:6px 0">ANOVA / Kruskal-Wallis dizem só “<b>algum</b> grupo difere”. Para saber <b>qual</b>, fazemos <i>post-hoc</i> (Tukey, Dunn)… e cada comparação extra aumenta o risco de falso positivo. Escolha o número de grupos:</p>
+  <div class="opt" id="mc-k"></div>
+  <div class="note warn" id="mc-out" style="margin-top:12px"></div>
+</section>
+
+<!-- 5 · Qui-quadrado -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 5 · Independência entre categorias</span><h2><span class="snum">5</span>Qui-quadrado (χ²) e Teste Exato de Fisher</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="chi-chips"></div>
+    <svg id="chi-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Teste qui-quadrado numa tabela 2 por 2"></svg>
+    <div class="a-row"><div class="ectext" id="chi-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="chi-prev">◀</button><button type="button" id="chi-play">▶ Reproduzir tudo</button><button type="button" id="chi-next">▶</button></div></div>
+  </div>
+</section>
+
+<section class="slide" data-agenda="6"></section>
+
+<!-- 6 · Correlação -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 6 · Correlação</span><h2><span class="snum">6</span>Pearson (r) × Spearman (ρ)</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="cor-chips"></div>
+    <svg id="cor-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Correlação de Pearson e Spearman em diferentes padrões"></svg>
+    <div class="a-row"><div class="ectext" id="cor-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="cor-prev">◀</button><button type="button" id="cor-play">▶ Reproduzir tudo</button><button type="button" id="cor-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 6 · Anscombe -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 6 · Sempre visualize</span><h2><span class="snum">6</span>Quarteto de Anscombe e a regra de ouro</h2></header>
+  <svg id="ans-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Quarteto de Anscombe" style="height:300px"></svg>
+  <div class="cards c2 sm" style="margin-bottom:0">
+    <div class="card2"><b>Mesmos números, dados diferentes</b>Nos 4 conjuntos: média de x = 9, média de y ≈ 7,50, r ≈ 0,82 e a mesma reta y ≈ 3 + 0,5x. Só o gráfico revela a diferença.</div>
+    <div class="card2 warn"><b>Correlação ≠ causalidade</b>Vendas de sorvete e afogamentos sobem juntos… porque ambos dependem do <b>calor</b> (variável de confusão). Causalidade exige desenho experimental ou argumentos adicionais.</div>
+  </div>
+  <p class="vide"><b>Vide</b> F. J. Anscombe. <i>Graphs in Statistical Analysis.</i> The American Statistician 27(1), 1973.</p>
+</section>
+
+<!-- 6 · Regressão linear -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 6 · Regressão linear</span><h2><span class="snum">6</span>Regressão linear: y = β₀ + β₁x + ε</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="reg-chips"></div>
+    <svg id="reg-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Regressão linear passo a passo"></svg>
+    <div class="a-row"><div class="ectext" id="reg-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="reg-prev">◀</button><button type="button" id="reg-play">▶ Reproduzir tudo</button><button type="button" id="reg-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 6 · Regressão logística -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 6 · Classificação</span><h2><span class="snum">6</span>Classificação com regressão logística</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="logi-chips"></div>
+    <svg id="logi-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Regressão logística passo a passo"></svg>
+    <div class="a-row"><div class="ectext" id="logi-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="logi-prev">◀</button><button type="button" id="logi-play">▶ Reproduzir tudo</button><button type="button" id="logi-next">▶</button></div></div>
+  </div>
+</section>
+
+<section class="slide" data-agenda="7"></section>
+
+<!-- 7 · K-Means -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 7 · Agrupamento</span><h2><span class="snum">7</span>K-Means: grupos sem rótulos</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="km-chips"></div>
+    <svg id="km-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Algoritmo K-Means passo a passo"></svg>
+    <div class="a-row"><div class="ectext" id="km-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="km-prev">◀</button><button type="button" id="km-play">▶ Reproduzir tudo</button><button type="button" id="km-next">▶</button></div></div>
+  </div>
+  <p class="vide"><b>Vide</b> J. MacQueen. <i>Some Methods for Classification and Analysis of Multivariate Observations.</i> 5th Berkeley Symposium, 1967.</p>
+</section>
+
+<!-- 7 · Hierárquico -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 7 · Agrupamento</span><h2><span class="snum">7</span>Agrupamento hierárquico e o dendrograma</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="hc-chips"></div>
+    <svg id="hc-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Agrupamento hierárquico construindo um dendrograma"></svg>
+    <div class="a-row"><div class="ectext" id="hc-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="hc-prev">◀</button><button type="button" id="hc-play">▶ Reproduzir tudo</button><button type="button" id="hc-next">▶</button></div></div>
+  </div>
+</section>
+
+<!-- 7 · Cuidados práticos -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 7 · Cuidados práticos</span><h2><span class="snum">7</span>Todo algoritmo de agrupamento encontra grupos — até no ruído</h2></header>
+  <svg id="cuid-svg" class="st fig-svg" viewBox="0 0 1000 300" role="img" aria-label="K-Means em ruído uniforme e em dados com grupos reais" style="height:300px"></svg>
+  <div class="cards c3 sm" style="margin-bottom:0">
+    <div class="card2"><b>Padronize as variáveis</b>Distâncias dependem da escala: “renda em R$” domina “idade em anos”. Use escores z antes de agrupar.</div>
+    <div class="card2 warn"><b>Grupos fantasmas</b>O K-Means sempre devolve k grupos, mesmo em dados puramente aleatórios (à esquerda).</div>
+    <div class="card2 ok"><b>Valide com Silhouette</b>s ∈ [−1, 1]: perto de 1 = grupos coesos e separados; perto de 0 = estrutura fraca.</div>
+  </div>
+  <p class="vide"><b>Vide</b> P. J. Rousseeuw. <i>Silhouettes: a graphical aid to the interpretation and validation of cluster analysis.</i> J. Comput. Appl. Math. 20, 1987.</p>
+</section>
+
+<section class="slide" data-agenda="8"></section>
+
+<!-- 8 · PCA -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 8 · Fatoração</span><h2><span class="snum">8</span>PCA: resumir muitas variáveis em poucos componentes</h2></header>
+  <div class="anim astack">
+    <div class="ecchips" id="pca-chips"></div>
+    <svg id="pca-svg" class="st" viewBox="0 0 1000 380" role="img" aria-label="Análise de componentes principais passo a passo"></svg>
+    <div class="a-row"><div class="ectext" id="pca-text" aria-live="polite"></div>
+      <div class="ecctrl"><button type="button" id="pca-prev">◀</button><button type="button" id="pca-play">▶ Reproduzir tudo</button><button type="button" id="pca-next">▶</button></div></div>
+  </div>
+  <p class="vide"><b>Vide</b> K. Pearson. <i>On Lines and Planes of Closest Fit to Systems of Points in Space.</i> Philosophical Magazine 2(11), 1901.</p>
+</section>
+
+<!-- 8 · Fluxo do pesquisador -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 8 · Síntese</span><h2><span class="snum">8</span>O fluxo completo do pesquisador</h2></header>
+  <div class="grow">
+    <div class="flow4" style="width:100%">
+      <div class="card2"><span class="stp">1</span><b>Pergunta</b>Comparar, associar, prever, classificar, agrupar ou resumir?<small>Defina H₀, o desenho e a análise <b>antes</b> de ver os dados.</small></div>
+      <div class="arr">→</div>
+      <div class="card2"><span class="stp">2</span><b>Exploração</b>As 4 famílias: tendência, dispersão, assimetria e forma.<small>Gráficos sempre (lembre de Anscombe).</small></div>
+      <div class="arr">→</div>
+      <div class="card2"><span class="stp">3</span><b>Modelo / teste</b>Tipo de dado, nº de grupos, independente × pareado.<small>Verifique os pressupostos.</small></div>
+      <div class="arr">→</div>
+      <div class="card2"><span class="stp">4</span><b>Avaliação com incerteza</b>Tamanho de efeito + IC 95% + p-valor.<small>Interprete no contexto científico.</small></div>
+    </div>
+    <div class="note" style="width:100%;margin:0">Estatística não é um ritual de “p &lt; 0,05”: é a <b>linguagem da incerteza</b> da ciência.</div>
+  </div>
+</section>
+
+<!-- 8 · Armadilhas -->
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 8 · Armadilhas a evitar</span><h2><span class="snum">8</span>Erros clássicos</h2></header>
+  <div class="grow">
+    <div class="cards c2" style="width:100%">
+      <div class="card2 warn"><b><i>p-hacking</i></b>Testar várias análises, subgrupos ou variáveis até aparecer p &lt; 0,05. Solução: pré-registrar a análise e reportar tudo o que foi testado.</div>
+      <div class="card2 warn"><b>Confundir DP com EPM (SEM)</b>DP descreve a variação <b>dos dados</b>; EPM = DP/√n descreve a precisão <b>da média</b>. Barras com EPM parecem menores — diga sempre qual usou.</div>
+      <div class="card2 warn"><b>Ignorar a independência</b>Medidas repetidas do mesmo sujeito tratadas como observações independentes (pseudo-replicação) inflam n e geram falsos positivos.</div>
+      <div class="card2 warn"><b>Múltiplas comparações sem correção</b>20 testes com α = 0,05 → ~64% de chance de pelo menos um falso positivo. Use Holm, Bonferroni ou FDR.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Perguntas -->
+<section class="slide">
+  <div class="big-q"><span class="kick">Perguntas e discussão</span><p>Traga um caso da sua pesquisa</p>
+    <div class="cards c3 sm" style="width:100%;max-width:1050px;text-align:left">
+      <div class="card2"><b>Qual é a pergunta?</b>Comparar, associar, prever, classificar, agrupar ou resumir?</div>
+      <div class="card2"><b>Que dado eu tenho?</b>Contínuo, ordinal ou categórico? Simétrico ou assimétrico?</div>
+      <div class="card2"><b>Como foi coletado?</b>Grupos independentes ou medidas repetidas? Quantos grupos?</div>
+    </div>
+  </div>
+</section>
+
+<!-- Obrigado -->
+<section class="slide title-slide">
+  <div class="aims-logo" role="img" aria-label="Logo AIMS" style="width:110px;height:110px;border-radius:18px;margin-bottom:8px"></div>
+  <h1>Obrigado!</h1>
+  <p class="t-sub">Perguntas?</p>
+  <p class="t-ref">L. Breiman. <i>Statistical Modeling: The Two Cultures.</i> Statistical Science, 2001.</p>
+  <p class="t-ref">R. L. Wasserstein, N. A. Lazar. <i>The ASA Statement on p-Values.</i> The American Statistician, 2016.</p>
+  <p class="t-ref">J. Cohen. <i>Statistical Power Analysis for the Behavioral Sciences.</i> 1988 · F. J. Anscombe. <i>Graphs in Statistical Analysis.</i> 1973.</p>
+</section>
+
+<div class="hud"><button type="button" id="hud-prev" aria-label="Anterior">◀</button><span id="hud-n">1 / 1</span><button type="button" id="hud-next" aria-label="Próximo">▶</button></div>
+<script>
+  // ===== Utilidades: SVG, números e estatística =====
+  const ANIMS = new Map();
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = id => document.getElementById(id);
+  const el = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) if (attrs[k] !== undefined && attrs[k] !== null) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const txt = (p, x, y, s, attrs) => { const t = el("text", Object.assign({ x, y }, attrs || {}), p); t.textContent = s; return t; };
+  const lab = (p, x, y, s, fill, anchor, cls) => txt(p, x, y, s, { fill, "text-anchor": anchor || "start", class: cls || "lbl" });
+  const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
+  const fmt = (v, d = 2) => v.toFixed(d).replace("-", "−").replace(".", ",");
+  const pfmt = p => p < 0.001 ? "p < 0,001" : "p ≈ " + fmt(p, 3);
+  const COL = { a: "#3b5bdb", e: "#d9480f", s: "#2b8a3e", g: "#d08c00", p: "#ae3ec9", k: "#868e96", ink: "#1d1d1f" };
+  const KC = [COL.a, COL.e, COL.s, COL.p];
+
+  // gerador pseudoaleatório com semente (mulberry32) → figuras sempre iguais
+  const R = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  const gauss = r => { let u = 0; while (!u) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); };
+  const sum = a => a.reduce((s, v) => s + v, 0);
+  const mean = a => sum(a) / a.length;
+  const sd = a => { const m = mean(a); return Math.sqrt(sum(a.map(v => (v - m) ** 2)) / (a.length - 1)); };
+  const quant = (a, p) => { const s = [...a].sort((x, y) => x - y); const k = (s.length - 1) * p, f = Math.floor(k); return s[f] + (s[Math.min(f + 1, s.length - 1)] - s[f]) * (k - f); };
+  const median = a => quant(a, 0.5);
+  const npdf = (x, m = 0, s = 1) => Math.exp(-0.5 * ((x - m) / s) ** 2) / (s * Math.sqrt(2 * Math.PI));
+  const erf = x => { const sg = Math.sign(x); x = Math.abs(x); const t = 1 / (1 + 0.3275911 * x);
+    return sg * (1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x)); };
+  const Phi = z => 0.5 * (1 + erf(z / Math.SQRT2));
+  function lgamma(z) {
+    if (z < 0.5) return Math.log(Math.PI / Math.sin(Math.PI * z)) - lgamma(1 - z);
+    z -= 1;
+    const c = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
+    let x = c[0]; for (let i = 1; i < 9; i++) x += c[i] / (z + i);
+    const t = z + 7.5;
+    return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
+  }
+  const tpdf = (x, v) => Math.exp(lgamma((v + 1) / 2) - lgamma(v / 2) - 0.5 * Math.log(v * Math.PI) - (v + 1) / 2 * Math.log(1 + x * x / v));
+  const chipdf = (x, k) => x <= 0 ? 0 : Math.exp((k / 2 - 1) * Math.log(x) - x / 2 - (k / 2) * Math.log(2) - lgamma(k / 2));
+  const fpdf = (x, a, b) => x <= 0 ? 0 : Math.exp(0.5 * (a * Math.log(a * x) + b * Math.log(b) - (a + b) * Math.log(a * x + b)) - Math.log(x) - (lgamma(a / 2) + lgamma(b / 2) - lgamma((a + b) / 2)));
+  const simpson = (f, a, b, n = 2000) => { const h = (b - a) / n; let s = f(a) + f(b); for (let i = 1; i < n; i++) s += f(a + i * h) * (i % 2 ? 4 : 2); return s * h / 3; };
+  const pT2 = (t, v) => 2 * simpson(x => tpdf(x, v), Math.abs(t), Math.abs(t) + 60, 6000);
+  const pChi = (x, k) => simpson(u => chipdf(u, k), x, x + 120, 6000);
+  const tcrit = v => { let lo = 0, hi = 20; for (let i = 0; i < 60; i++) { const m = (lo + hi) / 2; if (pT2(m, v) > 0.05) lo = m; else hi = m; } return (lo + hi) / 2; };
+  const pearson = (x, y) => { const mx = mean(x), my = mean(y); let sxy = 0, sxx = 0, syy = 0;
+    for (let i = 0; i < x.length; i++) { sxy += (x[i] - mx) * (y[i] - my); sxx += (x[i] - mx) ** 2; syy += (y[i] - my) ** 2; } return sxy / Math.sqrt(sxx * syy); };
+  const ranks = a => { const idx = a.map((v, i) => [v, i]).sort((p, q) => p[0] - q[0]); const r = new Array(a.length);
+    for (let i = 0; i < idx.length;) { let j = i; while (j + 1 < idx.length && idx[j + 1][0] === idx[i][0]) j++; for (let k = i; k <= j; k++) r[idx[k][1]] = (i + j) / 2 + 1; i = j + 1; } return r; };
+  const spearman = (x, y) => pearson(ranks(x), ranks(y));
+  const dist2 = (p, q) => (p[0] - q[0]) ** 2 + (p[1] - q[1]) ** 2;
+
+  // eixos: X(v) e Y(v) convertem valores em coordenadas do SVG
+  function plot(svg, o) {
+    const X = v => o.x + (v - o.xmin) / (o.xmax - o.xmin) * o.w;
+    const Y = v => o.y + o.h - (v - o.ymin) / (o.ymax - o.ymin) * o.h;
+    const g = el("g", { class: "axis" }, svg);
+    (o.grid || []).forEach(v => el("line", { x1: o.x, x2: o.x + o.w, y1: Y(v), y2: Y(v), class: "grid" }, g));
+    if (!o.noX) el("line", { x1: o.x, y1: o.y + o.h, x2: o.x + o.w, y2: o.y + o.h }, g);
+    if (o.yaxis) el("line", { x1: o.x, y1: o.y, x2: o.x, y2: o.y + o.h }, g);
+    const f = o.fmt || (v => fmt(v, o.dec || 0));
+    (o.xt || []).forEach(t => { const [v, s] = Array.isArray(t) ? t : [t, f(t)];
+      el("line", { x1: X(v), x2: X(v), y1: o.y + o.h, y2: o.y + o.h + 5 }, g); txt(g, X(v), o.y + o.h + 21, s, { "text-anchor": "middle" }); });
+    (o.yt || []).forEach(t => { const [v, s] = Array.isArray(t) ? t : [t, (o.yfmt || f)(t)]; txt(g, o.x - 9, Y(v) + 5, s, { "text-anchor": "end" }); });
+    if (o.xl) txt(g, o.x + o.w, o.y + o.h + 42, o.xl, { "text-anchor": "end", class: "albl" });
+    if (o.yl) txt(g, o.x + 6, o.y - 8, o.yl, { class: "albl" });
+    return { X, Y, o };
+  }
+  function pts(P, f, a, b, N) { const top = P.o.ymax + (P.o.ymax - P.o.ymin) * 0.05; const out = [];
+    for (let i = 0; i <= N; i++) { const x = a + (b - a) * i / N; const y = Math.min(f(x), top); if (isFinite(y)) out.push(P.X(x).toFixed(1) + " " + P.Y(y).toFixed(1)); } return out; }
+  const curve = (svg, P, f, a, b, attrs, N = 260) => el("path", Object.assign({ d: "M" + pts(P, f, a, b, N).join("L"), fill: "none", "stroke-width": 3, "stroke-linejoin": "round" }, attrs), svg);
+  const area = (svg, P, f, a, b, attrs, N = 180) => el("path", Object.assign({ d: `M${P.X(a)} ${P.Y(0)}L` + pts(P, f, a, b, N).join("L") + `L${P.X(b)} ${P.Y(0)}Z`, stroke: "none" }, attrs), svg);
+  const dens = (data, a, b, w) => { const nb = Math.round((b - a) / w), c = new Array(nb).fill(0);
+    data.forEach(v => { const k = Math.floor((v - a) / w); if (k >= 0 && k < nb) c[k]++; }); return c.map(x => x / (data.length * w)); };
+  function bars(svg, P, d, a, w, attrs) { d.forEach((h, k) => { if (!h) return;
+    el("rect", Object.assign({ x: P.X(a + k * w) + 0.8, y: P.Y(h), width: Math.max(0.5, P.X(a + (k + 1) * w) - P.X(a + k * w) - 1.6), height: P.Y(0) - P.Y(h), class: "bar" }, attrs), svg); }); }
+  const vline = (svg, x, y1, y2, stroke, extra) => el("line", Object.assign({ x1: x, x2: x, y1, y2, stroke, "stroke-width": 2.5 }, extra || {}), svg);
+  const legend = (svg, x, y, items) => items.forEach(([c, s, dash], i) => {
+    el("line", { x1: x, x2: x + 30, y1: y + i * 25, y2: y + i * 25, stroke: c, "stroke-width": 3.5, "stroke-dasharray": dash || null }, svg);
+    txt(svg, x + 40, y + i * 25 + 5, s, { class: "lg" }); });
+  const arrowDefs = (svg, color) => { const id = svg.id + "-ah" + color.replace(/[^a-z0-9]/gi, ""); const d = el("defs", {}, svg);
+    const m = el("marker", { id, viewBox: "0 0 10 10", refX: 8, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse" }, d);
+    el("path", { d: "M0 0 L10 5 L0 10 z", fill: color }, m); return `url(#${id})`; };
+
+  // ===== Motor das animações passo a passo (o mesmo da Expo 1: chips, texto e ◀ ▶) =====
+  function stepper(pfx, stages, render) {
+    const svg = $(pfx + "-svg"); if (!svg) return;
+    const chips = $(pfx + "-chips"), text = $(pfx + "-text"), playBtn = $(pfx + "-play");
+    const btns = stages.map((s, i) => { const b = document.createElement("button");
+      b.type = "button"; b.textContent = `${i + 1}. ${s.chip}`; b.addEventListener("click", () => { stop(); show(i); }); chips.appendChild(b); return b; });
+    let cur = 0, timer = null;
+    function show(i) {
+      cur = i; clear(svg); render(svg, i, stages[i]);
+      const s = stages[i]; text.innerHTML = typeof s.text === "function" ? s.text(i) : s.text;
+      btns.forEach((b, j) => { b.classList.toggle("on", j === i); b.classList.toggle("done", j < i); });
+    }
+    function stop() { clearTimeout(timer); timer = null; playBtn.textContent = "▶ Reproduzir tudo"; }
+    function playFrom(i) { show(i); timer = setTimeout(() => (i < stages.length - 1 ? playFrom(i + 1) : stop()), 4800); }
+    playBtn.addEventListener("click", () => { if (timer) { stop(); return; } playBtn.textContent = "⏸ Pausar"; playFrom(cur === stages.length - 1 ? 0 : cur); });
+    $(pfx + "-prev").addEventListener("click", () => { stop(); show(Math.max(0, cur - 1)); });
+    $(pfx + "-next").addEventListener("click", () => { stop(); show(Math.min(stages.length - 1, cur + 1)); });
+    ANIMS.set(svg, { n: () => stages.length, cur: () => cur, go: i => { stop(); show(i); }, stop });
+    show(0);
+  }
+
+  // ===== Agenda (gerada para cada bloco) =====
+  (function () {
+    const B = ["Filosofia: Estatística × Computação", "As 4 famílias descritivas", "Probabilidade, LGN e TCL", "Distribuições da inferência e metodologias",
+      "Lógica da inferência e do p-valor", "Escolhendo o teste de comparação", "Correlação, regressão e classificação", "Técnicas de agrupamento (<i>clustering</i>)", "Fatoração (PCA), síntese e perguntas"];
+    const items = now => B.map((b, i) => (i === 0 || i === 4 ? `<li class="part${now > i ? " done" : ""}">${i === 0 ? "Parte I · Fundamentos conceituais" : "Parte II · Estatística aplicada"}</li>` : "")
+      + `<li${now == null ? "" : i < now ? ' class="done"' : i === now ? ' class="now"' : ""}${i === 0 || i === 4 ? ` value="${i}"` : ""}><b>${b}</b></li>`).join("");
+    $("agenda-full").innerHTML = items(null);
+    document.querySelectorAll("[data-agenda]").forEach(s => {
+      const n = +s.dataset.agenda;
+      s.innerHTML = `<header class="sh"><span class="kick">${n < 4 ? "Parte I" : "Parte II"} · Bloco ${n} de 8</span><h2>Conteúdo</h2></header><ol class="agenda" start="0">${items(n)}</ol>`;
+    });
+  })();
+
+  // ===== Ícones das 4 famílias =====
+  document.querySelectorAll("svg[data-mini]").forEach(svg => {
+    const P = { X: x => 6 + (x + 3.2) / 6.4 * 84, Y: y => 58 - y * 46, o: { ymin: 0, ymax: 1.2 } };
+    const c = (f, col, w = 2.6, dash) => curve(svg, P, f, -3.2, 3.2, { stroke: col, "stroke-width": w, "stroke-dasharray": dash }, 80);
+    el("line", { x1: 4, x2: 92, y1: 58, y2: 58, stroke: "#adb5bd", "stroke-width": 1.5 }, svg);
+    const k = svg.dataset.mini;
+    if (k === "tend") { c(x => npdf(x) * 2.4, COL.a); vline(svg, P.X(0), 58, 10, COL.e, { "stroke-width": 2 }); }
+    if (k === "disp") { c(x => npdf(x, 0, 0.6) * 1.4, COL.a); c(x => npdf(x, 0, 1.4) * 1.4, COL.e); }
+    if (k === "skew") c(x => { const u = x + 2.6; return u <= 0 ? 0 : Math.exp(-((Math.log(u)) ** 2) / 0.5) / u * 1.1; }, COL.a);
+    if (k === "kurt") { c(x => Math.exp(-Math.abs(x) * 2) * 1.1, COL.e); c(x => npdf(x) * 1.6, COL.a, 2, "4 3"); }
+  });
+
+  // ===== Bloco 0 · paramétrico × não-paramétrico =====
+  (function () {
+    const r = R(7), data = [];
+    for (let i = 0; i < 15; i++) data.push(-1.5 + 0.6 * gauss(r));
+    for (let i = 0; i < 15; i++) data.push(1.5 + 0.7 * gauss(r));
+    const m = mean(data), s = sd(data), h = 0.4, n = data.length;
+    const kde = x => mean(data.map(v => npdf(x, v, h)));
+    const sorted = [...data].sort((a, b) => a - b);
+    const d = dens(data, -4, 4, 0.5), ymax = Math.max(0.5, Math.max(...d) * 1.12);
+    stepper("par", [
+      { chip: "Dados", text: `Uma amostra de <b>${n} medições</b>. Antes de qualquer modelo, olhamos o histograma: os dados têm <b>dois picos</b> (distribuição bimodal).` },
+      { chip: "Paramétrico (global)", text: `O modelo <b>paramétrico</b> assume uma forma <b>global</b> conhecida — aqui a Normal — e resume tudo em <b>poucos parâmetros</b>: μ ≈ ${fmt(m)}, σ ≈ ${fmt(s)}. Simples e poderoso… mas, se a forma estiver errada, os dois picos desaparecem.` },
+      { chip: "Postos (ranks)", text: "Uma saída <b>não-paramétrica</b>: trocar cada valor pela sua <b>ordem</b> (posto 1, 2, …, 30). Testes como Mann-Whitney, Wilcoxon e a correlação de Spearman trabalham assim: não importa a forma, só “quem é maior que quem”." },
+      { chip: "Kernels locais", text: "Outra saída: colocar um pequeno <b>kernel</b> (uma “lombadinha” gaussiana) sobre cada ponto. Cada kernel descreve só a <b>vizinhança</b> do seu ponto: um modelo <b>local</b>." },
+      { chip: "KDE", text: "Somando os kernels obtemos a <b>estimativa de densidade por kernel (KDE)</b>, que recupera os dois picos. Paramétrico: poucos parâmetros, forma rígida e global. Não-paramétrico: forma flexível, guiada pelos dados." },
+    ], (svg, i) => {
+      const P = plot(svg, { x: 60, y: 24, w: 880, h: 250, xmin: -4, xmax: 4, ymin: 0, ymax, xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4] });
+      bars(svg, P, d, -4, 0.5, { opacity: i >= 3 ? 0.45 : 1 });
+      if (i !== 2) data.forEach(v => el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(0), y2: P.Y(0) - 11, class: "rug" }, svg));
+      if (i === 1) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.a, class: "in" }); lab(svg, P.X(m) + 10, P.Y(npdf(m, m, s)) - 12, `Normal(μ = ${fmt(m)}; σ = ${fmt(s)})`, COL.a); }
+      if (i === 2) {
+        const y0 = 335; el("line", { x1: P.X(-4), x2: P.X(4), y1: y0, y2: y0, stroke: "#adb5bd", "stroke-width": 1.5 }, svg);
+        txt(svg, P.X(-4), y0 - 14, "posto:", { class: "lbl", fill: COL.a });
+        sorted.forEach((v, k) => { el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(0), y2: P.Y(0) - 11, class: "rug" }, svg);
+          el("circle", { cx: P.X(v), cy: y0, r: 5.5, fill: COL.a, class: "in", style: `animation-delay:${k * 25}ms` }, svg);
+          if ([0, 4, 9, 14, 19, 24, 29].includes(k)) txt(svg, P.X(v), y0 + 26, String(k + 1), { "text-anchor": "middle", class: "lbl", fill: COL.a }); });
+      }
+      if (i >= 3) data.forEach(v => curve(svg, P, x => npdf(x, v, h) / n, v - 3 * h, v + 3 * h, { stroke: COL.s, "stroke-width": 1.4, opacity: i === 3 ? 0.9 : 0.35, class: i === 3 ? "in" : null }, 60));
+      if (i === 4) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.k, "stroke-width": 2, "stroke-dasharray": "6 5" });
+        curve(svg, P, kde, -4, 4, { stroke: COL.s, "stroke-width": 4, class: "in" });
+        legend(svg, 700, 40, [[COL.s, "KDE (soma de kernels)"], [COL.k, "Normal (paramétrico)", "6 5"]]); }
+    });
+  })();
+
+  // ===== Bloco 1 · tendência central =====
+  (function () {
+    const base = [3.2, 3.5, 3.7, 3.9, 4.0, 4.2, 4.4, 4.6, 4.9, 5.3], out = 15, all = base.concat(out);
+    const m0 = mean(base), md0 = median(base), m1 = mean(all), md1 = median(all), s1 = sd(all), q1 = quant(all, 0.25), q3 = quant(all, 0.75);
+    stepper("tend", [
+      { chip: "Dados simétricos", text: `Renda mensal de 10 pessoas (mil R$). Com dados simétricos, <b>média</b> (${fmt(m0)}) e <b>mediana</b> (${fmt(md0)}) praticamente coincidem. A <b>moda</b> (valor mais frequente) é a única medida possível para dados nominais.` },
+      { chip: "Chega um outlier", text: `Entra uma pessoa com renda 15. A <b>média salta</b> para ${fmt(m1)} — maior que 10 das 11 rendas! — enquanto a <b>mediana</b> mal se move (${fmt(md1)}). A média é sensível a <i>outliers</i>; a mediana é <b>robusta</b>.` },
+      { chip: "O que reportar", text: `Dados assimétricos ou com outliers: reporte <b>mediana [IQR]</b> = ${fmt(md1, 1)} [${fmt(q1, 2)}; ${fmt(q3, 2)}], a metade central dos dados. A <b>média ± DP</b> (${fmt(m1, 1)} ± ${fmt(s1, 1)}) fica inflada e descreve mal o “típico”. Com dados simétricos, média ± DP funciona bem.` },
+    ], (svg, i) => {
+      const d = i === 0 ? base : all, mu = mean(d), me = median(d);
+      const P = plot(svg, { x: 60, y: 30, w: 880, h: 190, xmin: 2, xmax: 16, ymin: 0, ymax: 1, xt: [2, 4, 6, 8, 10, 12, 14, 16], xl: "renda mensal (mil R$)" });
+      d.forEach((v, k) => el("circle", { cx: P.X(v), cy: P.Y(0) - 14 - (k % 3) * 18, r: 7.5, fill: v === out ? COL.e : "#6c757d", class: v === out ? "in" : null }, svg));
+      if (i === 1) { vline(svg, P.X(m0), P.Y(0), 58, COL.e, { "stroke-dasharray": "5 5", opacity: 0.45 });
+        el("path", { d: `M${P.X(m0) + 4} 72 H${P.X(mu) - 6}`, stroke: COL.e, "stroke-width": 2, "marker-end": arrowDefs(svg, COL.e) }, svg); }
+      vline(svg, P.X(mu), P.Y(0), 40, COL.e); lab(svg, P.X(mu) + 7, 48, `média = ${fmt(mu)}`, COL.e);
+      vline(svg, P.X(me), P.Y(0), 40, COL.a); lab(svg, P.X(me) - 7, 48, `mediana = ${fmt(me)}`, COL.a, "end");
+      if (i === 2) {
+        const y = 300, lo = Math.min(...all.filter(v => v >= q1 - 1.5 * (q3 - q1))), hi = Math.max(...all.filter(v => v <= q3 + 1.5 * (q3 - q1)));
+        const g = el("g", { class: "in" }, svg);
+        el("line", { x1: P.X(lo), x2: P.X(q1), y1: y, y2: y, stroke: COL.a, "stroke-width": 2 }, g);
+        el("line", { x1: P.X(q3), x2: P.X(hi), y1: y, y2: y, stroke: COL.a, "stroke-width": 2 }, g);
+        el("rect", { x: P.X(q1), y: y - 14, width: P.X(q3) - P.X(q1), height: 28, fill: "#e8edff", stroke: COL.a, "stroke-width": 2 }, g);
+        vline(g, P.X(md1), y - 14, y + 14, COL.a, { "stroke-width": 3 });
+        el("circle", { cx: P.X(out), cy: y, r: 6, fill: "none", stroke: COL.e, "stroke-width": 2 }, g);
+        lab(g, P.X(6.3), y + 6, "mediana [IQR] — boxplot", COL.a);
+        const y2 = 350; el("line", { x1: P.X(Math.max(2, m1 - s1)), x2: P.X(m1 + s1), y1: y2, y2, stroke: COL.e, "stroke-width": 3 }, g);
+        el("circle", { cx: P.X(m1), cy: y2, r: 6, fill: COL.e }, g);
+        lab(g, P.X(m1 + s1) + 10, y2 + 6, "média ± DP", COL.e);
+      }
+    });
+  })();
+
+  // ===== Bloco 1 · dispersão, assimetria, curtose =====
+  (function () {
+    const ln = x => x <= 0 ? 0 : Math.exp(-(Math.log(x) ** 2) / (2 * 0.36)) / (x * 0.6 * Math.sqrt(2 * Math.PI));
+    const mo = Math.exp(-0.36), mdn = 1, mn = Math.exp(0.18);
+    const lap = x => Math.exp(-Math.abs(x) * Math.SQRT2) / Math.SQRT2;
+    const ga = Math.sqrt(Math.exp(lgamma(0.25) - lgamma(0.75))), gc = 4 / (2 * ga * Math.exp(lgamma(0.25)));
+    const gn = x => gc * Math.exp(-((Math.abs(x) / ga) ** 4));
+    const marks = (svg, P, list, anchor) => list.forEach(([v, f, s, c], k) => { const yl = 40 + k * 26;
+      vline(svg, P.X(v), P.Y(0), yl - 6, c, { "stroke-width": 2, "stroke-dasharray": "5 4" }); lab(svg, P.X(v) + (anchor === "end" ? -7 : 7), yl, s, c, anchor); });
+    stepper("forma", [
+      { chip: "Dispersão", text: "Mesma média, <b>dispersões</b> diferentes. A <b>variância</b> é a média dos desvios ao quadrado; o <b>desvio padrão (DP)</b> é a sua raiz, na mesma unidade dos dados. O <b>IQR</b> (Q3 − Q1) é a alternativa robusta a outliers." },
+      { chip: "Assimetria à direita", text: "<b>Assimetria positiva</b>: cauda longa para valores altos (renda, tempo de reação, concentrações). Ordem típica: <b>moda &lt; mediana &lt; média</b> — a cauda “puxa” a média." },
+      { chip: "Assimetria à esquerda", text: "<b>Assimetria negativa</b>: cauda longa para valores baixos (ex.: notas numa prova fácil, idade ao óbito). Agora <b>média &lt; mediana &lt; moda</b>." },
+      { chip: "Curtose", text: "As três curvas têm média 0 e DP 1, mas <b>formas</b> diferentes. A <b>curtose</b> mede o peso das caudas: <b>leptocúrtica</b> (pico alto, caudas pesadas → mais eventos extremos), <b>mesocúrtica</b> (Normal, referência) e <b>platicúrtica</b> (achatada, caudas leves)." },
+    ], (svg, i) => {
+      if (i === 0) {
+        const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: -5, xmax: 5, ymin: 0, ymax: 0.75, xt: [-4, -2, 0, 2, 4] });
+        area(svg, P, x => npdf(x, 0, 0.6), -5, 5, { fill: COL.a, opacity: 0.08 });
+        curve(svg, P, x => npdf(x, 0, 0.6), -5, 5, { stroke: COL.a }); curve(svg, P, x => npdf(x, 0, 1.5), -5, 5, { stroke: COL.e });
+        lab(svg, P.X(0.55), P.Y(0.6), "DP = 0,6 (pouca variação)", COL.a); lab(svg, P.X(2.2), P.Y(0.2), "DP = 1,5 (muita variação)", COL.e);
+      } else if (i === 1 || i === 2) {
+        const flip = i === 2, f = flip ? x => ln(5 - x) : ln, mv = v => flip ? 5 - v : v;
+        const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: 0, xmax: 5, ymin: 0, ymax: 0.92, xt: [0, 1, 2, 3, 4, 5] });
+        area(svg, P, f, 0.001, 4.999, { fill: COL.a, opacity: 0.1, class: "in" }); curve(svg, P, f, 0.001, 4.999, { stroke: COL.a, class: "in" });
+        const L = [[mv(mo), 0, "moda", COL.k], [mv(mdn), 0, "mediana", COL.a], [mv(mn), 0, "média", COL.e]];
+        marks(svg, P, flip ? L : L, flip ? "end" : "start");
+        lab(svg, P.X(flip ? 1.3 : 3.7), P.Y(0.14), flip ? "← cauda longa à esquerda" : "cauda longa à direita →", COL.ink, "middle");
+      } else {
+        const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: -4, xmax: 4, ymin: 0, ymax: 0.76, xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4] });
+        curve(svg, P, gn, -4, 4, { stroke: COL.s, class: "in" }); curve(svg, P, npdf, -4, 4, { stroke: COL.a, "stroke-dasharray": "7 5" }); curve(svg, P, lap, -4, 4, { stroke: COL.e, class: "in" });
+        legend(svg, 80, 44, [[COL.e, "Leptocúrtica (Laplace): pico alto, caudas pesadas"], [COL.a, "Mesocúrtica (Normal)", "7 5"], [COL.s, "Platicúrtica: pico achatado, caudas leves"]]);
+      }
+    });
+  })();
+
+  // ===== Bloco 2 · variável aleatória (figura fixa) =====
+  (function () {
+    const svg = $("va-svg");
+    txt(svg, 50, 30, "Discreta: nº de caras em 10 lançamentos (Binomial)", { class: "ttl" });
+    const P = plot(svg, { x: 50, y: 50, w: 400, h: 170, xmin: -0.6, xmax: 10.6, ymin: 0, ymax: 0.28, xt: [0, 2, 4, 6, 8, 10] });
+    const C = (n, k) => Math.exp(lgamma(n + 1) - lgamma(k + 1) - lgamma(n - k + 1));
+    for (let k = 0; k <= 10; k++) { const p = C(10, k) / 1024; el("rect", { x: P.X(k - 0.35), y: P.Y(p), width: P.X(0.35) - P.X(-0.35), height: P.Y(0) - P.Y(p), fill: k === 5 ? COL.a : "#bac8ff" }, svg); }
+    lab(svg, P.X(5), P.Y(0.246) - 8, "P(X = 5) ≈ 0,25", COL.a, "middle");
+    txt(svg, 550, 30, "Contínua: altura de adultos (Normal, μ = 170, σ = 8 cm)", { class: "ttl" });
+    const Q = plot(svg, { x: 550, y: 50, w: 410, h: 170, xmin: 140, xmax: 200, ymin: 0, ymax: 0.055, xt: [140, 150, 160, 170, 180, 190, 200] });
+    area(svg, Q, x => npdf(x, 170, 8), 170, 180, { fill: COL.a, opacity: 0.25 }); curve(svg, Q, x => npdf(x, 170, 8), 140, 200, { stroke: COL.a });
+    lab(svg, Q.X(178), Q.Y(0.047), `P(170 < X < 180) ≈ ${fmt(Phi(1.25) - 0.5)}`, COL.a);
+    txt(svg, 550, 262, "Contínua: probabilidade = área sob a curva (não a altura)", { class: "albl" });
+    txt(svg, 50, 262, "Discreta: probabilidade = altura de cada barra", { class: "albl" });
+  })();
+
+  // ===== Bloco 2 · LGN =====
+  (function () {
+    const N = 5000, seqs = [1, 2, 3].map(k => { const r = R(100 + k); let s = 0; const o = []; for (let i = 1; i <= N; i++) { s += 1 + Math.floor(r() * 6); o.push(s / i); } return o; });
+    const cols = [COL.a, COL.e, COL.s], ns = [10, 100, 1000, 5000], L = Math.log10;
+    const msg = ["Com poucos lançamentos, as médias <b>oscilam muito</b> e podem estar longe de 3,5.", "As médias já se aproximam de 3,5, mas ainda variam entre os estudos.",
+      "As oscilações diminuíram bastante: a média amostral está <b>convergindo</b>.", "Todas estabilizaram perto de <b>μ = 3,5</b>: essa é a <b>Lei dos Grandes Números</b>. Mais dados → estimativa mais estável (a flutuação típica cai como 1/√n)."];
+    stepper("lgn", ns.map((n, i) => ({ chip: `n = ${n.toLocaleString("pt-BR")}`,
+      text: () => `Três “estudos” independentes lançam um dado. Após <b>n = ${n.toLocaleString("pt-BR")}</b>, as médias são ${seqs.map((s, k) => `<b style="color:${cols[k]}">${fmt(s[n - 1])}</b>`).join(", ")}. ${msg[i]}` })),
+    (svg, i) => {
+      const n = ns[i];
+      const P = plot(svg, { x: 70, y: 22, w: 870, h: 280, xmin: 0, xmax: L(N), ymin: 1, ymax: 6, yaxis: true, yt: [1, 2, 3, 4, 5, 6], grid: [2, 3, 4, 5, 6],
+        xt: [[0, "1"], [1, "10"], [2, "100"], [3, "1.000"], [L(5000), "5.000"]], xl: "número de lançamentos n (escala log)", yl: "média acumulada" });
+      seqs.forEach((s, k) => { let d = ""; for (let j = 1; j <= n; j += j < 300 ? 1 : Math.ceil(j / 300)) d += (j === 1 ? "M" : "L") + P.X(L(j)).toFixed(1) + " " + P.Y(s[j - 1]).toFixed(1);
+        d += "L" + P.X(L(n)).toFixed(1) + " " + P.Y(s[n - 1]).toFixed(1);
+        el("path", { d, stroke: cols[k], fill: "none", "stroke-width": 2.2, opacity: 0.9 }, svg); el("circle", { cx: P.X(L(n)), cy: P.Y(s[n - 1]), r: 6, fill: cols[k] }, svg); });
+      el("rect", { x: P.X(L(n)), y: 22, width: P.X(L(N)) - P.X(L(n)), height: 280, fill: "#f7f6f2", opacity: n === N ? 0 : 0.85 }, svg);
+      el("line", { x1: P.X(0), x2: P.X(L(N)), y1: P.Y(3.5), y2: P.Y(3.5), stroke: COL.ink, "stroke-width": 2, "stroke-dasharray": "7 5" }, svg);
+      lab(svg, P.X(L(N)) - 4, P.Y(3.5) - 10, "μ = 3,5", COL.ink, "end");
+    });
+  })();
+
+  // ===== Bloco 2 · TCL =====
+  (function () {
+    const r = R(21), ex = () => -Math.log(1 - r());
+    const means = {}; [2, 5, 30].forEach(n => { means[n] = Array.from({ length: 4000 }, () => { let s = 0; for (let k = 0; k < n; k++) s += ex(); return s / n; }); });
+    const raw = Array.from({ length: 4000 }, ex);
+    const pop = x => x < 0 ? 0 : Math.exp(-x);
+    const nText = { 2: "Com <b>n = 2</b>, a distribuição das médias já é menos assimétrica que a população.", 5: "Com <b>n = 5</b>, a forma de sino começa a aparecer.",
+      30: "Com <b>n = 30</b>, a distribuição das médias é praticamente <b>Normal</b>, centrada em μ = 1 e com desvio padrão σ/√n (o <b>erro padrão</b>)." };
+    function panel(svg, x, w, data, n, title) {
+      const d = dens(data, 0, 4, 0.1), sdm = 1 / Math.sqrt(n), ymax = Math.max(Math.max(...d), n ? npdf(0, 0, sdm) : 1) * 1.15;
+      const P = plot(svg, { x, y: 40, w, h: 270, xmin: 0, xmax: 4, ymin: 0, ymax, xt: [0, 1, 2, 3, 4] });
+      bars(svg, P, d, 0, 0.1);
+      if (n) curve(svg, P, v => npdf(v, 1, sdm), 0, 4, { stroke: COL.a, class: "in" }); else curve(svg, P, pop, 0, 4, { stroke: COL.e });
+      txt(svg, x, 26, title, { class: "ttl" }); return P;
+    }
+    stepper("tcl", [
+      { chip: "População", text: "A população é bem <b>assimétrica</b> (exponencial: muitos valores pequenos, poucos grandes; μ = 1, σ = 1). Nada de Normal aqui." },
+      { chip: "Médias de n = 2", text: nText[2] }, { chip: "n = 5", text: nText[5] }, { chip: "n = 30", text: nText[30] },
+      { chip: "Nota de rigor", text: "<b>Rigor:</b> o TCL garante a normalidade da <b>média</b> (ou soma) — não dos dados brutos! Uma amostra de n = 30 continua assimétrica. Por isso os testes paramétricos para médias funcionam com n grande… e ainda precisamos de métodos <b>não-paramétricos</b>." },
+    ], (svg, i) => {
+      if (i === 0) { panel(svg, 70, 860, raw, 0, "População: distribuição exponencial (histograma de 4.000 valores)"); return; }
+      if (i < 4) { const n = [0, 2, 5, 30][i]; panel(svg, 70, 860, means[n], n, `Distribuição de 4.000 médias, cada uma de n = ${n} observações`);
+        legend(svg, 640, 70, [[COL.a, `Normal(1; σ/√n = ${fmt(1 / Math.sqrt(n))})`]]); return; }
+      panel(svg, 60, 420, raw, 0, "Dados brutos: continuam assimétricos");
+      panel(svg, 540, 420, means[30], 30, "Médias de n = 30: Normal");
+    });
+  })();
+
+  // ===== Bloco 3 · distribuições Z, t, χ², F =====
+  (function () {
+    stepper("dist", [
+      { chip: "Normal (Z)", text: "<b>Normal padrão (Z)</b>: média 0, DP 1. É a referência para médias em <b>amostras grandes</b> (graças ao TCL): 95% da área fica entre −1,96 e +1,96." },
+      { chip: "t de Student", text: "<b>t de Student</b>: parecida com a Normal, mas com <b>caudas mais pesadas</b> para incorporar a incerteza extra de estimar σ em <b>amostras pequenas</b>. Com mais graus de liberdade (gl), converge para Z." },
+      { chip: "Qui-quadrado (χ²)", text: "<b>Qui-quadrado</b>: soma de k variáveis Normais padrão <b>ao quadrado</b> → só valores positivos. Base para testar <b>variâncias</b>, <b>aderência</b> e <b>independência</b> entre categorias." },
+      { chip: "F de Snedecor", text: "<b>F</b>: <b>razão de duas variâncias</b> (dois χ² divididos pelos seus gl). Base da <b>ANOVA</b>: compara a variação entre grupos com a variação dentro dos grupos (3 ou mais grupos)." },
+    ], (svg, i) => {
+      if (i <= 1) {
+        const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: -4.5, xmax: 4.5, ymin: 0, ymax: 0.42, xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4] });
+        if (i === 0) { area(svg, P, npdf, -1.96, 1.96, { fill: COL.a, opacity: 0.14, class: "in" }); curve(svg, P, npdf, -4.5, 4.5, { stroke: COL.a });
+          [-1.96, 1.96].forEach(v => vline(svg, P.X(v), P.Y(0), P.Y(0.1), COL.a, { "stroke-width": 2, "stroke-dasharray": "5 4" }));
+          lab(svg, P.X(0), P.Y(0.17), "95%", COL.a, "middle", "big"); lab(svg, P.X(-1.96), P.Y(0.1) - 8, "−1,96", COL.a, "middle"); lab(svg, P.X(1.96), P.Y(0.1) - 8, "+1,96", COL.a, "middle"); }
+        else { curve(svg, P, npdf, -4.5, 4.5, { stroke: COL.k, "stroke-dasharray": "7 5" });
+          [[2, COL.e], [5, COL.g], [30, COL.a]].forEach(([v, c]) => curve(svg, P, x => tpdf(x, v), -4.5, 4.5, { stroke: c, class: "in" }));
+          legend(svg, 80, 44, [[COL.e, "t com 2 gl"], [COL.g, "t com 5 gl"], [COL.a, "t com 30 gl"], [COL.k, "Normal (Z)", "7 5"]]); }
+      } else if (i === 2) {
+        const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: 0, xmax: 20, ymin: 0, ymax: 0.5, xt: [0, 5, 10, 15, 20] });
+        const ks = [[1, COL.e], [3, COL.g], [6, COL.s], [10, COL.a]];
+        ks.forEach(([k, c]) => curve(svg, P, x => chipdf(x, k), 0.02, 20, { stroke: c, class: "in" }, 400));
+        legend(svg, 700, 50, ks.map(([k, c]) => [c, `χ² com ${k} gl`]));
+      } else {
+        const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: 0, xmax: 5, ymin: 0, ymax: 1.05, xt: [0, 1, 2, 3, 4, 5] });
+        const fs = [[2, 20, COL.e], [5, 20, COL.g], [10, 40, COL.a]];
+        fs.forEach(([a, b, c]) => curve(svg, P, x => fpdf(x, a, b), 0.01, 5, { stroke: c, class: "in" }, 400));
+        legend(svg, 680, 50, fs.map(([a, b, c]) => [c, `F(${a}; ${b})`]));
+        lab(svg, P.X(3.4), P.Y(0.45), "F = variância entre grupos ÷ variância dentro", COL.ink, "middle");
+      }
+    });
+  })();
+
+  // ===== Bloco 4 · estrutura de um teste =====
+  (function () {
+    const n = 25, xb = 73, mu0 = 70, s = 6, t = (xb - mu0) / (s / Math.sqrt(n)), gl = n - 1, p = pT2(t, gl), tc = tcrit(gl);
+    const box = (svg, x, y, w, h, title, body, c, soft) => { const g = el("g", { class: "in" }, svg);
+      el("rect", { x, y, width: w, height: h, rx: 12, fill: soft, stroke: c, "stroke-width": 2 }, g);
+      lab(g, x + 18, y + 34, title, c); body.forEach((b, k) => txt(g, x + 18, y + 66 + k * 26, b, { class: "lg" })); };
+    stepper("teste", [
+      { chip: "Pergunta e H₀", text: `Um novo método de ensino muda a nota média (historicamente <b>70</b>)? Amostra de <b>n = ${n}</b> alunos: x̄ = ${xb}, s = ${s}. A <b>hipótese nula</b> é o “ceticismo padrão”: <b>não há efeito</b>.` },
+      { chip: "Mundo sob H₀", text: `Se H₀ fosse verdadeira, a estatística t seguiria uma distribuição <b>t de Student com ${gl} gl</b>: valores perto de 0 seriam comuns; valores extremos, raros.` },
+      { chip: "Estatística observada", text: `Calculamos a estatística com os nossos dados: <b>t = (x̄ − μ₀) / (s/√n) = (${xb} − ${mu0}) / (${s}/5) = ${fmt(t, 1)}</b>. Onde ela cai nesse “mundo de H₀”?` },
+      { chip: "p-valor", text: `O <b>p-valor</b> é a área das caudas além de ±${fmt(t, 1)} (teste bilateral): <b>${pfmt(p)}</b>. Se H₀ fosse verdadeira, veríamos um resultado tão extremo só em ~${Math.round(p * 100)}% dos estudos.` },
+      { chip: "Decisão (α = 0,05)", text: `Com α = 0,05 definido antes, a região de rejeição é |t| &gt; ${fmt(tc, 2)}. Como ${pfmt(p)} &lt; 0,05, <b>rejeitamos H₀</b>: os dados são pouco compatíveis com “nenhum efeito”. Isso <b>não</b> diz que o efeito é grande — veja IC e tamanho de efeito.` },
+    ], (svg, i) => {
+      if (i === 0) {
+        box(svg, 60, 50, 400, 130, "H₀ (hipótese nula)", ["μ = 70", "o método não muda a nota média"], COL.a, "#e8edff");
+        box(svg, 540, 50, 400, 130, "H₁ (hipótese alternativa)", ["μ ≠ 70", "o método muda a nota média"], COL.e, "#fff0e6");
+        box(svg, 300, 220, 400, 120, "Dados observados", [`n = ${n} · x̄ = ${xb} · s = ${s}`], COL.s, "#e6f6ea");
+        return;
+      }
+      const P = plot(svg, { x: 60, y: 40, w: 880, h: 270, xmin: -4.2, xmax: 4.2, ymin: 0, ymax: 0.42, xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4], xl: "estatística t" });
+      const f = x => tpdf(x, gl);
+      if (i === 4) { area(svg, P, f, tc, 4.2, { fill: COL.k, opacity: 0.18 }); area(svg, P, f, -4.2, -tc, { fill: COL.k, opacity: 0.18 });
+        [-tc, tc].forEach(v => vline(svg, P.X(v), P.Y(0), P.Y(0.2), COL.k, { "stroke-width": 2, "stroke-dasharray": "5 4" }));
+        lab(svg, P.X(-tc) - 6, P.Y(0.2) - 6, `−${fmt(tc, 2)}`, COL.k, "end"); lab(svg, P.X(tc) - 6, P.Y(0.2) - 6, `+${fmt(tc, 2)}`, COL.k, "end");
+        lab(svg, P.X(-3.3), P.Y(0.1), "rejeita H₀", COL.k, "middle"); lab(svg, P.X(3.6), P.Y(0.1), "rejeita H₀", COL.k, "middle"); }
+      if (i >= 3) { area(svg, P, f, t, 4.2, { fill: COL.e, opacity: 0.55, class: "in" }); area(svg, P, f, -4.2, -t, { fill: COL.e, opacity: 0.55, class: "in" }); }
+      curve(svg, P, f, -4.2, 4.2, { stroke: COL.a });
+      lab(svg, P.X(0), P.Y(0.395) - 4, `Distribuição de t se H₀ for verdadeira (${gl} gl)`, COL.a, "middle");
+      if (i >= 2) { vline(svg, P.X(t), P.Y(0), P.Y(0.3), COL.e, { "stroke-width": 3, class: "in" }); lab(svg, P.X(t) + 8, P.Y(0.3) + 4, `t observado = ${fmt(t, 1)}`, COL.e);
+        if (i === 2) { vline(svg, P.X(-t), P.Y(0), P.Y(0.2), COL.e, { "stroke-width": 2, "stroke-dasharray": "4 4", opacity: 0.6 }); lab(svg, P.X(-t) - 8, P.Y(0.2), `−${fmt(t, 1)}`, COL.e, "end"); } }
+      if (i >= 3) lab(svg, P.X(3.45), P.Y(0.2), pfmt(p), COL.e, "middle", "big");
+    });
+  })();
+
+  // ===== Bloco 4 · erros e poder =====
+  (function () {
+    const cfg = [null, [2.5, 1.645], [2.5, 1.645], [2.5, 1.645], [2.5, 1.645], [2.5 * Math.SQRT2, 1.645], [2.5, 2.326]];
+    stepper("poder", [
+      { chip: "Decisão × realidade", text: "Toda decisão de teste pode errar de dois jeitos. <b>Erro tipo I (α)</b>: falso positivo — “achamos” um efeito que não existe. <b>Erro tipo II (β)</b>: falso negativo — deixamos passar um efeito real." },
+      { chip: "Dois mundos", text: "Azul: distribuição da estatística se <b>H₀ é verdadeira</b>. Verde: se existe um <b>efeito real</b> (H₁). A linha tracejada é o valor crítico (teste unilateral com α = 0,05, para simplificar)." },
+      { chip: "α · erro tipo I", text: "<b>α = 0,05</b>: a área da curva de H₀ além do valor crítico. Se H₀ for verdadeira, ainda assim rejeitamos em 5% dos estudos (<b>falso positivo</b>). Nós escolhemos α." },
+      { chip: "β · erro tipo II", text: () => `<b>β ≈ ${fmt(1 - Phi(2.5 - 1.645))}</b>: a área da curva de H₁ <b>abaixo</b> do valor crítico. Existe efeito, mas o estudo não o detecta (<b>falso negativo</b>).` },
+      { chip: "Poder (1 − β)", text: () => `<b>Poder = 1 − β ≈ ${fmt(Phi(2.5 - 1.645))}</b>: a probabilidade de detectar um efeito que existe. Convenção usual: planejar o estudo para poder ≥ 0,80.` },
+      { chip: "Dobrar n", text: () => `<b>Dobrando o tamanho amostral</b>, o erro padrão cai por √2 e as curvas se afastam: o poder sobe para ≈ <b>${fmt(Phi(2.5 * Math.SQRT2 - 1.645))}</b>. É assim que se calcula o n de um estudo.` },
+      { chip: "α mais rígido (0,01)", text: () => `Com <b>α = 0,01</b> (menos falsos positivos), o valor crítico se desloca e o poder cai para ≈ <b>${fmt(Phi(2.5 - 2.326))}</b>: há um <b>compromisso</b> entre os dois erros.` },
+    ], (svg, i) => {
+      if (i === 0) {
+        const x0 = 260, y0 = 70, cw = 300, rh = 110;
+        lab(svg, x0 + cw, y0 - 30, "Realidade", COL.ink, "middle");
+        lab(svg, x0 + cw / 2, y0 - 6, "H₀ verdadeira (sem efeito)", COL.muted || "#5f6368", "middle"); lab(svg, x0 + cw * 1.5, y0 - 6, "H₀ falsa (efeito real)", "#5f6368", "middle");
+        lab(svg, x0 - 16, y0 + rh / 2 + 6, "Não rejeita H₀", "#5f6368", "end"); lab(svg, x0 - 16, y0 + rh * 1.5 + 6, "Rejeita H₀", "#5f6368", "end");
+        txt(svg, 60, y0 + rh + 6, "Decisão", { class: "lbl", fill: COL.ink, transform: `rotate(-90 60 ${y0 + rh})`, "text-anchor": "middle" });
+        const cell = (c, r, fill, stroke, t1, t2, k) => { const g = el("g", { class: "in", style: `animation-delay:${k * 120}ms` }, svg);
+          el("rect", { x: x0 + c * cw + 4, y: y0 + 8 + r * rh, width: cw - 8, height: rh - 8, rx: 12, fill, stroke, "stroke-width": 2 }, g);
+          lab(g, x0 + c * cw + cw / 2, y0 + r * rh + 50, t1, stroke, "middle"); txt(g, x0 + c * cw + cw / 2, y0 + r * rh + 78, t2, { "text-anchor": "middle", class: "lg" }); };
+        cell(0, 0, "#e6f6ea", COL.s, "✓ Correto", "probabilidade 1 − α", 0); cell(1, 0, "#fff4d6", COL.g, "Erro tipo II (β)", "falso negativo", 1);
+        cell(0, 1, "#fff0e6", COL.e, "Erro tipo I (α)", "falso positivo", 2); cell(1, 1, "#e6f6ea", COL.s, "✓ Poder (1 − β)", "detecta o efeito real", 3);
+        return;
+      }
+      const [dl, cr] = cfg[i];
+      const P = plot(svg, { x: 60, y: 40, w: 880, h: 280, xmin: -3.5, xmax: 7.5, ymin: 0, ymax: 0.44, xt: [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7] });
+      const h0 = x => npdf(x), h1 = x => npdf(x, dl);
+      if (i === 2 || i === 6) area(svg, P, h0, cr, 7.5, { fill: COL.e, opacity: 0.6, class: "in" });
+      if (i === 3) area(svg, P, h1, -3.5, cr, { fill: COL.g, opacity: 0.5, class: "in" });
+      if (i >= 4) area(svg, P, h1, cr, 7.5, { fill: COL.s, opacity: 0.3, class: "in" });
+      if (i >= 5) area(svg, P, h1, -3.5, cr, { fill: COL.g, opacity: 0.4 });
+      curve(svg, P, h0, -3.5, 7.5, { stroke: COL.a }); curve(svg, P, h1, -3.5, 7.5, { stroke: COL.s });
+      vline(svg, P.X(cr), P.Y(0), P.Y(0.44), COL.ink, { "stroke-width": 2, "stroke-dasharray": "6 5" });
+      lab(svg, P.X(cr) + 6, P.Y(0.43), `valor crítico (α = ${i === 6 ? "0,01" : "0,05"})`, COL.ink);
+      lab(svg, P.X(0), P.Y(0.405) + 26, "H₀", COL.a, "middle", "big"); lab(svg, P.X(dl), P.Y(0.405) + 26, "H₁", COL.s, "middle", "big");
+      if (i >= 4) lab(svg, P.X(dl + 1.6), P.Y(0.2), `poder ≈ ${fmt(Phi(dl - cr))}`, COL.s, "middle", "mid");
+      if (i === 3 || i >= 5) lab(svg, P.X(cr) - 10, P.Y(0.012), `β ≈ ${fmt(1 - Phi(dl - cr))}`, COL.g, "end");
+      if (i === 2 || i === 6) lab(svg, P.X(cr + 0.4), P.Y(0.035), `α = ${i === 6 ? "0,01" : "0,05"}`, COL.e);
+    });
+  })();
+
+  // ===== Bloco 4 · intervalo de confiança =====
+  (function () {
+    const mu = 50, sg = 10, K = 25;
+    const sim = (n, seed) => { const r = R(seed), tc = tcrit(n - 1); return Array.from({ length: K }, () => { const x = Array.from({ length: n }, () => mu + sg * gauss(r));
+      const m = mean(x), h = tc * sd(x) / Math.sqrt(n); return { m, lo: m - h, hi: m + h, miss: m - h > mu || m + h < mu }; }); };
+    const A = sim(20, 3), B = sim(80, 3);
+    const miss = S => S.filter(c => c.miss).length;
+    stepper("ic", [
+      { chip: "Um estudo", text: `Um estudo com n = 20 estima a média: x̄ = ${fmt(A[0].m, 1)}, <b>IC 95% [${fmt(A[0].lo, 1)}; ${fmt(A[0].hi, 1)}]</b>. O intervalo mostra a <b>precisão</b> da estimativa — muito mais informativo que um simples “significativo / não significativo”.` },
+      { chip: "Repetir 25 vezes", text: () => `Repetimos o estudo 25 vezes (simulação com a média verdadeira μ = 50, linha tracejada). Cada estudo gera um intervalo diferente; <b>${miss(A)} de 25</b> não contêm μ (em vermelho).` },
+      { chip: "O que “95%” significa", text: "O “95%” é uma propriedade do <b>método</b>: a longo prazo, 95% dos intervalos construídos assim contêm μ. Para um intervalo já calculado, μ está dentro ou fora — não é “95% de probabilidade de μ estar aqui”." },
+      { chip: "n = 80", text: () => `Com <b>n = 80</b>, os intervalos ficam cerca de <b>2 vezes mais estreitos</b> (largura ∝ 1/√n): mais dados, estimativa mais precisa. ${miss(B)} de 25 não contêm μ.` },
+    ], (svg, i) => {
+      const S = i === 3 ? B : A, show = i === 0 ? 1 : K;
+      const P = plot(svg, { x: 60, y: 14, w: 880, h: 310, xmin: 38, xmax: 62, ymin: 0, ymax: K + 1, xt: [38, 42, 46, 50, 54, 58, 62], xl: "valor da média" });
+      vline(svg, P.X(mu), P.Y(0), P.Y(K + 1), COL.ink, { "stroke-width": 2, "stroke-dasharray": "6 5", opacity: i === 0 ? 0.3 : 1 });
+      if (i > 0) lab(svg, P.X(mu) + 6, 30, "μ = 50", COL.ink);
+      S.slice(0, show).forEach((c, k) => { const y = P.Y(K - k), col = c.miss && i > 0 ? COL.e : COL.a;
+        const g = el("g", { class: "in", style: `animation-delay:${i === 1 ? k * 70 : 0}ms` }, svg);
+        el("line", { x1: P.X(c.lo), x2: P.X(c.hi), y1: y, y2: y, stroke: col, "stroke-width": c.miss && i > 0 ? 4 : 3, "stroke-linecap": "round" }, g);
+        el("circle", { cx: P.X(c.m), cy: y, r: 4.5, fill: col }, g); });
+      if (i === 0) lab(svg, P.X(A[0].hi) + 10, P.Y(K) + 6, "IC 95% do estudo 1", COL.a);
+    });
+  })();
+
+  // ===== Bloco 5 · seletor de testes =====
+  (function () {
+    const T = {
+      "norm|2|ind": ["pm", "Teste t de Welch", "Compara as médias de 2 grupos independentes, sem exigir variâncias iguais.", "Ex.: nota do grupo controle × grupo tratamento.", "Equivalente não-paramétrico: Mann-Whitney."],
+      "norm|2|par": ["pm", "Teste t pareado", "Analisa a média das <b>diferenças</b> dentro de cada par.", "Ex.: pressão arterial antes × depois do tratamento nos mesmos pacientes.", "Equivalente não-paramétrico: Wilcoxon (postos sinalizados)."],
+      "norm|3|ind": ["pm", "ANOVA de um fator", "Compara 3+ médias com a estatística F (variância entre grupos ÷ variância dentro). Se significativa → <i>post-hoc</i> (Tukey).", "Ex.: produtividade com 3 fertilizantes diferentes.", "Variâncias desiguais: ANOVA de Welch · não-paramétrico: Kruskal-Wallis."],
+      "norm|3|par": ["pm", "ANOVA de medidas repetidas", "Os mesmos sujeitos medidos em 3+ condições ou tempos; separa a variação entre sujeitos.", "Ex.: desempenho de cada participante em 3 sessões.", "Não-paramétrico: Friedman · alternativa moderna: modelos mistos."],
+      "rank|2|ind": ["np", "Mann-Whitney (U)", "Compara 2 grupos independentes usando <b>postos</b>: robusto a assimetria e outliers.", "Ex.: escala de dor (0–10) em dois hospitais.", "Equivalente paramétrico: teste t de Welch."],
+      "rank|2|par": ["np", "Wilcoxon (postos sinalizados)", "Usa os postos das <b>diferenças</b> dentro de cada par.", "Ex.: satisfação (escala Likert) antes × depois de uma intervenção.", "Equivalente paramétrico: teste t pareado."],
+      "rank|3|ind": ["np", "Kruskal-Wallis", "Extensão do Mann-Whitney para 3+ grupos independentes. Se significativo → <i>post-hoc</i> de Dunn com correção.", "Ex.: tempo de internação (muito assimétrico) em 4 alas.", "Equivalente paramétrico: ANOVA."],
+      "rank|3|par": ["np", "Friedman", "Compara 3+ condições nos mesmos sujeitos usando postos dentro de cada sujeito.", "Ex.: 10 juízes ordenam 4 vinhos.", "Equivalente paramétrico: ANOVA de medidas repetidas."],
+      "cat|2|ind": ["ct", "Qui-quadrado (χ²) de independência", "Testa se duas variáveis categóricas são independentes: contagens <b>observadas × esperadas</b>.", "Ex.: tratamento (A/B) × melhorou (sim/não).", "Se alguma contagem esperada &lt; 5: Teste Exato de Fisher."],
+      "cat|3|ind": ["ct", "Qui-quadrado (χ²) de independência", "Mesmo teste numa tabela r × c (3+ grupos ou categorias).", "Ex.: região (Norte/Sul/Centro) × uso de serviço (sim/não).", "Contagens pequenas: Fisher (ou Fisher-Freeman-Halton)."],
+      "cat|2|par": ["ct", "Teste de McNemar", "Proporções em dados <b>pareados</b>: a mesma unidade classificada sim/não em dois momentos.", "Ex.: sintoma presente antes × depois do tratamento.", "Pareado: o χ² comum não serve aqui."],
+      "cat|3|par": ["ct", "Q de Cochran", "Extensão do McNemar para 3+ medições binárias pareadas.", "Ex.: o mesmo paciente avaliado por 3 exames (positivo/negativo).", "Pareado: o χ² comum não serve aqui."],
+    };
+    const FAM = { pm: "paramétrico", np: "não-paramétrico", ct: "dados de contagem" };
+    const st = { tipo: "norm", grupos: "2", desenho: "ind" };
+    const NAMES = { norm: "contínuo ≈ Normal", rank: "assimétrico / ordinal", cat: "categórico", 2: "2 grupos", 3: "3+ grupos", ind: "independentes", par: "pareados" };
+    function render() {
+      const [f, name, desc, ex, alt] = T[`${st.tipo}|${st.grupos}|${st.desenho}`];
+      $("ch-res").innerHTML = `<span class="fam ${f}">${FAM[f]}</span><span class="path">${NAMES[st.tipo]} → ${NAMES[st.grupos]} → ${NAMES[st.desenho]}</span><b class="tn">${name}</b><p>${desc}</p><p class="ex">${ex}</p><p class="alt">${alt}</p>`;
+    }
+    document.querySelectorAll(".opt[data-ax]").forEach(g => g.addEventListener("click", e => { const b = e.target.closest("button"); if (!b) return;
+      st[g.dataset.ax] = b.dataset.v; g.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); render(); }));
+    render();
+  })();
+
+  // ===== Bloco 5 · comparações múltiplas =====
+  (function () {
+    const host = $("mc-k"), out = $("mc-out");
+    const show = k => { const m = k * (k - 1) / 2, fw = 1 - Math.pow(0.95, m);
+      host.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(+b.dataset.k === k)));
+      out.innerHTML = `<b>${k} grupos</b> → ${m} comparações par a par. Testando cada uma com α = 0,05, a chance de <b>pelo menos um falso positivo</b> é ≈ <b>${fmt(fw * 100, 0)}%</b>. Correção de Bonferroni: usar α/${m} = ${fmt(0.05 / m, 4)} (Holm é uma versão menos conservadora).`; };
+    [3, 4, 5, 6, 8].forEach(k => { const b = document.createElement("button"); b.type = "button"; b.dataset.k = k; b.textContent = `${k} grupos`; b.addEventListener("click", () => show(k)); host.appendChild(b); });
+    show(4);
+  })();
+
+  // ===== Bloco 5 · qui-quadrado =====
+  (function () {
+    const O = [[30, 20], [18, 32]], rs = O.map(sum), cs = [O[0][0] + O[1][0], O[0][1] + O[1][1]], N = sum(rs);
+    const E = O.map((r, i) => r.map((_, j) => rs[i] * cs[j] / N)), C = O.map((r, i) => r.map((o, j) => (o - E[i][j]) ** 2 / E[i][j]));
+    const chi = sum(C.flat()), p = pChi(chi, 1);
+    stepper("chi", [
+      { chip: "Observado", text: "100 pacientes, dois tratamentos. A pergunta: <b>melhorar depende do tratamento?</b> H₀: as variáveis são <b>independentes</b> (a taxa de melhora é a mesma em A e B)." },
+      { chip: "Esperado sob H₀", text: `Se H₀ fosse verdadeira, cada célula teria a contagem <b>esperada</b> E = (total da linha × total da coluna) / N. Ex.: A–sim = 50 × 48 / 100 = <b>${fmt(E[0][0], 0)}</b>.` },
+      { chip: "Estatística χ²", text: `Somamos as discrepâncias padronizadas: <b>χ² = Σ (O − E)² / E = ${fmt(chi)}</b>, com gl = (linhas − 1)(colunas − 1) = 1.` },
+      { chip: "p-valor", text: `Na distribuição χ² com 1 gl, a área além de ${fmt(chi)} é <b>${pfmt(p)}</b>: rejeitamos H₀ — a melhora parece <b>associada</b> ao tratamento (A: 60% × B: 36%).` },
+      { chip: "Quando usar Fisher", text: "O χ² é uma <b>aproximação</b> que exige amostras razoáveis. Se alguma contagem <b>esperada for &lt; 5</b> (amostras pequenas), use o <b>Teste Exato de Fisher</b>, que calcula a probabilidade exata da tabela." },
+    ], (svg, i) => {
+      const x0 = 40, y0 = 70, w0 = 150, cw = 120, rh = 60, rowN = ["Tratamento A", "Tratamento B", "Total"], colN = ["Sim", "Não", "Total"];
+      lab(svg, x0 + w0 + cw, y0 - 40, "Melhorou?", COL.ink, "middle");
+      colN.forEach((c, j) => lab(svg, x0 + w0 + j * cw + cw / 2, y0 - 12, c, "#5f6368", "middle"));
+      rowN.forEach((r, k) => lab(svg, x0 + w0 - 12, y0 + k * rh + 38, r, "#5f6368", "end"));
+      for (let k = 0; k < 3; k++) for (let j = 0; j < 3; j++) {
+        const x = x0 + w0 + j * cw, y = y0 + k * rh, tot = k === 2 || j === 2;
+        el("rect", { x: x + 2, y: y + 2, width: cw - 4, height: rh - 4, rx: 8, fill: tot ? "#f1efe8" : "#fff", stroke: "#e3e1da" }, svg);
+        const v = k === 2 ? (j === 2 ? N : cs[j]) : j === 2 ? rs[k] : O[k][j];
+        if (tot || i === 0 || i >= 3) { txt(svg, x + cw / 2, y + 38, String(v), { "text-anchor": "middle", class: "mid" }); continue; }
+        if (i === 1) { txt(svg, x + cw / 2, y + 28, String(v), { "text-anchor": "middle", class: "mid" }); lab(svg, x + cw / 2, y + 50, `E = ${fmt(E[k][j], 0)}`, COL.a, "middle").classList.add("in"); }
+        if (i === 2) { txt(svg, x + cw / 2, y + 22, `(${v}−${fmt(E[k][j], 0)})²/${fmt(E[k][j], 0)}`, { "text-anchor": "middle" }); lab(svg, x + cw / 2, y + 47, fmt(C[k][j]), COL.e, "middle").classList.add("in"); }
+      }
+      if (i >= 2) lab(svg, x0 + 10, y0 + 3 * rh + 50, `χ² = ${C.flat().map(c => fmt(c)).join(" + ")} = ${fmt(chi)}`, COL.e).classList.add("in");
+      if (i >= 3) {
+        const P = plot(svg, { x: 640, y: 50, w: 320, h: 230, xmin: 0, xmax: 9, ymin: 0, ymax: 0.6, xt: [0, 3, 6, 9], xl: "χ² (1 gl)" });
+        area(svg, P, x => chipdf(x, 1), chi, 9, { fill: COL.e, opacity: 0.6, class: "in" }); curve(svg, P, x => chipdf(x, 1), 0.02, 9, { stroke: COL.a }, 300);
+        vline(svg, P.X(chi), P.Y(0), P.Y(0.3), COL.e); lab(svg, P.X(chi), P.Y(0.3) - 8, `χ² = ${fmt(chi)}`, COL.e, "middle");
+        lab(svg, P.X(6.5), P.Y(0.45), pfmt(p), COL.e, "middle", "mid");
+      }
+      if (i === 4) { const g = el("g", { class: "in" }, svg); el("rect", { x: 620, y: 300, width: 350, height: 66, rx: 10, fill: "#fff4d6", stroke: COL.g, "stroke-width": 2 }, g);
+        lab(g, 795, 328, "Esperado < 5 em alguma célula?", COL.g, "middle"); txt(g, 795, 352, "→ Teste Exato de Fisher", { "text-anchor": "middle", class: "lg" }); }
+    });
+  })();
+
+  // ===== Bloco 6 · correlação =====
+  (function () {
+    const mk = (seed, f, n = 40) => { const r = R(seed), x = [], y = []; for (let i = 0; i < n; i++) { const [a, b] = f(r, i); x.push(a); y.push(b); } return { x, y }; };
+    const C = [
+      { chip: "Linear", d: mk(5, r => { const x = gauss(r); return [x, x + 0.55 * gauss(r)]; }), t: "Relação <b>linear</b> com ruído: Pearson e Spearman concordam." },
+      { chip: "Monotônica não linear", d: mk(6, r => { const x = 3 * r(); return [x, Math.exp(2.4 * x) * (1 + 0.06 * gauss(r))]; }), t: "Sempre crescente, mas <b>curva</b> (exponencial). Spearman ≈ 1 porque a <b>ordem</b> é quase perfeita; Pearson subestima, pois mede só a parte <b>linear</b>." },
+      { chip: "Um outlier", d: mk(8, (r, i) => i === 39 ? [9, 9] : [gauss(r), gauss(r)]), t: "Nenhuma relação real… mais <b>um único outlier</b> extremo. Pearson “vê” uma correlação criada por 1 ponto; Spearman, baseado em postos, mal se altera." },
+      { chip: "Curva em U", d: mk(9, (r, i) => { const x = -2 + 4 * i / 39; return [x, x * x + 0.3 * gauss(r)]; }), t: "Relação <b>forte</b>, mas não monotônica (em U): r ≈ ρ ≈ 0! Correlação baixa <b>não</b> significa ausência de relação — sempre visualize." },
+      { chip: "Sem relação", d: mk(10, r => [gauss(r), gauss(r)]), t: "Variáveis <b>independentes</b>: r ≈ ρ ≈ 0, como esperado." },
+    ].map(c => Object.assign(c, { r: pearson(c.d.x, c.d.y), rho: spearman(c.d.x, c.d.y) }));
+    stepper("cor", C.map(c => ({ chip: c.chip, text: () => `${c.t} <span style="white-space:nowrap">(r = <b>${fmt(c.r)}</b> · ρ = <b style="color:#2b8a3e">${fmt(c.rho)}</b>)</span>` })), (svg, i) => {
+      const { x, y } = C[i].d, ext = a => { const lo = Math.min(...a), hi = Math.max(...a), p = (hi - lo) * 0.08; return [lo - p, hi + p]; };
+      const [x0, x1] = ext(x), [y0, y1] = ext(y);
+      const P = plot(svg, { x: 120, y: 20, w: 560, h: 320, xmin: x0, xmax: x1, ymin: y0, ymax: y1, yaxis: true, xl: "x", yl: "y" });
+      x.forEach((v, k) => el("circle", { cx: P.X(v), cy: P.Y(y[k]), r: 6.5, fill: i === 2 && k === 39 ? COL.e : COL.a, opacity: 0.8, class: "in", style: `animation-delay:${k * 12}ms` }, svg));
+      txt(svg, 740, 120, "Pearson (linear)", { class: "lg" }); lab(svg, 740, 165, `r = ${fmt(C[i].r)}`, COL.a, "start", "big");
+      txt(svg, 740, 230, "Spearman (postos)", { class: "lg" }); lab(svg, 740, 275, `ρ = ${fmt(C[i].rho)}`, COL.s, "start", "big");
+    });
+  })();
+
+  // ===== Bloco 6 · Anscombe (figura fixa) =====
+  (function () {
+    const svg = $("ans-svg"), x = [10, 8, 13, 9, 11, 14, 6, 4, 12, 7, 5];
+    const D = [[x, [8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 10.84, 4.82, 5.68]], [x, [9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13, 7.26, 4.74]],
+      [x, [7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39, 8.15, 6.42, 5.73]], [[8, 8, 8, 8, 8, 8, 8, 19, 8, 8, 8], [6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 12.50, 5.56, 7.91, 6.89]]];
+    ["I", "II", "III", "IV"].forEach((nm, k) => {
+      const P = plot(svg, { x: 45 + k * 245, y: 30, w: 200, h: 190, xmin: 2, xmax: 20, ymin: 2, ymax: 14, yaxis: true, xt: [5, 10, 15, 20], yt: [4, 8, 12] });
+      txt(svg, 45 + k * 245 + 100, 22, `Conjunto ${nm} · r = ${fmt(pearson(D[k][0], D[k][1]))}`, { class: "ttl", "text-anchor": "middle" });
+      el("line", { x1: P.X(3), x2: P.X(20), y1: P.Y(4.5), y2: P.Y(13), stroke: COL.e, "stroke-width": 2 }, svg);
+      D[k][0].forEach((v, j) => el("circle", { cx: P.X(v), cy: P.Y(D[k][1][j]), r: 5, fill: COL.a }, svg));
+    });
+  })();
+
+  // ===== Bloco 6 · regressão linear =====
+  (function () {
+    const r = R(31), n = 30, x = [], y = [];
+    for (let i = 0; i < n; i++) { const xi = 0.3 + 9.4 * r(); x.push(xi); y.push(50 + 3.5 * xi + 7 * gauss(r)); }
+    const mx = mean(x), my = mean(y), Sxx = sum(x.map(v => (v - mx) ** 2)), Sxy = sum(x.map((v, i) => (v - mx) * (y[i] - my)));
+    const b1 = Sxy / Sxx, b0 = my - b1 * mx, fit = v => b0 + b1 * v, res = y.map((v, i) => v - fit(x[i]));
+    const sse = sum(res.map(e => e * e)), sst = sum(y.map(v => (v - my) ** 2)), R2 = 1 - sse / sst, s2 = sse / (n - 2), se1 = Math.sqrt(s2 / Sxx), tc = tcrit(n - 2);
+    const p1 = pT2(b1 / se1, n - 2), band = v => tc * Math.sqrt(s2 * (1 / n + (v - mx) ** 2 / Sxx));
+    stepper("reg", [
+      { chip: "Dados", text: "30 estudantes: <b>horas de estudo por semana</b> (x) e <b>nota</b> (y). A correlação diz “andam juntas”; a regressão quer <b>quantificar</b> como y muda com x." },
+      { chip: "Reta (mínimos quadrados)", text: `Modelo: <b>y = β₀ + β₁x + ε</b>. Os mínimos quadrados estimam <b>b₀ = ${fmt(b0, 1)}</b> (nota esperada com 0 h) e <b>b₁ = ${fmt(b1, 2)}</b> (inclinação).` },
+      { chip: "Resíduos", text: "Os <b>resíduos</b> (y − ŷ) são as distâncias verticais até a reta; a reta escolhida é a que <b>minimiza a soma dos resíduos ao quadrado</b>. Eles devem parecer ruído sem padrão (checagem dos pressupostos)." },
+      { chip: "Interpretar β₁", text: `<b>Cada hora a mais de estudo está associada a +${fmt(b1, 2)} pontos</b> na nota (IC 95%: [${fmt(b1 - tc * se1, 2)}; ${fmt(b1 + tc * se1, 2)}], ${pfmt(p1)}). Foco na <b>explicação</b>: tamanho e incerteza do efeito.` },
+      { chip: "R²", text: `<b>R² = ${fmt(R2)}</b>: ${fmt(R2 * 100, 0)}% da variabilidade das notas é explicada pelas horas de estudo; o restante vem de outros fatores e ruído.` },
+      { chip: "Incerteza da reta", text: "A <b>banda de confiança de 95%</b> mostra a incerteza sobre a reta média: mais estreita perto da média de x, mais larga nas pontas. E lembre: estudo observacional → <b>associação</b>, não causalidade." },
+    ], (svg, i) => {
+      const P = plot(svg, { x: 80, y: 20, w: 860, h: 290, xmin: 0, xmax: 10, ymin: 30, ymax: 105, yaxis: true, xt: [0, 2, 4, 6, 8, 10], yt: [40, 60, 80, 100], grid: [40, 60, 80, 100], xl: "horas de estudo por semana", yl: "nota" });
+      if (i === 5) el("path", { d: "M" + Array.from({ length: 51 }, (_, k) => { const v = k / 5; return `${P.X(v)} ${P.Y(fit(v) + band(v))}`; }).join("L") + "L" + Array.from({ length: 51 }, (_, k) => { const v = 10 - k / 5; return `${P.X(v)} ${P.Y(fit(v) - band(v))}`; }).join("L") + "Z", fill: COL.a, opacity: 0.18, class: "in" }, svg);
+      if (i === 4) { el("line", { x1: P.X(0), x2: P.X(10), y1: P.Y(my), y2: P.Y(my), stroke: COL.k, "stroke-width": 2, "stroke-dasharray": "6 5" }, svg); lab(svg, P.X(10) - 4, P.Y(my) + 22, "média de y", COL.k, "end"); }
+      if (i === 2 || i === 4) x.forEach((v, k) => el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(y[k]), y2: P.Y(fit(v)), stroke: COL.e, "stroke-width": 1.8, opacity: i === 4 ? 0.45 : 1, class: i === 2 ? "in" : null }, svg));
+      x.forEach((v, k) => el("circle", { cx: P.X(v), cy: P.Y(y[k]), r: 6, fill: "#495057", opacity: 0.8 }, svg));
+      if (i >= 1) { el("line", { x1: P.X(0), x2: P.X(10), y1: P.Y(fit(0)), y2: P.Y(fit(10)), stroke: COL.a, "stroke-width": 3.5, class: i === 1 ? "in" : null }, svg);
+        lab(svg, P.X(0.3), P.Y(100), `ŷ = ${fmt(b0, 1)} + ${fmt(b1, 2)} · x`, COL.a); }
+      if (i === 3) { const a = 4, b = 7, g = el("g", { class: "in" }, svg);
+        el("path", { d: `M${P.X(a)} ${P.Y(fit(a))} H${P.X(b)} V${P.Y(fit(b))}`, fill: "none", stroke: COL.e, "stroke-width": 3 }, g);
+        lab(g, (P.X(a) + P.X(b)) / 2, P.Y(fit(a)) + 24, "+3 horas", COL.e, "middle"); lab(g, P.X(b) + 10, (P.Y(fit(a)) + P.Y(fit(b))) / 2 + 6, `+3 × b₁ = +${fmt(3 * b1, 1)} pontos`, COL.e); }
+      if (i === 4) lab(svg, P.X(6.5), P.Y(45), `R² = ${fmt(R2)}`, COL.a, "middle", "big");
+    });
+  })();
+
+  // ===== Bloco 6 · regressão logística =====
+  (function () {
+    const r = R(41), n = 60, x = [], y = [];
+    for (let i = 0; i < n; i++) { const a = 20 + 60 * r(); x.push(a); y.push(r() < 1 / (1 + Math.exp(-(-8 + 0.16 * a))) ? 1 : 0); }
+    let b = [0, 0], H = [[1, 0], [0, 1]];
+    for (let it = 0; it < 30; it++) { let g0 = 0, g1 = 0, h00 = 0, h01 = 0, h11 = 0;
+      for (let i = 0; i < n; i++) { const p = 1 / (1 + Math.exp(-(b[0] + b[1] * x[i]))), w = p * (1 - p); g0 += y[i] - p; g1 += (y[i] - p) * x[i]; h00 += w; h01 += w * x[i]; h11 += w * x[i] * x[i]; }
+      const det = h00 * h11 - h01 * h01; H = [[h11 / det, -h01 / det], [-h01 / det, h00 / det]]; b = [b[0] + H[0][0] * g0 + H[0][1] * g1, b[1] + H[1][0] * g0 + H[1][1] * g1]; }
+    const se1 = Math.sqrt(H[1][1]), sig = v => 1 / (1 + Math.exp(-(b[0] + b[1] * v))), x50 = -b[0] / b[1];
+    const OR = Math.exp(10 * b[1]), lo = Math.exp(10 * (b[1] - 1.96 * se1)), hi = Math.exp(10 * (b[1] + 1.96 * se1));
+    const mx = mean(x), my = mean(y), l1 = sum(x.map((v, i) => (v - mx) * (y[i] - my))) / sum(x.map(v => (v - mx) ** 2)), lin = v => my + l1 * (v - mx);
+    const jit = R(42), jy = y.map(v => v + (jit() - 0.5) * 0.06);
+    stepper("logi", [
+      { chip: "Dados 0/1", text: "60 pacientes: <b>idade</b> (x) e <b>doença</b> presente (1) ou ausente (0). A resposta é <b>categórica</b>: um problema de <b>classificação</b>." },
+      { chip: "Reta? ✗", text: "Uma reta comum prevê “probabilidades” <b>menores que 0 e maiores que 1</b> (em vermelho) — sem sentido. Precisamos de uma curva limitada entre 0 e 1." },
+      { chip: "Sigmoide", text: "A <b>regressão logística</b> modela a probabilidade com a curva <b>sigmoide</b>: p(x) = 1 / (1 + e<sup>−(β₀ + β₁x)</sup>). Equivale a uma reta no <b>log-odds</b>: log(p / (1 − p)) = β₀ + β₁x." },
+      { chip: "Limiar → classe", text: `Para <b>classificar</b>, escolhemos um limiar: p = 0,5 ocorre aos <b>${fmt(x50, 0)} anos</b>. À direita, a previsão é “doente”. O limiar pode mudar conforme o custo de cada tipo de erro.` },
+      { chip: "Odds ratio", text: `O ganho estatístico: <b>OR = ${fmt(OR, 1)}</b> por 10 anos (IC 95%: [${fmt(lo, 1)}; ${fmt(hi, 1)}]) — a cada década, as <b>chances</b> de doença multiplicam por ~${fmt(OR, 1)}. Um classificador caixa-preta pode até acertar mais, mas não entrega esse efeito interpretável com incerteza.` },
+    ], (svg, i) => {
+      const P = plot(svg, { x: 80, y: 20, w: 860, h: 300, xmin: 15, xmax: 85, ymin: -0.35, ymax: 1.35, yaxis: true, xt: [20, 30, 40, 50, 60, 70, 80], yt: [0, 0.5, 1], yfmt: v => fmt(v, 1), grid: [0, 0.5, 1], xl: "idade (anos)", yl: "P(doença)" });
+      if (i === 3) el("rect", { x: P.X(x50), y: 20, width: P.X(85) - P.X(x50), height: 300, fill: COL.e, opacity: 0.07, class: "in" }, svg);
+      x.forEach((v, k) => el("circle", { cx: P.X(v), cy: P.Y(jy[k]), r: 6, fill: i >= 3 ? (sig(v) >= 0.5 ? COL.e : COL.a) : "#495057", opacity: 0.8 }, svg));
+      if (i === 1) { const g = el("g", { class: "in" }, svg); el("line", { x1: P.X(15), x2: P.X(85), y1: P.Y(lin(15)), y2: P.Y(lin(85)), stroke: COL.k, "stroke-width": 3 }, g);
+        const xa = mx + (0 - my) / l1, xb = mx + (1 - my) / l1;
+        el("line", { x1: P.X(15), x2: P.X(xa), y1: P.Y(lin(15)), y2: P.Y(0), stroke: COL.e, "stroke-width": 5 }, g); el("line", { x1: P.X(xb), x2: P.X(85), y1: P.Y(1), y2: P.Y(lin(85)), stroke: COL.e, "stroke-width": 5 }, g);
+        lab(g, P.X(78), P.Y(1.25), "p > 1 ?!", COL.e, "middle"); lab(g, P.X(22), P.Y(-0.25), "p < 0 ?!", COL.e, "middle"); }
+      if (i >= 2) curve(svg, P, sig, 15, 85, { stroke: COL.a, "stroke-width": 4, class: i === 2 ? "in" : null });
+      if (i === 3) { vline(svg, P.X(x50), P.Y(-0.35), P.Y(1.35), COL.ink, { "stroke-width": 2, "stroke-dasharray": "6 5" }); lab(svg, P.X(x50) + 8, P.Y(0.56), `limiar p = 0,5 → ${fmt(x50, 0)} anos`, COL.ink);
+        lab(svg, P.X(78), P.Y(-0.22), "classe: doente", COL.e, "middle"); lab(svg, P.X(24), P.Y(1.22), "classe: saudável", COL.a, "middle"); }
+      if (i === 4) { const g = el("g", { class: "in" }, svg); el("rect", { x: P.X(16.5), y: P.Y(1.3), width: 330, height: 74, rx: 10, fill: "#fff", stroke: COL.a, "stroke-width": 2 }, g);
+        lab(g, P.X(16.5) + 16, P.Y(1.3) + 30, `OR (10 anos) = ${fmt(OR, 1)}`, COL.a); txt(g, P.X(16.5) + 16, P.Y(1.3) + 56, `IC 95%: [${fmt(lo, 1)}; ${fmt(hi, 1)}]`, { class: "lg" }); }
+    });
+  })();
+
+  // ===== Bloco 7 · K-Means =====
+  function kmeans(P, C0, maxIt = 50) {
+    const hist = []; let C = C0.map(c => c.slice()), A = null;
+    for (let it = 0; it < maxIt; it++) {
+      const A2 = P.map(p => { let b = 0; C.forEach((c, k) => { if (dist2(p, c) < dist2(p, C[b])) b = k; }); return b; });
+      const C2 = C.map((c, k) => { const m = P.filter((_, i) => A2[i] === k); return m.length ? [mean(m.map(q => q[0])), mean(m.map(q => q[1]))] : c; });
+      hist.push({ A: A2, Cin: C, Cout: C2 });
+      if (A && A2.every((v, i) => v === A[i])) break;
+      A = A2; C = C2;
+    }
+    return hist;
+  }
+  const inertia = (P, A, C) => sum(P.map((p, i) => dist2(p, C[A[i]])));
+  function silhouette(P, A) {
+    const k = Math.max(...A) + 1;
+    return mean(P.map((p, i) => { const d = new Array(k).fill(0), c = new Array(k).fill(0);
+      P.forEach((q, j) => { if (i !== j) { d[A[j]] += Math.sqrt(dist2(p, q)); c[A[j]]++; } });
+      const a = c[A[i]] ? d[A[i]] / c[A[i]] : 0, b = Math.min(...d.map((v, j) => j === A[i] || !c[j] ? Infinity : v / c[j]));
+      return c[A[i]] ? (b - a) / Math.max(a, b) : 0; }));
+  }
+  const blobs = (() => { const r = R(51), out = []; [[2, 2], [7.2, 2.4], [4.6, 5.4]].forEach(([cx, cy]) => { for (let i = 0; i < 25; i++) out.push([cx + 0.75 * gauss(r), cy + 0.7 * gauss(r)]); }); return out; })();
+  (function () {
+    const H = kmeans(blobs, [[1.2, 6.2], [2.6, 0.8], [3.4, 2.0]]), last = H[H.length - 1];
+    const states = [null, { C: H[0].Cin, A: null }, { C: H[0].Cin, A: H[0].A }, { C: H[0].Cout, A: H[0].A }, { C: H[1].Cout, A: H[1].A }, { C: last.Cout, A: last.A }];
+    const trail = [H[0].Cin].concat(H.map(h => h.Cout));
+    const upto = [0, 0, 0, 1, 2, trail.length - 1];
+    stepper("km", [
+      { chip: "Dados sem rótulo", text: "75 observações <b>sem rótulos</b>. Objetivo do agrupamento: formar grupos em que os elementos sejam <b>mais parecidos entre si</b> do que com os de outros grupos." },
+      { chip: "Escolher k = 3", text: "O <b>K-Means</b> exige escolher <b>k</b> de antemão. Começamos com 3 centróides (×) em posições iniciais — aqui, propositalmente ruins." },
+      { chip: "Atribuir", text: "<b>Passo 1</b>: cada ponto vai para o <b>centróide mais próximo</b> (distância euclidiana)." },
+      { chip: "Atualizar", text: "<b>Passo 2</b>: cada centróide se move para a <b>média</b> dos pontos do seu grupo." },
+      { chip: "Repetir", text: "Repetimos atribuir → atualizar. A <b>inércia</b> (soma das distâncias² até o centróide) diminui a cada iteração." },
+      { chip: "Convergiu", text: `Nenhum ponto mudou de grupo: o algoritmo <b>convergiu</b> após ${H.length} iterações. O resultado depende do início; na prática, usamos várias inicializações (k-means++).` },
+    ], (svg, i) => {
+      const P = plot(svg, { x: 250, y: 15, w: 500, h: 345, xmin: -0.6, xmax: 10, ymin: -1, ymax: 7.8, noX: true });
+      el("rect", { x: 250, y: 15, width: 500, height: 345, fill: "none", stroke: "#e3e1da", rx: 8 }, svg);
+      const s = states[i];
+      blobs.forEach((p, k) => el("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 6, fill: s && s.A ? KC[s.A[k]] : "#868e96", opacity: 0.8 }, svg));
+      if (!s) return;
+      for (let k = 0; k < 3; k++) {
+        if (upto[i] > 0) el("path", { d: "M" + trail.slice(0, upto[i] + 1).map(c => `${P.X(c[k][0])} ${P.Y(c[k][1])}`).join("L"), fill: "none", stroke: KC[k], "stroke-width": 2, "stroke-dasharray": "5 4" }, svg);
+        const [cx, cy] = [P.X(s.C[k][0]), P.Y(s.C[k][1])], g = el("g", { class: "in" }, svg);
+        el("circle", { cx, cy, r: 15, fill: "#fff", stroke: KC[k], "stroke-width": 3 }, g);
+        el("path", { d: `M${cx - 7} ${cy - 7}L${cx + 7} ${cy + 7}M${cx + 7} ${cy - 7}L${cx - 7} ${cy + 7}`, stroke: KC[k], "stroke-width": 3.5 }, g);
+      }
+      if (s.A) { lab(svg, 30, 60, "Inércia", COL.ink); lab(svg, 30, 100, fmt(inertia(blobs, s.A, s.C), 1), COL.a, "start", "big"); }
+      lab(svg, 30, 160, "k = 3", COL.ink);
+      if (i >= 2) { lab(svg, 790, 60, "Iteração", COL.ink); lab(svg, 790, 100, String([0, 0, 1, 1, 2, H.length][i]), COL.a, "start", "big"); }
+    });
+  })();
+
+  // ===== Bloco 7 · agrupamento hierárquico =====
+  (function () {
+    const L = "ABCDEFG", pts = [[1, 1.2], [1.7, 1.6], [1.2, 2.4], [5, 4.2], [5.6, 3.6], [6.1, 4.6], [3.4, 5.9]];
+    const D = (a, b) => Math.sqrt(dist2(pts[a], pts[b]));
+    let cl = pts.map((_, i) => ({ m: [i], id: i, h: 0 })); const merges = [];
+    while (cl.length > 1) { let best = null;
+      for (let a = 0; a < cl.length; a++) for (let b = a + 1; b < cl.length; b++) { let s = 0; cl[a].m.forEach(i => cl[b].m.forEach(j => { s += D(i, j); })); const d = s / (cl[a].m.length * cl[b].m.length); if (!best || d < best.d) best = { a, b, d }; }
+      const nw = { m: cl[best.a].m.concat(cl[best.b].m), id: 7 + merges.length, h: best.d, l: cl[best.a], r: cl[best.b] };
+      merges.push(nw); cl = cl.filter((_, k) => k !== best.a && k !== best.b).concat(nw); }
+    const order = []; (function dfs(n) { if (n.l) { dfs(n.l); dfs(n.r); } else order.push(n.id); })(merges[merges.length - 1]);
+    const hmax = merges[merges.length - 1].h, cut = (merges[3].h + merges[4].h) / 2;
+    const cutCl = (() => { const roots = merges.slice(4).flatMap(m => [m.l, m.r]).filter(c => !merges.slice(4).includes(c)); return pts.map((_, i) => roots.findIndex(c => c.m.includes(i))); })();
+    const nm = c => c.m.map(i => L[i]).sort().join("");
+    stepper("hc", [
+      { chip: "Pontos", text: "7 observações (A–G). O agrupamento <b>hierárquico aglomerativo</b> começa com cada ponto sendo o seu próprio grupo — sem fixar k." },
+      ...merges.map((m, k) => ({ chip: `Fusão ${k + 1}`, text: `Une os dois grupos mais próximos: <b>${nm(m.l)}</b> + <b>${nm(m.r)}</b> (distância média = ${fmt(m.h)}). ${k === 0 ? "No dendrograma, a <b>altura</b> de cada junção é a distância em que ela ocorreu." : k === merges.length - 1 ? "Agora todos estão num único grupo: a árvore está completa." : ""}` })),
+      { chip: "Cortar a árvore", text: "<b>Cortando</b> o dendrograma numa altura escolhida, obtemos os grupos — aqui, <b>3 grupos</b>. Vantagem: vemos toda a estrutura de similaridade antes de decidir k." },
+    ], (svg, i) => {
+      const nM = Math.min(i, merges.length), done = merges.slice(0, nM), isCut = i === merges.length + 1;
+      const P = plot(svg, { x: 40, y: 20, w: 400, h: 330, xmin: 0, xmax: 7, ymin: 0, ymax: 7, noX: true });
+      el("rect", { x: 40, y: 20, width: 400, height: 330, fill: "none", stroke: "#e3e1da", rx: 8 }, svg);
+      const alive = done.filter(m => !done.some(o => o.l === m || o.r === m));
+      if (!isCut) alive.forEach(m => { const c = [mean(m.m.map(j => pts[j][0])), mean(m.m.map(j => pts[j][1]))], rr = Math.max(...m.m.map(j => Math.sqrt(dist2(pts[j], c)))) + 0.45;
+        el("ellipse", { cx: P.X(c[0]), cy: P.Y(c[1]), rx: P.X(rr) - P.X(0), ry: P.Y(0) - P.Y(rr), fill: m === done[done.length - 1] ? "#fff0e6" : "#e8edff", stroke: m === done[done.length - 1] ? COL.e : COL.a, "stroke-width": 2, "stroke-dasharray": "5 4", class: m === done[done.length - 1] ? "in" : null }, svg); });
+      pts.forEach((p, k) => { el("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 8, fill: isCut ? KC[cutCl[k]] : "#495057" }, svg); lab(svg, P.X(p[0]) + 12, P.Y(p[1]) - 8, L[k], COL.ink); });
+      const dx = k => 540 + order.indexOf(k) * 66, Hy = h => 320 - h / hmax * 280, pos = {};
+      pts.forEach((_, k) => { pos[k] = [dx(k), 320]; lab(svg, dx(k), 345, L[k], isCut ? KC[cutCl[k]] : COL.ink, "middle"); });
+      el("line", { x1: 520, x2: 520, y1: 30, y2: 320, stroke: "#868e96" }, svg); txt(svg, 512, 25, "altura (distância)", { class: "albl" });
+      done.forEach((m, k) => { const [x1, y1] = pos[m.l.id], [x2, y2] = pos[m.r.id], y = Hy(m.h); pos[m.id] = [(x1 + x2) / 2, y];
+        el("path", { d: `M${x1} ${y1}V${y}H${x2}V${y2}`, fill: "none", stroke: k === nM - 1 && !isCut ? COL.e : "#495057", "stroke-width": k === nM - 1 && !isCut ? 3.5 : 2.5, class: k === nM - 1 && !isCut ? "in" : null }, svg); });
+      if (isCut) { el("line", { x1: 525, x2: 975, y1: Hy(cut), y2: Hy(cut), stroke: COL.e, "stroke-width": 2.5, "stroke-dasharray": "8 5", class: "in" }, svg); lab(svg, 975, Hy(cut) - 8, "corte → 3 grupos", COL.e, "end"); }
+    });
+  })();
+
+  // ===== Bloco 7 · cuidados (figura fixa) =====
+  (function () {
+    const svg = $("cuid-svg"), r = R(61), U = Array.from({ length: 90 }, () => [9.6 * r(), 6.5 * r()]);
+    const HU = kmeans(U, [U[0], U[1], U[2]]), AU = HU[HU.length - 1].A;
+    const HB = kmeans(blobs, [[1.2, 6.2], [2.6, 0.8], [3.4, 2.0]]), AB = HB[HB.length - 1].A;
+    [[U, AU, 40, "Ruído uniforme (sem grupos reais), k = 3"], [blobs, AB, 530, "Três grupos reais, k = 3"]].forEach(([D, A, x0, t]) => {
+      const P = plot(svg, { x: x0, y: 40, w: 430, h: 215, xmin: -0.6, xmax: 10, ymin: -1, ymax: 7.8, noX: true });
+      el("rect", { x: x0, y: 40, width: 430, height: 215, fill: "none", stroke: "#e3e1da", rx: 8 }, svg);
+      txt(svg, x0, 28, t, { class: "ttl" });
+      D.forEach((p, k) => el("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 5, fill: KC[A[k]], opacity: 0.85 }, svg));
+      const s = silhouette(D, A); lab(svg, x0 + 430, 284, `Silhouette média = ${fmt(s)}`, s > 0.5 ? COL.s : COL.e, "end");
+    });
+  })();
+
+  // ===== Bloco 8 · PCA =====
+  (function () {
+    const r = R(71), n = 80, raw = Array.from({ length: n }, () => { const a = gauss(r); return [a, 0.85 * a + 0.5 * gauss(r)]; });
+    const z = k => { const v = raw.map(p => p[k]), m = mean(v), s = sd(v); return v.map(x => (x - m) / s); };
+    const z0 = z(0), z1 = z(1), D = z0.map((v, i) => [v, z1[i]]);
+    const a = sum(z0.map(v => v * v)) / (n - 1), c = sum(z1.map(v => v * v)) / (n - 1), b = sum(z0.map((v, i) => v * z1[i])) / (n - 1);
+    const l1 = (a + c) / 2 + Math.sqrt(((a - c) / 2) ** 2 + b * b), l2 = (a + c) / 2 - Math.sqrt(((a - c) / 2) ** 2 + b * b);
+    let v1 = [b, l1 - a]; const nv = Math.hypot(...v1); v1 = [v1[0] / nv, v1[1] / nv]; const v2 = [-v1[1], v1[0]];
+    const e1 = l1 / (l1 + l2), e2 = 1 - e1;
+    const scree = [38, 21, 12, 8, 6, 5, 4, 3, 2, 1];
+    stepper("pca", [
+      { chip: "Duas variáveis", text: "Duas variáveis <b>correlacionadas</b> (padronizadas), ex.: altura e envergadura. Grande parte da informação de uma já está na outra: há <b>redundância</b>." },
+      { chip: "PC1", text: "A <b>1ª componente principal (PC1)</b> é a direção de <b>maior variância</b> dos dados: o eixo que melhor “resume” a nuvem." },
+      { chip: "PC2", text: "A <b>PC2</b> é perpendicular (não correlacionada) à PC1 e captura a variância que sobrou." },
+      { chip: "Projetar", text: "Cada ponto é <b>projetado</b> na PC1: trocamos 2 números por 1 (o <b>escore</b> na componente), perdendo pouca informação." },
+      { chip: "Variância explicada", text: `A PC1 sozinha explica <b>${fmt(e1 * 100, 0)}%</b> da variância total; a PC2, ${fmt(e2 * 100, 0)}%. Com 2 variáveis o ganho é modesto…` },
+      { chip: "Dezenas de variáveis", text: "…mas com dezenas de variáveis correlacionadas (questionários, genes, sinais), poucas componentes costumam reter a maior parte da variância. Exemplo ilustrativo: <b>3 de 10 componentes ≈ 71%</b>. A <b>análise fatorial</b> segue ideia parecida, buscando fatores latentes interpretáveis." },
+    ], (svg, i) => {
+      const P = plot(svg, { x: 40, y: 15, w: 350, h: 350, xmin: -3.3, xmax: 3.3, ymin: -3.3, ymax: 3.3, noX: true });
+      el("line", { x1: P.X(-3.3), x2: P.X(3.3), y1: P.Y(0), y2: P.Y(0), stroke: "#ced4da" }, svg); el("line", { x1: P.X(0), x2: P.X(0), y1: P.Y(-3.3), y2: P.Y(3.3), stroke: "#ced4da" }, svg);
+      txt(svg, P.X(3.3), P.Y(0) - 8, "var. 1", { "text-anchor": "end", class: "albl" }); txt(svg, P.X(0) + 6, P.Y(3.3) + 14, "var. 2", { class: "albl" });
+      const fade = i === 5 ? 0.3 : 0.8;
+      if (i === 3) D.forEach(p => { const s = p[0] * v1[0] + p[1] * v1[1]; el("line", { x1: P.X(p[0]), y1: P.Y(p[1]), x2: P.X(s * v1[0]), y2: P.Y(s * v1[1]), stroke: COL.e, "stroke-width": 1.2, opacity: 0.7, class: "in" }, svg); });
+      D.forEach(p => el("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 5, fill: "#495057", opacity: fade }, svg));
+      const ax = (v, len, c, name, cls) => { const m = arrowDefs(svg, c);
+        el("line", { x1: P.X(-len * v[0]), y1: P.Y(-len * v[1]), x2: P.X(len * v[0]), y2: P.Y(len * v[1]), stroke: c, "stroke-width": 3.5, "marker-end": m, class: cls }, svg);
+        lab(svg, P.X(len * v[0]) + 8, P.Y(len * v[1]) - 6, name, c); };
+      if (i >= 1) ax(v1, 3.1, COL.a, "PC1", i === 1 ? "in" : null);
+      if (i >= 2) ax(v2, 1.3, COL.s, "PC2", i === 2 ? "in" : null);
+      if (i === 3) D.forEach(p => { const s = p[0] * v1[0] + p[1] * v1[1]; el("circle", { cx: P.X(s * v1[0]), cy: P.Y(s * v1[1]), r: 4, fill: COL.a, class: "in" }, svg); });
+      if (i === 4) { const Q = plot(svg, { x: 520, y: 40, w: 420, h: 270, xmin: 0, xmax: 2, ymin: 0, ymax: 100, yaxis: true, yt: [0, 25, 50, 75, 100], yfmt: v => v + "%", xt: [[0.5, "PC1"], [1.5, "PC2"]], yl: "variância explicada" });
+        [[e1, COL.a, 0.5], [e2, COL.s, 1.5]].forEach(([e, col, xc]) => { el("rect", { x: Q.X(xc - 0.3), y: Q.Y(e * 100), width: Q.X(0.6) - Q.X(0), height: Q.Y(0) - Q.Y(e * 100), fill: col, rx: 4, class: "in" }, svg);
+          lab(svg, Q.X(xc), Q.Y(e * 100) - 10, fmt(e * 100, 0) + "%", col, "middle", "mid"); }); }
+      if (i === 5) { const Q = plot(svg, { x: 480, y: 40, w: 470, h: 270, xmin: 0.4, xmax: 10.6, ymin: 0, ymax: 100, yaxis: true, yt: [0, 25, 50, 75, 100], yfmt: v => v + "%", xt: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], xl: "componente (exemplo ilustrativo com 10 variáveis)" });
+        let cum = 0; const cp = [];
+        scree.forEach((e, k) => { cum += e; cp.push(`${Q.X(k + 1)} ${Q.Y(cum)}`); el("rect", { x: Q.X(k + 1 - 0.32), y: Q.Y(e), width: Q.X(0.64) - Q.X(0), height: Q.Y(0) - Q.Y(e), fill: k < 3 ? COL.a : "#bac8ff", rx: 3, class: "in", style: `animation-delay:${k * 60}ms` }, svg); });
+        el("path", { d: "M" + cp.join("L"), fill: "none", stroke: COL.e, "stroke-width": 3, class: "in" }, svg);
+        lab(svg, Q.X(3) + 10, Q.Y(71) + 22, "variância acumulada: 71% com 3 componentes", COL.e); }
+    });
+  })();
+
+  // ===== Navegação das diapositivas (mesmo motor da Expo 1) =====
+  (function () {
+    const MAIN = [...document.querySelectorAll(".slide")];
+    const counter = $("hud-n"), bar = document.querySelector(".progress");
+    let idx = 0, current = null;
+    const fit = () => document.documentElement.style.setProperty("--s", Math.min(innerWidth / 1280, innerHeight / 720));
+    const animOf = s => { for (const h of s.querySelectorAll("svg, [data-anim]")) { const a = ANIMS.get(h); if (a) return a; } return null; };
+    function show(n, fromBack) {
+      n = Math.max(0, Math.min(MAIN.length - 1, n));
+      if (current) { const oa = animOf(current); if (oa) oa.stop(); current.classList.remove("active"); }
+      idx = n; current = MAIN[idx]; current.classList.add("active");
+      const a = animOf(current); if (a) a.go(fromBack ? a.n() - 1 : 0);
+      counter.textContent = `${idx + 1} / ${MAIN.length}`;
+      bar.style.width = `${(idx + 1) / MAIN.length * 100}%`;
+      history.replaceState(null, "", "#" + (idx + 1));
+    }
+    // Com animação na lâmina, as setas percorrem os passos antes de mudar de lâmina
+    function next() { const a = animOf(current); if (a && a.cur() < a.n() - 1) a.go(a.cur() + 1); else show(idx + 1); }
+    function prev() { const a = animOf(current); if (a && a.cur() > 0) a.go(a.cur() - 1); else if (idx > 0) show(idx - 1, true); }
+    document.addEventListener("keydown", e => {
+      const k = e.key;
+      if (k === "ArrowRight" || k === " " || k === "Enter") { e.preventDefault(); next(); }
+      else if (k === "ArrowLeft" || k === "Backspace") { e.preventDefault(); prev(); }
+      else if (k === "PageDown" || k === "ArrowDown") { e.preventDefault(); show(idx + 1); }
+      else if (k === "PageUp" || k === "ArrowUp") { e.preventDefault(); show(idx - 1); }
+      else if (k === "Home") show(0);
+      else if (k === "End") show(MAIN.length - 1);
+      else if (k === "f" || k === "F") { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    });
+    document.addEventListener("click", e => { const b = e.target.closest("button"); if (b) b.blur(); });
+    $("hud-prev").addEventListener("click", prev);
+    $("hud-next").addEventListener("click", next);
+    addEventListener("resize", fit);
+    fit();
+    const start = parseInt(location.hash.slice(1), 10);
+    show(Number.isFinite(start) ? start - 1 : 0);
+  })();
+</script>
+</body>
+</html>
