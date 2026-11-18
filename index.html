@@ -113,6 +113,31 @@
   .icards .card2 svg { width: 96px; height: 64px; }
   .icards .card2 b { display: block; color: var(--accent); font-size: 22px; margin-bottom: 2px; }
 
+  /* equações (sem bibliotecas) */
+  .eq { font-family: "Cambria Math", "STIX Two Math", "Times New Roman", Georgia, serif; font-size: 34px; display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; color: var(--ink); }
+  .eq sub, .eq sup { font-size: 60%; }
+  .frac { display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; line-height: 1.05; }
+  .frac > span:first-child { border-bottom: 2px solid currentColor; padding: 0 6px 2px; }
+  .frac > span:last-child { padding: 2px 6px 0; }
+  .bigop { display: inline-flex; flex-direction: column; align-items: center; line-height: .9; }
+  .bigop b { font-size: 150%; font-weight: 400; }
+  .bigop small { font-size: 45%; }
+  .eq-box { display: flex; justify-content: center; align-items: center; gap: 26px; background: var(--accent-soft); border-radius: 12px; padding: 12px 20px; margin: 6px 0 12px; flex: none; }
+  .eq-box .eq-lbl { font-size: 17px; color: var(--muted); max-width: 300px; line-height: 1.35; }
+  .card2 .eq { font-size: 30px; margin: 6px 0 2px; }
+  .arrow-lim { display: inline-flex; flex-direction: column; align-items: center; font-size: 60%; line-height: 1; }
+  .arrow-lim b { font-size: 170%; font-weight: 400; }
+
+  /* mapa final dos métodos */
+  .tbl.road { margin: 0; }
+  .tbl.road td { font-size: 16.5px; padding: 6px 10px; line-height: 1.3; }
+  .tbl.road th { font-size: 13px; padding: 4px 10px; }
+  .tbl.road td:first-child { font-weight: 700; width: 25%; }
+  .tbl.road td.pm { color: var(--accent); } .tbl.road td.np { color: var(--spk); }
+  .tbl.road td.both { color: var(--ink); text-align: center; }
+  .tbl.road td.blk { text-align: center; width: 60px; }
+  .tbl.road th.pm { color: var(--accent); } .tbl.road th.np { color: var(--spk); }
+
   /* fluxo do pesquisador */
   .flow4 { display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr 34px 1fr; align-items: stretch; gap: 6px; margin: 8px 0 12px; }
   .flow4 .arr { display: grid; place-items: center; font-size: 30px; color: var(--accent); font-weight: 700; }
@@ -193,17 +218,24 @@
   <div class="anim astack" data-step="pq" data-label="Uma reta usada para predição e para explicação"></div>
 </section>
 
-<section class="slide">
-  <header class="sh"><span class="kick">Bloco 0 · Filosofia</span><h2><span class="snum">0</span>Dois jeitos de modelar: forma rígida × forma flexível</h2></header>
-  <div class="anim astack" data-step="rig" data-label="Forma rígida e forma flexível sobre os mesmos dados"></div>
-</section>
-
 <!-- ============ BLOCO 1 · DESCRITIVA ============ -->
 <section class="slide" data-agenda="1"></section>
 
 <section class="slide">
-  <header class="sh"><span class="kick">Bloco 1 · Estatística descritiva</span><h2><span class="snum">1</span>De onde vêm as 4 famílias? Quatro perguntas a um histograma</h2></header>
-  <div class="anim astack" data-step="orig" data-label="As quatro perguntas que originam os momentos de uma distribuição"></div>
+  <header class="sh"><span class="kick">Bloco 1 · Estatística descritiva</span><h2><span class="snum">1</span>Estatística: resumir para poder interpretar</h2></header>
+  <p class="lead sm">Ninguém interpreta 400 números soltos. A estatística descritiva <b>resume</b> os dados em <b>poucos números</b> que contam a história.</p>
+  <svg id="resumo-svg" class="st fig-svg" viewBox="0 0 1000 170" role="img" aria-label="Dados brutos, histograma e quatro números-resumo" style="height:178px"></svg>
+  <div class="eq-box">
+    <span class="eq-lbl">Uma única receita gera os resumos: o <b>momento de ordem k</b></span>
+    <span class="eq">m<sub>k</sub> = <span class="frac"><span>1</span><span>n</span></span><span class="bigop"><small>n</small><b>Σ</b><small>i = 1</small></span>(x<sub>i</sub> − x̄)<sup>k</sup></span>
+    <span class="eq-lbl">quanto maior k, mais peso aos valores <b>longe</b> do centro</span>
+  </div>
+  <div class="cards c4 sm" style="margin:0">
+    <div class="card2"><b>k = 1 · centro</b>O 1º momento é a própria <b>média</b> x̄ (o ponto de equilíbrio).</div>
+    <div class="card2"><b>k = 2 · dispersão</b>A <b>variância</b>; sua raiz é o desvio padrão.</div>
+    <div class="card2"><b>k = 3 · assimetria</b>O cubo mantém o sinal: a cauda mais longa “vence”.</div>
+    <div class="card2"><b>k = 4 · curtose</b>A 4ª potência amplifica os valores extremos.</div>
+  </div>
 </section>
 
 <section class="slide">
@@ -237,11 +269,6 @@
 <section class="slide">
   <header class="sh"><span class="kick">Bloco 1 · Assimetria e forma</span><h2><span class="snum">1</span>Além do centro e da dispersão: assimetria e curtose</h2></header>
   <div class="anim astack" data-step="forma" data-label="Assimetria e curtose"></div>
-</section>
-
-<section class="slide">
-  <header class="sh"><span class="kick">Bloco 1 · Tipos de modelos</span><h2><span class="snum">1</span>Paramétrico × não-paramétrico, agora com nome</h2></header>
-  <div class="anim astack" data-step="par" data-label="Modelo paramétrico e não-paramétrico sobre os mesmos dados"></div>
 </section>
 
 <!-- ============ BLOCO 2 · PROBABILIDADE ============ -->
@@ -278,9 +305,12 @@
   <div class="split" style="grid-template-columns: 430px 1fr">
     <svg id="galton-svg" class="st fig-svg" viewBox="0 0 460 400" role="img" aria-label="Tábua de Galton" style="height:440px"></svg>
     <div class="col">
-      <div class="card2"><b>A ideia</b>Cada bolinha soma muitos pequenos desvios aleatórios (esquerda ou direita). O acúmulo de muitas pequenas causas independentes forma um <b>sino</b>.</div>
-      <div class="card2"><b>O que o TCL diz</b>A <b>média</b> (ou a soma) de muitas observações independentes tem distribuição aproximadamente <b>Normal</b> — qualquer que seja a forma dos dados originais.</div>
-      <div class="card2 ok"><b>Por que importa</b>Permite construir intervalos de confiança e testes para médias <b>sem conhecer</b> a distribuição dos dados — e explica por que erros de medida costumam ser Normais.<small>Condições: observações independentes, variância finita e n “grande” (≈ 30 é regra de bolso; dados muito assimétricos pedem mais).</small></div>
+      <div class="card2"><b>A ideia</b>Muitas pequenas causas independentes, somadas, formam um <b>sino</b>.</div>
+      <div class="card2"><b>O teorema</b>
+        <div class="eq"><span class="frac"><span>X̄<sub>n</sub> − μ</span><span>σ / √n</span></span><span class="arrow-lim"><b>⟶</b>n → ∞</span>N(0, 1)</div>
+        <svg id="tclmini-svg" class="st" viewBox="0 0 560 96" role="img" aria-label="Formas diferentes convergindo para o sino" style="width:100%;height:96px;display:block"></svg>
+        <small>Qualquer forma de partida (com variância finita): com n grande, a <b>média</b> vira Normal.</small></div>
+      <div class="card2 ok"><b>Por que importa</b>Testes e intervalos para <b>médias</b> funcionam sem conhecer a forma dos dados.<small>Regra de bolso: n ≈ 30 (dados muito assimétricos pedem mais).</small></div>
     </div>
   </div>
 </section>
@@ -290,12 +320,44 @@
   <div class="anim astack" data-step="tcl" data-label="Distribuição da média de n dados convergindo para a Normal"></div>
 </section>
 
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 2 · Além da Normal</span><h2><span class="snum">2</span>E quando os dados não seguem uma Normal?</h2></header>
+  <p class="lead sm">O TCL protege as <b>médias</b> quando n é grande. Mas com <b>n pequeno</b>, ou quando a forma dos próprios dados importa, supor um sino pode enganar:</p>
+  <svg id="nn-svg" class="st fig-svg" viewBox="0 0 1000 250" role="img" aria-label="Amostra pequena, dados assimétricos e dados com dois montes contra uma Normal" style="height:262px"></svg>
+  <div class="cards c2 sm" style="margin-bottom:0">
+    <div class="card2"><b>Paramétrico</b>Supõe uma forma conhecida (ex.: Normal), descrita por <b>poucos parâmetros</b> (μ, σ). Forma rígida e <b>global</b>.<small>ex.: teste t, ANOVA, Pearson, regressão linear</small></div>
+    <div class="card2 ok"><b>Não-paramétrico</b>Não impõe forma: usa a <b>ordem</b> dos dados (postos) ou deixa os dados desenharem a curva (<b>kernels</b>, visão <b>local</b>).<small>ex.: Mann-Whitney, Kruskal-Wallis, Spearman, KDE</small></div>
+  </div>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 2 · Além da Normal</span><h2><span class="snum">2</span>Kernels: do modelo global ao local</h2></header>
+  <div class="anim astack" data-step="par" data-label="Modelo paramétrico global e estimativa de densidade por kernels"></div>
+</section>
+
 <!-- ============ BLOCO 3 · DISTRIBUIÇÕES ============ -->
 <section class="slide" data-agenda="3"></section>
 
 <section class="slide">
   <header class="sh"><span class="kick">Bloco 3 · Distribuições da inferência</span><h2><span class="snum">3</span>As quatro distribuições que sustentam os testes</h2></header>
   <div class="anim astack" data-step="dist" data-label="Distribuições Z, t, qui-quadrado e F"></div>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 3 · Distribuições da inferência</span><h2><span class="snum">3</span>Cada distribuição tem um “trabalho”</h2></header>
+  <p class="lead sm">Cada uma descreve como um <b>resumo dos dados</b> varia de amostra para amostra. Saber <b>qual resumo</b> ela descreve ajuda a reconhecê-la nos testes:</p>
+  <div class="grow">
+    <div class="cards c4 pc map" style="width:100%">
+      <div class="card2"><svg data-pict="dz" viewBox="0 0 200 90"></svg><b>Z · Normal</b>Médias com n grande e <b>proporções</b>.<span class="tag">IC · teste de proporção</span></div>
+      <div class="card2"><svg data-pict="dt" viewBox="0 0 200 90"></svg><b>t de Student</b><b style="display:inline;color:inherit;font-size:inherit">Médias</b> quando σ é estimado pela amostra.<span class="tag">teste t · IC · regressão</span></div>
+      <div class="card2"><svg data-pict="dchi" viewBox="0 0 200 90"></svg><b>χ² · qui-quadrado</b><b style="display:inline;color:inherit;font-size:inherit">Contagens</b> em tabelas e <b style="display:inline;color:inherit;font-size:inherit">variâncias</b>.<span class="tag">independência · ajuste</span></div>
+      <div class="card2"><svg data-pict="df" viewBox="0 0 200 90"></svg><b>F de Fisher</b><b style="display:inline;color:inherit;font-size:inherit">Razão de variâncias</b>: entre ÷ dentro.<span class="tag">ANOVA · regressão</span></div>
+    </div>
+    <table class="tbl tests" style="width:100%;margin:0">
+      <tr><th>O que quero resumir?</th><th>Tendência (médias)</th><th>Dispersão (variâncias)</th><th>Proporções e contagens</th></tr>
+      <tr><td>Distribuição que aparece</td><td class="pm">Z · t</td><td class="pm">χ² · F</td><td class="pm">Z · χ²</td></tr>
+    </table>
+  </div>
 </section>
 
 <section class="slide">
@@ -334,6 +396,17 @@
 </section>
 
 <section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · Erros e poder</span><h2><span class="snum">4</span>Dois jeitos de errar: erro tipo I (α), tipo II (β) e poder</h2></header>
+  <div class="anim astack" data-step="poder" data-label="Erros tipo I e II e poder estatístico"></div>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 4 · Tamanho de efeito</span><h2><span class="snum">4</span>Significância estatística ≠ relevância científica</h2></header>
+  <div class="anim astack" data-step="efe" data-label="Tamanho de efeito d de Cohen e dois estudos"></div>
+  <p class="vide"><b>Vide</b> J. Cohen. <i>Statistical Power Analysis for the Behavioral Sciences.</i> 2ª ed., 1988.</p>
+</section>
+
+<section class="slide">
   <header class="sh"><span class="kick">Bloco 4 · p-valor</span><h2><span class="snum">4</span>O que o p-valor realmente diz (e o que não diz)</h2></header>
   <table class="tbl myth">
     <tr><th class="yes">✓ O p-valor é…</th><th class="no">✗ O p-valor não é…</th></tr>
@@ -359,11 +432,11 @@
 </section>
 
 <section class="slide">
-  <header class="sh"><span class="kick">Bloco 5 · Antes de escolher o teste</span><h2><span class="snum">5</span>Checando normalidade e resíduos na prática</h2></header>
-  <svg id="qq-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Gráficos Q-Q e de resíduos" style="height:290px"></svg>
+  <header class="sh"><span class="kick">Bloco 5 · Antes de escolher o teste</span><h2><span class="snum">5</span>Checando a normalidade na prática</h2></header>
+  <svg id="qq-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Histogramas e gráficos Q-Q de dados Normais e assimétricos" style="height:290px"></svg>
   <div class="cards c3 sm" style="margin-bottom:0">
-    <div class="card2 ok"><b>Olhe os gráficos</b>Histograma e <b>gráfico Q-Q</b>: se os pontos seguem a reta, os dados são ≈ Normais. Curvas nas pontas = assimetria ou caudas pesadas.</div>
-    <div class="card2 ok"><b>Resíduos sem padrão</b>Em modelos (regressão, ANOVA), os resíduos devem formar uma nuvem sem forma: nada de curvas nem “funis”.</div>
+    <div class="card2 ok"><b>Olhe o histograma</b>Forma de sino, sem cauda longa nem dois montes? Bom sinal.</div>
+    <div class="card2 ok"><b>Gráfico Q-Q</b>Compara os dados ordenados com o que a Normal preveria: pontos sobre a reta → ≈ Normal; curva nas pontas → assimetria ou caudas pesadas.</div>
     <div class="card2 warn"><b>Shapiro-Wilk não basta</b>Com n pequeno, quase nunca rejeita (pouco poder); com n grande, rejeita desvios irrelevantes — e aí o TCL já protege os testes de médias.</div>
   </div>
 </section>
@@ -386,6 +459,20 @@
 <section class="slide">
   <header class="sh"><span class="kick">Bloco 5 · Teste de comparação</span><h2><span class="snum">5</span><i>Post-hoc</i>: afinal, quais grupos diferem?</h2></header>
   <div class="anim astack" data-step="ph" data-label="Comparações post-hoc entre pares de grupos"></div>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 5 · Desenho de experimentos</span><h2><span class="snum">5</span>E se houver mais fatores, mais respostas ou medidas repetidas?</h2></header>
+  <p class="lead sm">Até aqui: <b>um</b> fator (o grupo) e <b>uma</b> resposta. Pesquisas reais costumam ter mais — e cada desenho tem o seu método:</p>
+  <div class="grow">
+    <div class="cards c4 pc map" style="width:100%">
+      <div class="card2"><svg data-pict="d1" viewBox="0 0 200 90"></svg><b>1 fator · 1 resposta</b>Três dietas → peso.<br>ANOVA ↔ Kruskal-Wallis<span class="tag">já vimos</span></div>
+      <div class="card2"><svg data-pict="dfat" viewBox="0 0 200 90"></svg><b>2+ fatores</b>Fertilizante <b>×</b> irrigação → produtividade.<br>ANOVA fatorial<span class="tag">próxima lâmina</span></div>
+      <div class="card2"><svg data-pict="dman" viewBox="0 0 200 90"></svg><b>2+ respostas</b>Grupo → memória <b>e</b> atenção.<br>MANOVA (multivariada)<span class="tag">em 2 lâminas</span></div>
+      <div class="card2"><svg data-pict="dfri" viewBox="0 0 200 90"></svg><b>Mesmas pessoas, 3+ condições</b>Antes, 1 mês, 6 meses.<br>ANOVA de medidas repetidas ↔ Friedman</div>
+    </div>
+    <div class="note" style="width:100%;margin:0"><b>Friedman</b>, o gêmeo não-paramétrico: ordena as condições <b>dentro de cada pessoa</b> (postos 1, 2, 3). H₀: as condições têm a mesma distribuição (postos médios iguais).</div>
+  </div>
 </section>
 
 <section class="slide">
@@ -427,7 +514,7 @@
       <div class="card2"><svg data-pict="ppbis" viewBox="0 0 200 90"></svg><b>Ponto-bisserial (r<sub>pb</sub>)</b>Dicotômica (0/1) × numérica.</div>
       <div class="card2"><svg data-pict="pphi" viewBox="0 0 200 90"></svg><b>Coeficiente φ (phi)</b>Dicotômica × dicotômica (tabela 2 × 2).</div>
     </div>
-    <div class="note" style="width:100%;margin:0">Mesmo sujeito medido várias vezes? Use a <b>correlação de medidas repetidas</b> (<i>rmcorr</i>) — veremos em duas lâminas.</div>
+    <div class="note" style="width:100%;margin:0">Mesmo sujeito medido várias vezes? Use a <b>correlação de medidas repetidas</b> (<i>rmcorr</i>) — veremos depois da regressão.</div>
   </div>
 </section>
 
@@ -442,17 +529,11 @@
 </section>
 
 <section class="slide">
-  <header class="sh"><span class="kick">Bloco 6 · Correlação</span><h2><span class="snum">6</span>Dados pareados: correlação de medidas repetidas</h2></header>
-  <div class="anim astack" data-step="rm" data-label="Correlação global e correlação dentro de cada sujeito"></div>
-  <p class="vide"><b>Vide</b> J. Z. Bakdash, L. R. Marusich. <i>Repeated Measures Correlation.</i> Frontiers in Psychology 8, 2017.</p>
-</section>
-
-<section class="slide">
   <header class="sh"><span class="kick">Bloco 6 · Sempre visualize</span><h2><span class="snum">6</span>Quarteto de Anscombe e a regra de ouro</h2></header>
   <svg id="ans-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Quarteto de Anscombe" style="height:300px"></svg>
   <div class="cards c2 sm" style="margin-bottom:0">
     <div class="card2"><b>Mesmos números, dados diferentes</b>Nos 4 conjuntos: média de x = 9, média de y ≈ 7,50, r ≈ 0,82 e a mesma reta y ≈ 3 + 0,5x. Só o gráfico revela a diferença.</div>
-    <div class="card2 warn"><b>Correlação ≠ causalidade</b>Sorvete e afogamentos sobem juntos… porque ambos dependem do <b>calor</b> (variável de confusão). Numa regressão, incluir o confusor como covariável (y = β₀ + β₁x₁ + β₂x₂ + …) permite <b>ajustar</b> por ele.</div>
+    <div class="card2 warn"><b>Correlação ≠ causalidade</b>Sorvete e afogamentos sobem juntos… porque ambos dependem do <b>calor</b> (variável de confusão). Na regressão veremos como <b>ajustar</b> por ela.</div>
   </div>
   <p class="vide"><b>Vide</b> F. J. Anscombe. <i>Graphs in Statistical Analysis.</i> The American Statistician 27(1), 1973.</p>
 </section>
@@ -475,6 +556,12 @@
 <section class="slide">
   <header class="sh"><span class="kick">Bloco 6 · Predição (regressão)</span><h2><span class="snum">6</span>Regressão não linear: prever ŷ com intervalo de confiança</h2></header>
   <div class="anim astack" data-step="reg" data-label="Regressão não linear e predição para um novo x"></div>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 6 · Correlação + regressão</span><h2><span class="snum">6</span>Dados pareados: correlação de medidas repetidas</h2></header>
+  <div class="anim astack" data-step="rm" data-label="Correlação global e correlação dentro de cada sujeito"></div>
+  <p class="vide"><b>Vide</b> J. Z. Bakdash, L. R. Marusich. <i>Repeated Measures Correlation.</i> Frontiers in Psychology 8, 2017.</p>
 </section>
 
 <section class="slide">
@@ -544,49 +631,54 @@
 <section class="slide" data-agenda="8"></section>
 
 <section class="slide">
-  <header class="sh"><span class="kick">Bloco 8 · Fatoração</span><h2><span class="snum">8</span>PCA: resumir muitas variáveis em poucos componentes</h2></header>
+  <header class="sh"><span class="kick">Bloco 8 · Variáveis latentes</span><h2><span class="snum">8</span>O que está por trás das medidas?</h2></header>
+  <p class="lead sm">Muitas coisas que queremos estudar <b>não se medem diretamente</b> (ansiedade, inteligência, timbre). Medimos suas “sombras”: vários itens observados.</p>
+  <svg id="lat-svg" class="st fig-svg" viewBox="0 0 1000 300" role="img" aria-label="Analogia da sombra e projeção num espaço latente" style="height:318px"></svg>
+  <div class="cards c2 sm" style="margin-bottom:0">
+    <div class="card2"><b>Fatorar = achar as dimensões escondidas</b>Muitas variáveis correlacionadas costumam refletir <b>poucas</b> dimensões latentes. Projetamos os dados nelas.</div>
+    <div class="card2 ok"><b>Dois caminhos</b><b style="display:inline;color:inherit;font-size:inherit">PCA</b> procura a sombra mais informativa (resumir). <b style="display:inline;color:inherit;font-size:inherit">Análise fatorial</b> modela a causa escondida (explicar).</div>
+  </div>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 8 · Variáveis latentes</span><h2><span class="snum">8</span>PCA × análise fatorial: resumir ou explicar?</h2></header>
+  <svg id="af-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Diagramas de PCA e de análise fatorial" style="height:300px"></svg>
+  <div class="cards c2 sm" style="margin-bottom:0">
+    <div class="card2"><b>PCA · resumir</b>A componente é uma <b>combinação</b> das variáveis observadas (setas saem das variáveis). Resume a variância <b>total</b>, sem modelo de erro.</div>
+    <div class="card2 ok"><b>Análise fatorial · explicar</b>Um <b>construto latente</b> <b>causa</b> as respostas (setas saem do fator); cada item tem seu erro próprio. Modela só a variância <b>comum</b>.</div>
+  </div>
+  <p class="vide">São métodos <b>independentes</b>, para perguntas diferentes: não é preciso fazer PCA antes da análise fatorial. Veremos um de cada vez.</p>
+</section>
+
+<section class="slide">
+  <header class="sh"><span class="kick">Bloco 8 · PCA</span><h2><span class="snum">8</span>PCA: resumir muitas variáveis em poucos componentes</h2></header>
   <div class="anim astack" data-step="pca" data-label="Análise de componentes principais passo a passo"></div>
   <p class="vide"><b>Vide</b> K. Pearson. <i>On Lines and Planes of Closest Fit to Systems of Points in Space.</i> Philosophical Magazine 2(11), 1901.</p>
 </section>
 
 <section class="slide">
-  <header class="sh"><span class="kick">Bloco 8 · Fatoração</span><h2><span class="snum">8</span>Análise fatorial: modelar construtos latentes (não é PCA!)</h2></header>
-  <svg id="af-svg" class="st fig-svg" viewBox="0 0 1000 270" role="img" aria-label="Diagramas de PCA e de análise fatorial" style="height:300px"></svg>
-  <div class="cards c2 sm" style="margin-bottom:0">
-    <div class="card2"><b>PCA · resumir</b>A componente é uma <b>combinação</b> das variáveis observadas (setas saem das variáveis). Resume a variância <b>total</b>, sem modelo de erro.</div>
-    <div class="card2 ok"><b>Análise fatorial · explicar</b>Um <b>construto latente</b> (ansiedade, inteligência, satisfação) <b>causa</b> as respostas (setas saem do fator); cada item tem seu erro próprio. Modela só a variância <b>comum</b>.</div>
-  </div>
-  <p class="vide">Na prática, a PCA costuma ser usada como aproximação ou ponto de partida, mas só a análise fatorial é um <b>modelo</b> de construtos latentes.</p>
-</section>
-
-<section class="slide">
-  <header class="sh"><span class="kick">Bloco 8 · Fatoração</span><h2><span class="snum">8</span>Técnicas da análise fatorial e suas hipóteses</h2></header>
-  <table class="tbl af">
-    <tr><th>Etapa / técnica</th><th>Tipo</th><th>Pergunta ou hipótese</th></tr>
-    <tr><td><b>Teste de esfericidade de Bartlett</b></td><td class="pm">paramétrico</td><td>H₀: as variáveis não são correlacionadas (matriz identidade) → não há o que fatorar.</td></tr>
-    <tr><td><b>KMO</b> (Kaiser-Meyer-Olkin)</td><td>índice descritivo</td><td>As correlações são adequadas para fatorar? (KMO ≥ 0,6 é aceitável.)</td></tr>
-    <tr><td><b>AFE por máxima verossimilhança</b></td><td class="pm">paramétrico (normal multivariada)</td><td>H₀: k fatores bastam para reproduzir as correlações (teste χ²).</td></tr>
-    <tr><td><b>AFE por eixos principais / mínimos resíduos</b></td><td class="np">sem supor distribuição</td><td>Quantos fatores? Decidido por <i>scree plot</i> e análise paralela.</td></tr>
-    <tr><td><b>AF com correlações policóricas</b></td><td class="np">para itens ordinais (Likert)</td><td>Mesmas perguntas, sem tratar a escala ordinal como contínua.</td></tr>
-    <tr><td><b>Análise fatorial confirmatória (AFC)</b></td><td class="pm">paramétrico</td><td>H₀: o modelo teórico reproduz as covariâncias (χ², CFI, RMSEA).</td></tr>
-  </table>
+  <header class="sh"><span class="kick">Bloco 8 · Análise fatorial</span><h2><span class="snum">8</span>Análise fatorial: o que se busca e quais hipóteses</h2></header>
+  <div class="anim astack" data-step="afx" data-label="Análise fatorial com matriz de correlações, teste de Bartlett e cargas"></div>
   <p class="vide"><b>Vide</b> L. R. Fabrigar et al. <i>Evaluating the use of exploratory factor analysis in psychological research.</i> Psychological Methods 4(3), 1999.</p>
 </section>
 
 <section class="slide">
-  <header class="sh"><span class="kick">Bloco 8 · Síntese</span><h2><span class="snum">8</span>O fluxo completo do pesquisador</h2></header>
-  <div class="grow">
-    <div class="flow4" style="width:100%">
-      <div class="card2"><span class="stp">1</span><b>Pergunta</b>Explicação ou predição? Comparar, associar, classificar, agrupar ou resumir?<small>Defina H₀, o desenho e a análise <b>antes</b> de ver os dados.</small></div>
-      <div class="arr">→</div>
-      <div class="card2"><span class="stp">2</span><b>Exploração</b>As 4 famílias: tendência, dispersão, assimetria e forma.<small>Gráficos sempre (lembre de Anscombe).</small></div>
-      <div class="arr">→</div>
-      <div class="card2"><span class="stp">3</span><b>Modelo / teste</b>Tipo de dado, nº de grupos, independente × pareado.<small>Verifique os pressupostos (Q-Q, resíduos).</small></div>
-      <div class="arr">→</div>
-      <div class="card2"><span class="stp">4</span><b>Avaliação com incerteza</b>Estimativa + IC 95% + p-valor.<small>Interprete no contexto científico.</small></div>
-    </div>
-    <div class="note" style="width:100%;margin:0">Estatística não é um ritual de “p &lt; 0,05”: é a <b>linguagem da incerteza</b> da ciência.</div>
-  </div>
+  <header class="sh"><span class="kick">Síntese</span><h2>Mapa dos métodos: o que vimos na parte aplicada</h2></header>
+  <table class="tbl road">
+    <tr><th>Pergunta</th><th class="pm">Paramétrico</th><th class="np">Não-paramétrico</th><th>Bloco</th></tr>
+    <tr><td>Lógica de todo teste</td><td class="both" colspan="2">H₀ · p-valor · erros α e β · poder · tamanho de efeito · IC 95%</td><td class="blk"><span class="tag">4</span></td></tr>
+    <tr><td>Os dados seguem a distribuição suposta?</td><td class="both" colspan="2">Kolmogorov-Smirnov · Shapiro-Wilk · gráfico Q-Q</td><td class="blk"><span class="tag">5</span></td></tr>
+    <tr><td>Comparar 2 grupos</td><td class="pm">t de Student · t pareado</td><td class="np">Mann-Whitney · Wilcoxon</td><td class="blk"><span class="tag">5</span></td></tr>
+    <tr><td>Comparar 3+ grupos</td><td class="pm">ANOVA · medidas repetidas → Tukey</td><td class="np">Kruskal-Wallis · Friedman → Dunn</td><td class="blk"><span class="tag">5</span></td></tr>
+    <tr><td>Mais fatores ou mais respostas</td><td class="pm">ANOVA fatorial · MANOVA</td><td class="np">ANOVA por postos alinhados (ART) · PERMANOVA</td><td class="blk"><span class="tag">5</span></td></tr>
+    <tr><td>Duas categorias estão associadas?</td><td class="both" colspan="2">Qui-quadrado (amostras grandes) · Exato de Fisher (pequenas)</td><td class="blk"><span class="tag">5</span></td></tr>
+    <tr><td>Duas variáveis andam juntas?</td><td class="pm">Pearson · ponto-bisserial · φ · rmcorr</td><td class="np">Spearman · Kendall</td><td class="blk"><span class="tag">6</span></td></tr>
+    <tr><td>Prever um valor (regressão)</td><td class="pm">linear · polinomial · GLM</td><td class="np">LOESS · <i>splines</i> · KNN · <i>random forest</i></td><td class="blk"><span class="tag">6</span></td></tr>
+    <tr><td>Prever uma classe</td><td class="pm">logística · LDA · <i>Naive Bayes</i></td><td class="np">KNN · árvores · SVM com <i>kernel</i></td><td class="blk"><span class="tag">6</span></td></tr>
+    <tr><td>Existem grupos sem rótulo?</td><td class="pm">misturas gaussianas (GMM)</td><td class="np">K-Means · hierárquico · DBSCAN</td><td class="blk"><span class="tag">7</span></td></tr>
+    <tr><td>Poucas dimensões latentes?</td><td class="pm">análise fatorial (AFE · AFC)</td><td class="np">PCA (sem supor distribuição)</td><td class="blk"><span class="tag">8</span></td></tr>
+  </table>
+  <p class="vide">Escolha guiada por três perguntas: <b>qual é a pergunta?</b> · <b>que tipo de dado?</b> · <b>como foi coletado</b> (independente ou pareado)?</p>
 </section>
 
 <section class="slide">
@@ -616,7 +708,7 @@
   <h1>Obrigado!</h1>
   <p class="t-sub">Perguntas?</p>
   <p class="t-ref">L. Breiman. <i>Statistical Modeling: The Two Cultures.</i> Statistical Science, 2001.</p>
-  <p class="t-ref">R. L. Wasserstein, N. A. Lazar. <i>The ASA Statement on p-Values.</i> The American Statistician, 2016.</p>
+  <p class="t-ref">R. L. Wasserstein, N. A. Lazar. <i>The ASA Statement on p-Values.</i> The American Statistician, 2016 · J. Cohen. <i>Statistical Power Analysis for the Behavioral Sciences.</i> 1988.</p>
   <p class="t-ref">F. J. Anscombe. <i>Graphs in Statistical Analysis.</i> 1973 · J. Z. Bakdash, L. R. Marusich. <i>Repeated Measures Correlation.</i> 2017.</p>
 </section>
 
@@ -637,6 +729,21 @@
   const clear = n => { while (n.firstChild) n.removeChild(n.firstChild); };
   const fmt = (v, d = 2) => v.toFixed(d).replace("-", "−").replace(".", ",");
   const pfmt = p => p < 0.001 ? "p < 0,001" : "p ≈ " + fmt(p, 3);
+  const pnum = p => p < 0.001 ? "< 0,001" : fmt(p, 3);
+  const mdIqr = a => `${fmt(median(a), 1)} [${fmt(quant(a, 0.25), 1)}; ${fmt(quant(a, 0.75), 1)}]`;
+  const mSd = a => `${fmt(mean(a), 1)} ± ${fmt(sd(a), 1)}`;
+  // tabela no estilo de artigo: rows = [[rótulo, cor, ...células]], cols = posições x (última alinhada à direita)
+  function paperTable(svg, title, cols, blocks, foot) {
+    const RX = cols[cols.length - 1]; lab(svg, cols[0], 26, title, COL.ink); let y = 44;
+    hline(svg, cols[0], RX, y, COL.ink, { "stroke-width": 2 });
+    blocks.forEach(({ head, rows }, b) => { y += 26; head.forEach((h, k) => txt(svg, k === cols.length - 1 ? RX : cols[k], y, h, { class: "lbl", fill: COL.m, "text-anchor": k === cols.length - 1 ? "end" : "start" }));
+      y += 10; hline(svg, cols[0], RX, y, "#adb5bd", { "stroke-width": 1 });
+      rows.forEach(([lbl, c, ...cells], r) => { y += 30; const g = el("g", { class: "in", style: `animation-delay:${(b * 2 + r) * 120}ms` }, svg);
+        lab(g, cols[0], y, lbl, c); cells.forEach((v, k) => txt(g, k + 1 === cols.length - 1 ? RX : cols[k + 1], y, v, { class: "lg", "text-anchor": k + 1 === cols.length - 1 ? "end" : "start" })); });
+      y += 12; hline(svg, cols[0], RX, y, b === blocks.length - 1 ? COL.ink : "#adb5bd", { "stroke-width": b === blocks.length - 1 ? 2 : 1 }); });
+    (foot || []).forEach((f, k) => txt(svg, cols[0], y + 30 + k * 24, f, { class: "sm", style: "font-size:15px" }));
+    return y;
+  }
   const COL = { a: "#0b95d6", e: "#e8590c", s: "#2b8a3e", g: "#d08c00", p: "#ae3ec9", k: "#868e96", ink: "#1d1d1f", m: "#5f6368" };
   const AS = "#e3f4fc", AL = "#a5dcf5", ES = "#fff0e6", SS = "#e6f6ea", GS = "#fff4d6";
   const KC = [COL.a, COL.e, COL.s, COL.p, COL.g];
@@ -762,8 +869,8 @@
 
   // ===== Agenda (gerada para cada bloco) =====
   block("agenda", () => {
-    const B = ["Filosofia: explicação × predição", "Estatística descritiva", "Probabilidade, LGN e TCL", "Distribuições e mapa das perguntas",
-      "Hipótese nula, p-valor e intervalo de confiança", "Testes de comparação e de independência", "Correlação, predição (regressão) e classificação", "Agrupamento (<i>clustering</i>)", "Fatoração (PCA e análise fatorial) e síntese"];
+    const B = ["Filosofia: explicação × predição", "Estatística descritiva", "Probabilidade, LGN, TCL e além da Normal", "Distribuições e mapa das perguntas",
+      "Hipótese nula, p-valor, erros, tamanho de efeito e IC", "Testes de comparação e de independência", "Correlação, predição (regressão) e classificação", "Agrupamento (<i>clustering</i>)", "Variáveis latentes (PCA e análise fatorial) e síntese"];
     const items = now => B.map((b, i) => (i === 0 || i === 4 ? `<li class="part${now > i ? " done" : ""}">${i === 0 ? "Fundamentos conceituais" : "Estatística aplicada à pesquisa"}</li>` : "")
       + `<li${now == null ? "" : i < now ? ' class="done"' : i === now ? ' class="now"' : ""}${i === 0 || i === 4 ? ` value="${i}"` : ""}><b>${b}</b></li>`).join("");
     $("agenda-full").innerHTML = items(null);
@@ -824,6 +931,22 @@
       [1, 2, 3, 4, 5].forEach((k, j) => txt(s, 30 + j * 34, 12, String(k) + "º", { style: "font-size:11px", fill: COL.m })); },
     ppbis(s) { const r = R(16); [[60, 58], [140, 32]].forEach(([x, m], k) => { for (let i = 0; i < 9; i++) el("circle", { cx: x + 22 * (r() - 0.5), cy: m + 26 * (r() - 0.5), r: 3.8, fill: KC[k] }, s); hline(s, x - 18, x + 18, m, COL.ink, { "stroke-width": 2.5 }); });
       el("line", { x1: 60, y1: 58, x2: 140, y2: 32, stroke: COL.ink, "stroke-width": 1.5, "stroke-dasharray": "4 3" }, s); txt(s, 60, 88, "0", { "text-anchor": "middle", style: "font-size:12px" }); txt(s, 140, 88, "1", { "text-anchor": "middle", style: "font-size:12px" }); },
+    dz(s) { const P = { X: x => 100 + x * 26, Y: y => 84 - y * 165, o: { ymin: 0, ymax: 9 } };
+      area(s, P, npdf, -1.96, 1.96, { fill: COL.a, opacity: 0.18 }, 50); curve(s, P, npdf, -3.6, 3.6, { stroke: COL.a, "stroke-width": 2.5 }, 60); },
+    dt(s) { const P = { X: x => 100 + x * 26, Y: y => 84 - y * 165, o: { ymin: 0, ymax: 9 } };
+      curve(s, P, npdf, -3.6, 3.6, { stroke: COL.k, "stroke-width": 1.8, "stroke-dasharray": "4 3" }, 60); curve(s, P, x => tpdf(x, 2), -3.6, 3.6, { stroke: COL.a, "stroke-width": 2.5 }, 60); },
+    dchi(s) { const P = { X: x => 12 + x * 15, Y: y => 84 - y * 280, o: { ymin: 0, ymax: 9 } };
+      [[3, COL.a], [6, AL]].forEach(([k, c]) => curve(s, P, x => chipdf(x, k), 0.05, 11.5, { stroke: c, "stroke-width": 2.5 }, 80)); },
+    df(s) { const P = { X: x => 12 + x * 44, Y: y => 84 - y * 95, o: { ymin: 0, ymax: 9 } };
+      [[5, 20, COL.a], [2, 10, AL]].forEach(([a, b, c]) => curve(s, P, x => fpdf(x, a, b), 0.03, 4, { stroke: c, "stroke-width": 2.5 }, 80)); },
+    d1(s) { PICT.comp(s); },
+    dfat(s) { [[64, 56, COL.a], [60, 14, COL.e]].forEach(([y1, y2, c]) => { el("line", { x1: 40, x2: 160, y1, y2, stroke: c, "stroke-width": 3 }, s);
+      el("circle", { cx: 40, cy: y1, r: 5, fill: c }, s); el("circle", { cx: 160, cy: y2, r: 5, fill: c }, s); });
+      txt(s, 40, 86, "baixa", { "text-anchor": "middle", style: "font-size:11px" }); txt(s, 160, 86, "alta", { "text-anchor": "middle", style: "font-size:11px" }); },
+    dman(s) { const r = R(23); [[60, 60], [100, 45], [140, 30]].forEach(([cx, cy], k) => { el("ellipse", { cx, cy, rx: 30, ry: 11, transform: `rotate(-30 ${cx} ${cy})`, fill: "none", stroke: KC[k], "stroke-width": 1.8 }, s);
+      for (let i = 0; i < 6; i++) { const u = (r() - 0.5) * 40, v = (r() - 0.5) * 10; el("circle", { cx: cx + u * 0.87 + v * 0.5, cy: cy - u * 0.5 + v * 0.87, r: 3, fill: KC[k] }, s); } }); },
+    dfri(s) { const r = R(29); for (let k = 0; k < 5; k++) { const b = 12 + k * 10, ys = [b + 30, b + 15 + 6 * r(), b + 4 * r()];
+      el("path", { d: `M40 ${ys[0]}L100 ${ys[1]}L160 ${ys[2]}`, fill: "none", stroke: KC[k], "stroke-width": 1.8 }, s); [40, 100, 160].forEach((x, j) => el("circle", { cx: x, cy: ys[j], r: 3.2, fill: KC[k] }, s)); } },
     pphi(s) { [[0, 0, 30], [1, 0, 20], [0, 1, 18], [1, 1, 32]].forEach(([c, r2, v]) => { const sz = 12 + v * 0.9, cx = 75 + c * 50, cy = 24 + r2 * 42;
       el("rect", { x: cx - sz / 2, y: cy - sz / 2, width: sz, height: sz, rx: 3, fill: c === r2 ? COL.a : AL }, s); txt(s, cx, cy + 5, String(v), { "text-anchor": "middle", fill: c === r2 ? "#fff" : COL.ink, style: "font-size:12px;font-weight:700" }); }); },
   };
@@ -856,53 +979,24 @@
     });
   });
 
-  // ===== Bloco 0 · forma rígida × flexível =====
+  // ===== Dados com dois montes (usados no Bloco 2) =====
   const BIMOD = (() => { const r = R(7), data = []; for (let i = 0; i < 15; i++) data.push(-1.5 + 0.6 * gauss(r)); for (let i = 0; i < 15; i++) data.push(1.5 + 0.7 * gauss(r)); return data; })();
-  block("rig", () => {
-    const data = BIMOD, m = mean(data), s = sd(data), h = 0.4, kde = x => mean(data.map(v => npdf(x, v, h)));
-    const d = dens(data, -4, 4, 0.5), ymax = Math.max(0.5, Math.max(...d) * 1.12);
-    stepper("rig", [
-      { chip: "Os dados", text: "Uma amostra de 30 medições. O histograma mostra <b>dois montes</b>. Como descrever essa forma com um modelo?" },
-      { chip: "Forma rígida", text: "<b>Jeito 1 — forma rígida:</b> escolhemos um molde pronto (o sino) e ajustamos só <b>dois botões</b>: centro e largura. Pouca coisa a estimar e fácil de interpretar… mas, se o molde for errado, ele <b>apaga os dois montes</b>." },
-      { chip: "Forma flexível", text: "<b>Jeito 2 — forma flexível:</b> não impomos molde; deixamos <b>os dados desenharem</b> a curva. Ela recupera os dois montes, mas precisa de mais dados e resume menos." },
-      { chip: "Os nomes", text: "A forma rígida, descrita por poucos parâmetros, é a ideia dos métodos <b>paramétricos</b>; a forma flexível, guiada pelos dados, a dos <b>não-paramétricos</b>. Voltaremos a eles no fim do Bloco 1, depois de conhecer centro, dispersão e forma." },
-    ], (svg, i) => {
-      const P = plot(svg, { x: 60, y: 24, w: 880, h: 290, xmin: -4, xmax: 4, ymin: 0, ymax });
-      bars(svg, P, d, -4, 0.5, { opacity: i >= 1 ? 0.55 : 1 });
-      data.forEach(v => el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(0), y2: P.Y(0) - 11, class: "rug" }, svg));
-      if (i === 1 || i === 3) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.e, class: i === 1 ? "in" : null }); if (i === 1) lab(svg, P.X(m), P.Y(npdf(m, m, s)) - 14, "forma rígida (sino): 2 botões", COL.e, "middle"); }
-      if (i >= 2) { curve(svg, P, kde, -4, 4, { stroke: COL.s, "stroke-width": 4, class: i === 2 ? "in" : null }); if (i === 2) lab(svg, P.X(2.2), P.Y(kde(1.5)) - 12, "forma flexível (guiada pelos dados)", COL.s, "middle"); }
-      if (i === 3) legend(svg, 70, 44, [[COL.e, "rígida → paramétrico"], [COL.s, "flexível → não-paramétrico"]]);
-    });
-  });
 
-  // ===== Bloco 1 · de onde vêm as 4 famílias =====
-  block("orig", () => {
-    const r = R(17), data = Array.from({ length: 400 }, () => Math.exp(Math.log(0.42) + 0.38 * gauss(r)));
-    const m = mean(data), s = sd(data), d = dens(data, 0, 1.6, 0.05), ymax = Math.max(...d) * 1.15;
-    stepper("orig", [
-      { chip: "Um histograma", text: "Tempos de reação de 400 pessoas (segundos). Diante de <b>qualquer</b> histograma, quatro perguntas surgem naturalmente — e cada uma deu origem a uma família de medidas." },
-      { chip: "Onde está o centro?", text: "Se o histograma fosse uma régua com pesos, onde ela ficaria <b>em equilíbrio</b>? Esse ponto é a <b>média</b> — o <b>1º momento</b> da distribuição." },
-      { chip: "Quão espalhado?", text: "Quão longe do centro os dados costumam ficar? A distância típica é o <b>desvio padrão</b>, raiz da <b>variância</b> — o <b>2º momento</b> (média das distâncias ao quadrado)." },
-      { chip: "Para que lado puxa?", text: "Uma cauda é mais longa que a outra? Isso é a <b>assimetria</b> — o <b>3º momento</b>: elevar as distâncias ao cubo preserva o sinal, e a cauda mais longa “vence”." },
-      { chip: "Caudas pesadas?", text: "Quantos valores <b>extremos</b> aparecem nas pontas? Isso é a <b>curtose</b> — o <b>4º momento</b>: a 4ª potência amplifica muito os valores distantes." },
-      { chip: "Os momentos", text: "O nome vem da Física (K. Pearson, 1893): o 1º momento é o <b>centro de massa</b>; o 2º, o <b>momento de inércia</b>. Quanto maior a potência, mais peso aos valores extremos — e cada potência responde a uma das quatro perguntas." },
-    ], (svg, i) => {
-      const P = plot(svg, { x: 60, y: 24, w: 880, h: 300, xmin: 0, xmax: 1.6, ymin: 0, ymax, xt: [0, 0.4, 0.8, 1.2, 1.6], fmt: v => fmt(v, 1), xl: "tempo de reação (s)" });
-      const tail = (a, b, c) => { const k0 = Math.max(0, Math.floor(a / 0.05)), k1 = Math.min(d.length, Math.ceil(b / 0.05));
-        for (let k = k0; k < k1; k++) if (d[k]) el("rect", { x: P.X(k * 0.05) + 0.8, y: P.Y(d[k]), width: P.X(0.05) - P.X(0) - 1.6, height: P.Y(0) - P.Y(d[k]), fill: c, opacity: 0.8, class: "in" }, svg); };
-      bars(svg, P, d, 0, 0.05);
-      if (i === 3) { tail(m + 1.5 * s, 1.6, COL.e); lab(svg, P.X(1.05), P.Y(ymax * 0.3), "cauda longa à direita →", COL.e, "middle"); }
-      if (i === 4) { tail(m + 2 * s, 1.6, COL.p); tail(0, m - 2 * s, COL.p); lab(svg, P.X(1.15), P.Y(ymax * 0.25), "valores extremos", COL.p, "middle"); }
-      if (i >= 1) { vline(svg, P.X(m), P.Y(0), P.Y(ymax * 0.97), COL.e, { class: i === 1 ? "in" : null });
-        el("path", { d: `M${P.X(m)} ${P.Y(0)} l-11 18 h22 z`, fill: COL.e, class: i === 1 ? "in" : null }, svg); lab(svg, P.X(m) + 8, P.Y(ymax * 0.93), "média (equilíbrio)", COL.e); }
-      if (i >= 2) { const y = P.Y(ymax * 0.6), g = el("g", { class: i === 2 ? "in" : null }, svg);
-        el("line", { x1: P.X(m - s), x2: P.X(m + s), y1: y, y2: y, stroke: COL.a, "stroke-width": 3, "marker-end": arrowDefs(svg, COL.a), "marker-start": arrowDefs(svg, COL.a) }, g);
-        lab(g, P.X(m + s) + 10, y + 6, "± 1 desvio padrão", COL.a); }
-      if (i === 5) { const g = el("g", { class: "in" }, svg); el("rect", { x: 610, y: 30, width: 340, height: 160, rx: 12, fill: "#fff", stroke: COL.a, "stroke-width": 2 }, g);
-        [["1º momento", "centro → média", COL.e], ["2º momento", "dispersão → variância", COL.a], ["3º momento", "assimetria", COL.s], ["4º momento", "caudas → curtose", COL.p]].forEach(([a, b, c], k) => {
-          lab(g, 630, 64 + k * 34, a, c); txt(g, 760, 64 + k * 34, b, { class: "lg" }); }); }
-    });
+  // ===== Bloco 1 · resumir para interpretar (figura fixa) =====
+  block("resumo", () => {
+    const svg = $("resumo-svg"), r = R(17), data = Array.from({ length: 400 }, () => Math.exp(Math.log(0.42) + 0.38 * gauss(r)));
+    const m = mean(data), s = sd(data), m3 = mean(data.map(v => ((v - m) / s) ** 3)), m4 = mean(data.map(v => ((v - m) / s) ** 4));
+    txt(svg, 20, 24, "1 · 400 números soltos", { class: "ttl" });
+    for (let k = 0; k < 40; k++) txt(svg, 22 + (k % 5) * 52, 48 + Math.floor(k / 5) * 15, fmt(data[k], 2), { class: "sm" });
+    txt(svg, 150, 166, "…", { "text-anchor": "middle", class: "ttl" });
+    arrow(svg, 292, 95, 340, 95, COL.a, 3);
+    txt(svg, 360, 24, "2 · a forma (histograma)", { class: "ttl" });
+    const d = dens(data, 0, 1.4, 0.05), P = plot(svg, { x: 360, y: 34, w: 250, h: 108, xmin: 0, xmax: 1.4, ymin: 0, ymax: Math.max(...d) * 1.08, xt: [0, 0.7, 1.4], fmt: v => fmt(v, 1) });
+    bars(svg, P, d, 0, 0.05);
+    arrow(svg, 628, 95, 676, 95, COL.a, 3);
+    txt(svg, 694, 24, "3 · quatro números-resumo", { class: "ttl" });
+    [["centro", `média = ${fmt(m, 2)} s`, COL.e], ["dispersão", `DP = ${fmt(s, 2)} s`, COL.a], ["assimetria", `${fmt(m3, 1)} (cauda à direita)`, COL.s], ["curtose", `${fmt(m4, 1)} (Normal = 3)`, COL.p]].forEach(([a, b, c], k) => {
+      const y = 56 + k * 30; el("rect", { x: 694, y: y - 19, width: 6, height: 24, rx: 2, fill: c }, svg); lab(svg, 710, y, a, c); txt(svg, 820, y, b, { class: "lg" }); });
   });
 
   // ===== Bloco 1 · três ideias de centro =====
@@ -910,25 +1004,60 @@
     const base = [1, 2, 2, 2, 3, 4, 5, 6, 9], moved = [1, 2, 2, 2, 3, 4, 5, 6, 20];
     const m0 = mean(base), md = median(base), m1 = mean(moved);
     const L = sum(base.filter(v => v < m0).map(v => m0 - v)), Rr = sum(base.filter(v => v > m0).map(v => v - m0));
+    // pestana "tipo de dado": um cartão por medida
+    function tipos(svg) {
+      const cols = [["Média", "dados numéricos", COL.e, ES, ["renda, tempo, altura,", "temperatura"], "usa as distâncias"],
+        ["Mediana", "dados ordinais", COL.a, AS, ["escala Likert, estágio", "de doença, ranking"], "usa só a ordem"],
+        ["Moda", "dados categóricos / qualitativos", COL.s, SS, ["cor preferida, tipo", "sanguíneo, espécie"], "usa só a contagem"]];
+      cols.forEach(([t, sub, c, soft, ex, how], k) => { const x = 20 + k * 330, g = el("g", { class: "in", style: `animation-delay:${k * 120}ms` }, svg);
+        el("rect", { x, y: 8, width: 300, height: 330, rx: 14, fill: soft, stroke: c, "stroke-width": 2 }, g);
+        lab(g, x + 150, 44, t, c, "middle", "big"); txt(g, x + 150, 72, sub, { "text-anchor": "middle", class: "lbl", fill: COL.ink });
+        const cy = 150;
+        if (k === 0) { hline(g, x + 30, x + 270, cy + 20, COL.ink, { "stroke-width": 2 }); for (let j = 0; j <= 12; j++) vline(g, x + 30 + j * 20, cy + 20, cy + (j % 4 ? 12 : 6), COL.ink, { "stroke-width": 1.5 });
+          [52, 88, 116, 170, 236].forEach(v => el("circle", { cx: x + v, cy: cy, r: 8, fill: c }, g)); txt(g, x + 150, cy + 46, "1,2 · 2,9 · 4,3 · 7,0 · 10,3", { "text-anchor": "middle", class: "sm" }); }
+        if (k === 1) ["discordo", "", "neutro", "", "concordo"].forEach((w, j) => { const xx = x + 30 + j * 50;
+          el("rect", { x: xx, y: cy - 20, width: 40, height: 40, rx: 8, fill: j === 2 ? c : "#fff", stroke: c, "stroke-width": 2 }, g);
+          txt(g, xx + 20, cy + 7, String(j + 1), { "text-anchor": "middle", class: "mid", fill: j === 2 ? "#fff" : COL.ink }); if (w) txt(g, xx + 20, cy + 42, w, { "text-anchor": "middle", class: "sm" }); });
+        if (k === 2) [["A", 0.55], ["B", 0.25], ["AB", 0.08], ["O", 0.9]].forEach(([w, f], j) => { const xx = x + 40 + j * 58;
+          el("rect", { x: xx, y: cy + 20 - 70 * f, width: 42, height: 70 * f, rx: 4, fill: j === 3 ? c : AL }, g); txt(g, xx + 21, cy + 40, w, { "text-anchor": "middle", class: "sm" }); });
+        txt(g, x + 150, 236, ex[0], { "text-anchor": "middle", class: "lg" }); txt(g, x + 150, 260, ex[1], { "text-anchor": "middle", class: "lg" });
+        lab(g, x + 150, 306, how, c, "middle"); });
+      txt(svg, 500, 368, "A mediana também serve para numéricos assimétricos; a moda serve para qualquer tipo de dado.", { "text-anchor": "middle", class: "lg" });
+    }
+    // pestana "menção honrosa": outras médias
+    function outras(svg) {
+      const M = [["Ponderada", "Σ wᵢxᵢ / Σ wᵢ", "notas com pesos diferentes"], ["Geométrica", "(x₁ · x₂ · … · xₙ)^(1/n)", "taxas de crescimento, razões"],
+        ["Harmônica", "n / Σ (1/xᵢ)", "velocidades e taxas médias"], ["Quadrática (RMS)", "√( Σ xᵢ² / n )", "amplitude e energia de sinais"],
+        ["Aparada (truncada)", "corta k% de cada ponta", "robusta a outliers"], ["Winsorizada", "extremos → valor limite", "robusta, sem descartar dados"],
+        ["Móvel", "média de uma janela", "que desliza ao longo do tempo"], ["Trimédia (Tukey)", "(Q1 + 2·Md + Q3) / 4", "mistura mediana e quartis"]];
+      M.forEach(([t, f, u], k) => { const x = 8 + (k % 4) * 248, y = 8 + Math.floor(k / 4) * 166, g = el("g", { class: "in", style: `animation-delay:${k * 70}ms` }, svg);
+        el("rect", { x, y, width: 236, height: 152, rx: 12, fill: "#fff", stroke: AL, "stroke-width": 2 }, g);
+        lab(g, x + 16, y + 34, t, COL.a); txt(g, x + 16, y + 78, f, { class: "lg", style: "font-size:17px;font-weight:600", fill: COL.ink }); txt(g, x + 16, y + 122, u, { class: "sm" }); });
+      txt(svg, 500, 368, "E a média “empírica” x̄ (calculada com os dados) estima a média teórica da população, μ — veremos no Bloco 2.", { "text-anchor": "middle", class: "lg" });
+    }
     stepper("cen", [
       { chip: "Os dados", text: "Nove valores (ex.: número de consultas médicas no ano de 9 pessoas). Onde fica o “centro”? Há <b>três respostas</b>, cada uma baseada numa ideia diferente." },
       { chip: "Média · distâncias", text: `A <b>média</b> (${fmt(m0)}) é o ponto de <b>equilíbrio</b>: a soma das distâncias à esquerda (${fmt(L, 1)}) é igual à soma à direita (${fmt(Rr, 1)}). Ela depende de <b>quão longe</b> cada valor está.` },
       { chip: "Mediana · posições", text: `A <b>mediana</b> (${fmt(md, 0)}) só olha a <b>posição</b>: ordenamos os valores e pegamos o do meio (o 5º de 9). Não importa quão longe estão os extremos, só a <b>ordem</b>.` },
       { chip: "Moda · frequência", text: "A <b>moda</b> (2) é o valor que <b>mais se repete</b>. É a única medida de centro que serve também para dados nominais (ex.: cor preferida)." },
+      { chip: "Qual usar? Tipo de dado", text: "Cada medida tem o seu terreno: a <b>média</b> brilha em dados <b>numéricos</b>; a <b>mediana</b>, em dados <b>ordinais</b>; a <b>moda</b>, em dados <b>categóricos</b> (qualitativos)." },
+      { chip: "Menção honrosa", text: "Existem muitas outras “médias”, cada uma pensada para um tipo de problema. Não é preciso decorar: basta saber que existem e quando aparecem." },
       { chip: "Ponte: um valor distante", text: `Afastamos o maior valor (9 → 20). A <b>média</b> anda de ${fmt(m0)} para ${fmt(m1)} (depende das distâncias); a <b>mediana</b> (posição) e a <b>moda</b> (frequência) não mudam. É o efeito de um <i>outlier</i> — veja a seguir.` },
     ], (svg, i) => {
-      const data = i === 4 ? moved : base, mu = mean(data);
+      if (i === 4) return tipos(svg);
+      if (i === 5) return outras(svg);
+      const br = i === 6, data = br ? moved : base, mu = mean(data);
       const P = plot(svg, { x: 60, y: 30, w: 880, h: 215, xmin: 0, xmax: 21, ymin: 0, ymax: 1, xt: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20] });
       const yb = P.Y(0), cnt = {}, pos = data.map(v => { cnt[v] = (cnt[v] || 0) + 1; return [P.X(v), yb - 18 - (cnt[v] - 1) * 30]; });
       if (i === 3) { const g = el("g", { class: "in" }, svg); el("rect", { x: P.X(2) - 20, y: yb - 108, width: 40, height: 108, rx: 10, fill: SS, stroke: COL.s, "stroke-width": 2 }, g); }
       if (i === 1) data.forEach((v, k) => { if (Math.abs(v - mu) < 0.05) return; const c = v < mu ? COL.a : COL.e;
         el("line", { x1: P.X(mu), x2: pos[k][0] + (v < mu ? 13 : -13), y1: pos[k][1], y2: pos[k][1], stroke: c, "stroke-width": 2.5, class: "in", "marker-end": arrowDefs(svg, c) }, svg); });
-      if (i === 4) { el("circle", { cx: P.X(9), cy: yb - 18, r: 13, fill: "none", stroke: COL.k, "stroke-width": 2, "stroke-dasharray": "4 3" }, svg); arrow(svg, P.X(9) + 16, yb - 18, P.X(20) - 16, yb - 18, COL.k, 2); }
-      data.forEach((v, k) => el("circle", { cx: pos[k][0], cy: pos[k][1], r: 13, fill: i === 4 && v === 20 ? COL.e : "#6c757d", class: i === 4 && v === 20 ? "in" : null }, svg));
-      if (i === 1 || i === 4) { vline(svg, P.X(mu), yb, 40, COL.e); el("path", { d: `M${P.X(mu)} ${yb} l-12 20 h24 z`, fill: COL.e }, svg); lab(svg, P.X(mu) + 8, i === 4 ? 66 : 48, `média = ${fmt(mu)}`, COL.e); }
-      if (i === 4) { vline(svg, P.X(m0), yb, 40, COL.e, { "stroke-dasharray": "5 5", opacity: 0.4 }); }
-      if (i === 2 || i === 4) { vline(svg, P.X(md), yb, 40, COL.a); lab(svg, P.X(md) + 8, 48, `mediana = ${fmt(md, 0)}`, COL.a); }
-      if (i === 3 || i === 4) { vline(svg, P.X(2), yb, 40, COL.s, i === 4 ? {} : { opacity: 0 }); lab(svg, i === 4 ? P.X(2) - 8 : P.X(2) + 28, i === 4 ? 48 : 120, "moda = 2", COL.s, i === 4 ? "end" : "start"); }
+      if (br) { el("circle", { cx: P.X(9), cy: yb - 18, r: 13, fill: "none", stroke: COL.k, "stroke-width": 2, "stroke-dasharray": "4 3" }, svg); arrow(svg, P.X(9) + 16, yb - 18, P.X(20) - 16, yb - 18, COL.k, 2); }
+      data.forEach((v, k) => el("circle", { cx: pos[k][0], cy: pos[k][1], r: 13, fill: br && v === 20 ? COL.e : "#6c757d", class: br && v === 20 ? "in" : null }, svg));
+      if (i === 1 || br) { vline(svg, P.X(mu), yb, 40, COL.e); el("path", { d: `M${P.X(mu)} ${yb} l-12 20 h24 z`, fill: COL.e }, svg); lab(svg, P.X(mu) + 8, br ? 66 : 48, `média = ${fmt(mu)}`, COL.e); }
+      if (br) { vline(svg, P.X(m0), yb, 40, COL.e, { "stroke-dasharray": "5 5", opacity: 0.4 }); }
+      if (i === 2 || br) { vline(svg, P.X(md), yb, 40, COL.a); lab(svg, P.X(md) + 8, 48, `mediana = ${fmt(md, 0)}`, COL.a); }
+      if (i === 3 || br) { vline(svg, P.X(2), yb, 40, COL.s, br ? {} : { opacity: 0 }); lab(svg, br ? P.X(2) - 8 : P.X(2) + 28, br ? 48 : 120, "moda = 2", COL.s, br ? "end" : "start"); }
       if (i === 2) { const sorted = [...data].sort((a, b) => a - b), g = el("g", { class: "in" }, svg), y0 = 312;
         txt(g, 60, y0 + 6, "ordenados:", { class: "lbl", fill: COL.a });
         sorted.forEach((v, k) => { const x = 200 + k * 80, c = k === 4;
@@ -995,7 +1124,7 @@
             el("path", { d: `M${P.X(mn)} ${yy - 8} V${yy} H${P.X(mx)} V${yy - 8}`, fill: "none", stroke: COL.p, "stroke-width": 2.5 }, g);
             lab(g, P.X(mx) + 10, yy + 4, `amplitude = ${fmt(mx - mn, 1)}`, COL.p); }
           if (i === 2) { const g = el("g", { class: "in" }, svg), yy = y0 + 44; hline(g, P.X(m - s), P.X(m + s), yy, COL.e, { "stroke-width": 4 }); el("circle", { cx: P.X(m), cy: yy, r: 6, fill: COL.e }, g);
-            lab(g, P.X(m + s) + 10, yy + 6, `média ± DP · DP = ${fmt(s, 1)}`, COL.e); }
+            lab(g, P.X(m + s) + 10, yy + 6, "média ± DP", COL.e); }
         });
         return;
       }
@@ -1043,38 +1172,61 @@
     });
   });
 
-  // ===== Bloco 1 · paramétrico × não-paramétrico (com nome) =====
+  // ===== Bloco 2 · kernels: do global ao local =====
   block("par", () => {
     const data = BIMOD, m = mean(data), s = sd(data), h = 0.4, n = data.length;
-    const kde = x => mean(data.map(v => npdf(x, v, h)));
-    const sorted = [...data].sort((a, b) => a - b);
+    const kdeH = hh => x => mean(data.map(v => npdf(x, v, hh))), kde = kdeH(h);
     const d = dens(data, -4, 4, 0.5), ymax = Math.max(0.5, Math.max(...d) * 1.12);
+    const HS = [[1.3, COL.k, "h grande → global (quase um sino)", "6 5"], [0.4, COL.s, "h médio → equilíbrio", null], [0.1, COL.p, "h pequeno → muito local (ruído)", null]];
     stepper("par", [
-      { chip: "Densidade", text: "Voltemos aos 30 valores com dois montes. No eixo Y está a <b>densidade</b>: a altura indica onde os dados se concentram, e a <b>área</b> de cada barra é a proporção de dados naquele intervalo (a área total é 1)." },
-      { chip: "Paramétrico", text: `O modelo <b>paramétrico</b> assume uma forma conhecida — a Normal — e a resume em <b>poucos parâmetros</b>, estimados pela amostra: μ̂ = x̄ ≈ ${fmt(m)} e σ̂ = s ≈ ${fmt(s)}. Simples e poderoso… mas, se a forma estiver errada, os dois montes desaparecem.` },
-      { chip: "Postos (ranks)", text: "Uma saída <b>não-paramétrica</b>: trocar cada valor pela sua <b>ordem</b> (posto 1, 2, …, 30). Testes como Mann-Whitney, Wilcoxon e a correlação de Spearman trabalham assim: não importa a forma, só “quem é maior que quem”." },
-      { chip: "Kernels locais", text: "Outra saída: colocar um pequeno <b>kernel</b> (uma “lombadinha” gaussiana) sobre cada ponto. Cada kernel descreve só a <b>vizinhança</b> do seu ponto: um modelo <b>local</b>." },
-      { chip: "KDE", text: "Somando os kernels obtemos a <b>estimativa de densidade por kernel (KDE)</b>, que recupera os dois montes. Paramétrico: poucos parâmetros, forma rígida e global. Não-paramétrico: forma flexível, guiada pelos dados." },
+      { chip: "Os dados", text: "30 medições com <b>dois montes</b>. No eixo Y está a <b>densidade</b>: a <b>área</b> de cada barra é a proporção de dados naquele intervalo (a área total é 1)." },
+      { chip: "Paramétrico: global", text: `O modelo <b>paramétrico</b> usa <b>uma única</b> curva para o eixo inteiro — a Normal — com dois parâmetros estimados: μ̂ = x̄ ≈ ${fmt(m)} e σ̂ = s ≈ ${fmt(s)}. É uma visão <b>global</b>: e os dois montes desaparecem.` },
+      { chip: "Um kernel por ponto", text: "Ideia não-paramétrica: colocar um pequeno <b>kernel</b> (uma “lombadinha” gaussiana) sobre <b>cada</b> ponto. Cada kernel só descreve a <b>vizinhança</b> do seu ponto: visão <b>local</b>." },
+      { chip: "Somar → KDE", text: "Somando os kernels obtemos a <b>estimativa de densidade por kernel (KDE)</b>: os dados desenham a curva, e os dois montes aparecem." },
+      { chip: "De global a local (h)", text: "A <b>largura h</b> do kernel controla a escala: <b>h grande</b> → visão global, suaviza tudo e volta a parecer um sino; <b>h pequeno</b> → visão local demais, segue cada ponto (ruído). O bom h fica no meio." },
     ], (svg, i) => {
-      const P = plot(svg, { x: 80, y: 24, w: 860, h: 250, xmin: -4, xmax: 4, ymin: 0, ymax, yaxis: true, yt: [0, 0.2, 0.4], yfmt: v => fmt(v, 1), xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4], yl: "densidade" });
-      bars(svg, P, d, -4, 0.5, { opacity: i >= 3 ? 0.45 : 1 });
+      const P = plot(svg, { x: 80, y: 24, w: 860, h: 290, xmin: -4, xmax: 4, ymin: 0, ymax: i === 4 ? 0.62 : ymax, yaxis: true, yt: [0, 0.2, 0.4, 0.6].filter(v => v <= (i === 4 ? 0.62 : ymax)), yfmt: v => fmt(v, 1), xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4], yl: "densidade" });
+      bars(svg, P, d, -4, 0.5, { opacity: i >= 2 ? 0.4 : 1 });
       if (i === 0) { const k = d.indexOf(Math.max(...d)), g = el("g", { class: "in" }, svg);
         el("rect", { x: P.X(-4 + k * 0.5) + 0.8, y: P.Y(d[k]), width: P.X(0.5) - P.X(0) - 1.6, height: P.Y(0) - P.Y(d[k]), fill: COL.a, opacity: 0.55 }, g);
         lab(g, P.X(-4 + (k + 1) * 0.5) + 10, P.Y(d[k]) + 20, `área = ${fmt(d[k] * 0.5 * 100, 0)}% dos dados`, COL.a); }
-      if (i !== 2) data.forEach(v => el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(0), y2: P.Y(0) - 11, class: "rug" }, svg));
-      if (i === 1) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.a, class: "in" }); lab(svg, P.X(m) + 10, P.Y(npdf(m, m, s)) - 12, `Normal(x̄ = ${fmt(m)}; s = ${fmt(s)})`, COL.a); }
-      if (i === 2) {
-        const y0 = 335; hline(svg, P.X(-4), P.X(4), y0, "#adb5bd", { "stroke-width": 1.5 });
-        txt(svg, P.X(-4), y0 - 14, "posto:", { class: "lbl", fill: COL.a });
-        sorted.forEach((v, k) => { el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(0), y2: P.Y(0) - 11, class: "rug" }, svg);
-          el("circle", { cx: P.X(v), cy: y0, r: 5.5, fill: COL.a, class: "in", style: `animation-delay:${k * 25}ms` }, svg);
-          if ([0, 4, 9, 14, 19, 24, 29].includes(k)) txt(svg, P.X(v), y0 + 26, String(k + 1), { "text-anchor": "middle", class: "lbl", fill: COL.a }); });
-      }
-      if (i >= 3) data.forEach(v => curve(svg, P, x => npdf(x, v, h) / n, v - 3 * h, v + 3 * h, { stroke: COL.s, "stroke-width": 1.4, opacity: i === 3 ? 0.9 : 0.35, class: i === 3 ? "in" : null }, 60));
-      if (i === 4) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.k, "stroke-width": 2, "stroke-dasharray": "6 5" });
+      data.forEach(v => el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(0), y2: P.Y(0) - 11, class: "rug" }, svg));
+      if (i === 1) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.a, class: "in" }); lab(svg, P.X(m) + 10, P.Y(npdf(m, m, s)) - 12, `uma curva global: Normal(x̄ = ${fmt(m)}; s = ${fmt(s)})`, COL.a, "middle"); }
+      if (i === 2 || i === 3) data.forEach(v => curve(svg, P, x => npdf(x, v, h) / n, v - 3 * h, v + 3 * h, { stroke: COL.s, "stroke-width": 1.4, opacity: i === 2 ? 0.9 : 0.35, class: i === 2 ? "in" : null }, 60));
+      if (i === 3) { curve(svg, P, x => npdf(x, m, s), -4, 4, { stroke: COL.k, "stroke-width": 2, "stroke-dasharray": "6 5" });
         curve(svg, P, kde, -4, 4, { stroke: COL.s, "stroke-width": 4, class: "in" });
-        legend(svg, 700, 40, [[COL.s, "KDE (soma de kernels)"], [COL.k, "Normal (paramétrico)", "6 5"]]); }
+        legend(svg, 690, 40, [[COL.s, "KDE (soma dos kernels)"], [COL.k, "Normal (global)", "6 5"]]); }
+      if (i === 4) { HS.forEach(([hh, c, t, dash]) => curve(svg, P, kdeH(hh), -4, 4, { stroke: c, "stroke-width": hh === 0.4 ? 4 : 2.5, "stroke-dasharray": dash, class: "in" }, 400));
+        legend(svg, 600, 40, HS.map(([, c, t, dash]) => [c, t, dash])); }
     });
+  });
+
+  // ===== Bloco 2 · quando não é Normal (figura fixa) =====
+  block("nn", () => {
+    const svg = $("nn-svg"), r = R(19), small = Array.from({ length: 8 }, () => 5 + 1.6 * gauss(r));
+    const skew = Array.from({ length: 300 }, () => Math.exp(1 + 0.6 * gauss(r)));
+    const panels = [["Amostra pequena (n = 8)", small, 0, 10, 1], ["Assimétrica (ex.: renda)", skew, 0, 12, 0.5], ["Dois montes", BIMOD, -4, 4, 0.5]];
+    panels.forEach(([t, D, a, b, w], k) => {
+      const x0 = 30 + k * 330, m = mean(D), sdv = sd(D), dd = dens(D, a, b, w), top = Math.max(Math.max(...dd), npdf(m, m, sdv)) * 1.15;
+      txt(svg, x0, 24, t, { class: "ttl" });
+      const P = plot(svg, { x: x0, y: 40, w: 290, h: 170, xmin: a, xmax: b, ymin: 0, ymax: top });
+      if (k === 0) { D.forEach(v => el("circle", { cx: P.X(v), cy: P.Y(0) - 12, r: 7, fill: "#6c757d" }, svg));
+        curve(svg, P, x => npdf(x, m, sdv), a, b, { stroke: COL.e, "stroke-width": 2.5, "stroke-dasharray": "6 5" });
+        lab(svg, P.X(m), P.Y(top * 0.5), "Normal? impossível saber", COL.e, "middle"); }
+      else { bars(svg, P, dd, a, w); curve(svg, P, x => npdf(x, m, sdv), a, b, { stroke: COL.e, "stroke-width": 2.5, "stroke-dasharray": "6 5" }); }
+      txt(svg, x0 + 145, 240, ["poucos dados, o TCL ainda não ajuda", "o sino erra a cauda longa", "o sino apaga os dois montes"][k], { "text-anchor": "middle", class: "lg" });
+    });
+  });
+
+  // ===== Bloco 2 · TCL: formas diferentes → sino (mini figura) =====
+  block("tclmini", () => {
+    const svg = $("tclmini-svg"), base = 80;
+    const shapes = [x => (x > 0.15 && x < 0.85 ? 0.7 : 0), x => x <= 0 ? 0 : 12 * x * Math.exp(-6 * x), x => 0.9 * Math.exp(-(((x - 0.28) / 0.09) ** 2)) + 0.9 * Math.exp(-(((x - 0.72) / 0.09) ** 2))];
+    shapes.forEach((f, k) => { const x0 = 8 + k * 112, P = { X: u => x0 + u * 96, Y: v => base - v * 62, o: { ymin: 0, ymax: 2 } };
+      hline(svg, x0, x0 + 96, base, "#adb5bd", { "stroke-width": 1.5 }); area(svg, P, f, 0.001, 0.999, { fill: AL, opacity: 0.6 }, 80); curve(svg, P, f, 0.001, 0.999, { stroke: COL.k, "stroke-width": 2 }, 80); });
+    arrow(svg, 350, 50, 412, 50, COL.a, 3); txt(svg, 381, 40, "n grande", { "text-anchor": "middle", class: "sm" });
+    const Q = { X: u => 424 + u * 130, Y: v => base - v * 21, o: { ymin: 0, ymax: 4 } };
+    hline(svg, 424, 554, base, "#adb5bd", { "stroke-width": 1.5 }); area(svg, Q, u => npdf(u, 0.5, 0.13), 0, 1, { fill: COL.a, opacity: 0.18 }, 80); curve(svg, Q, u => npdf(u, 0.5, 0.13) * 1, 0, 1, { stroke: COL.a, "stroke-width": 3 }, 80);
   });
 
   // ===== Bloco 2 · variável aleatória (figura fixa) =====
@@ -1215,7 +1367,7 @@
       { chip: "Hipótese nula (H₀)", text: "<b>H₀</b> é a posição de <b>ceticismo</b>: “não há nada de especial” — a moeda é honesta. Como num tribunal: o réu é <b>inocente até prova em contrário</b>. <b>H₁</b> é o que queremos mostrar: a moeda não é honesta." },
       { chip: "O mundo de H₀", text: "Se H₀ fosse verdadeira, quantas caras veríamos em 20 lançamentos? Repetindo o experimento milhares de vezes, obtemos esta distribuição: <b>perto de 10 é comum</b>; 18 ou 2 é raríssimo." },
       { chip: "Nosso resultado", text: "Onde cai o nosso resultado (16 caras) nesse mundo em que a moeda é honesta? Bem na cauda: é um resultado <b>pouco usual</b> sob H₀." },
-      { chip: "p-valor", text: `<b>p-valor</b> = probabilidade, <b>num mundo em que H₀ é verdadeira</b>, de obter um resultado tão ou mais extremo que o observado (16 ou mais caras, ou 4 ou menos): <b>p ≈ ${fmt(pv, 3)}</b>, ou seja, ~${fmt(pv * 100, 1)}%.` },
+      { chip: "p-valor", text: `<b>p-valor</b> = probabilidade, <b>num mundo em que H₀ é verdadeira</b>, de um resultado tão ou mais extremo que o nosso (16+ caras, ou 4 ou menos): <b>p ≈ ${fmt(pv, 3)}</b>. As faixas mostram as <b>3 zonas</b>: no centro, <b>não rejeição</b> (resultados comuns sob H₀); nas duas pontas, <b>rejeição</b> (juntas somam ≈ 5%). O 16 caiu numa ponta.` },
       { chip: "Como ler", text: "<b>p pequeno</b> → nossos dados seriam muito surpreendentes se H₀ fosse verdadeira → temos evidência <b>contra H₀</b>. <b>p grande</b> → os dados são compatíveis com H₀, o que <b>não prova</b> que H₀ é verdadeira. Por convenção, p &lt; 0,05 é tratado como evidência suficiente." },
     ], (svg, i) => {
       if (i === 0) {
@@ -1231,12 +1383,15 @@
         txt(g, 500, 314, "Os dados precisam ser surpreendentes o bastante para abandonarmos H₀.", { "text-anchor": "middle", class: "lg" }); return;
       }
       const P = plot(svg, { x: 80, y: 30, w: 860, h: 280, xmin: -0.7, xmax: 20.7, ymin: 0, ymax: 0.2, yaxis: true, yt: [0, 0.05, 0.1, 0.15], yfmt: v => fmt(v, 2), xt: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20], xl: "número de caras em 20 lançamentos (se a moeda for honesta)", yl: "probabilidade" });
+      if (i >= 4) [[-0.7, 5.5, ES, "rejeita H₀", COL.e], [5.5, 14.5, AS, "não rejeita H₀", COL.a], [14.5, 20.7, ES, "rejeita H₀", COL.e]].forEach(([a, b, f, t, c]) => {
+        el("rect", { x: P.X(a), y: P.Y(0.2), width: P.X(b) - P.X(a), height: P.Y(0) - P.Y(0.2), fill: f, opacity: 0.85, class: i === 4 ? "in" : null }, svg); lab(svg, (P.X(a) + P.X(b)) / 2, P.Y(0.2) + 22, t, c, "middle"); });
+      if (i >= 4) [5.5, 14.5].forEach(v => vline(svg, P.X(v), P.Y(0), P.Y(0.2), COL.k, { "stroke-width": 1.5, "stroke-dasharray": "5 4" }));
       for (let k = 0; k <= n; k++) { const p = binom(n, k), ext = i >= 4 && (k >= obs || k <= n - obs);
         el("rect", { x: P.X(k - 0.38), y: P.Y(p), width: P.X(0.38) - P.X(-0.38), height: P.Y(0) - P.Y(p), fill: ext ? COL.e : AL, class: ext ? "in" : null }, svg); }
       if (i >= 3) { vline(svg, P.X(obs), P.Y(0), P.Y(0.12), COL.e, { "stroke-width": 3 }); lab(svg, P.X(obs), P.Y(0.12) - 10, "nosso resultado: 16", COL.e, "middle"); }
-      if (i >= 4) { lab(svg, P.X(17.6), P.Y(0.075), `p ≈ ${fmt(pv, 3)}`, COL.e, "middle", "big"); lab(svg, P.X(3), P.Y(0.06), "tão extremo quanto, do outro lado", COL.e, "middle"); }
-      if (i === 5) { const g = el("g", { class: "in" }, svg); el("rect", { x: 100, y: 40, width: 300, height: 92, rx: 12, fill: "#fff", stroke: COL.e, "stroke-width": 2 }, g);
-        lab(g, 118, 70, "p pequeno = surpresa sob H₀", COL.e); txt(g, 118, 96, "→ evidência contra H₀", { class: "lg" }); txt(g, 118, 120, "(p grande ≠ prova de H₀)", { class: "lg" }); }
+      if (i >= 4) { lab(svg, P.X(17.6), P.Y(0.075), `p ≈ ${fmt(pv, 3)}`, COL.e, "middle", "big"); if (i === 4) lab(svg, P.X(2.4), P.Y(0.06), "tão extremo quanto", COL.e, "middle"); }
+      if (i === 5) { const g = el("g", { class: "in" }, svg); el("rect", { x: 70, y: 150, width: 300, height: 92, rx: 12, fill: "#fff", stroke: COL.e, "stroke-width": 2 }, g);
+        lab(g, 88, 180, "p pequeno = surpresa sob H₀", COL.e); txt(g, 88, 206, "→ evidência contra H₀", { class: "lg" }); txt(g, 88, 230, "(p grande ≠ prova de H₀)", { class: "lg" }); }
     });
   });
 
@@ -1247,8 +1402,8 @@
       { chip: "Pergunta e H₀", text: `Um novo método de ensino muda a nota média (historicamente <b>70</b>)? Amostra de <b>n = ${n}</b> alunos: x̄ = ${xb}, s = ${s}. H₀ é o ceticismo: o método <b>não</b> muda a média.` },
       { chip: "Mundo sob H₀", text: `Se H₀ fosse verdadeira, a estatística t seguiria uma distribuição <b>t de Student com ${gl} gl</b>: valores perto de 0 seriam comuns; valores extremos, raros.` },
       { chip: "Estatística observada", text: `Medimos quão longe x̄ está de 70, em unidades de erro padrão: <b>t = (${xb} − ${mu0}) / (${s}/5) = ${fmt(t, 1)}</b>. Onde ela cai nesse “mundo de H₀”?` },
-      { chip: "p-valor", text: `O <b>p-valor</b> é a área das caudas além de ±${fmt(t, 1)}: <b>${pfmt(p)}</b>. Se H₀ fosse verdadeira, um resultado tão extremo apareceria em menos de 1 a cada 100 estudos.` },
-      { chip: "Conclusão", text: `Como ${pfmt(p)} &lt; 0,05, <b>rejeitamos H₀</b>: os dados são pouco compatíveis com “nenhum efeito”. Isso <b>não</b> diz que o efeito é grande — para isso olhamos o intervalo de confiança.` },
+      { chip: "p-valor", text: `O <b>p-valor</b> é a área das caudas além de ±${fmt(t, 1)}: <b>${pfmt(p)}</b>. As faixas mostram as <b>3 zonas</b> (α = 0,05): centro = <b>não rejeição</b> (95% dos t sob H₀); as duas pontas além de ±${fmt(tc, 2)} = <b>rejeição</b>. Nosso t caiu na ponta direita.` },
+      { chip: "Conclusão", text: `Como ${pfmt(p)} &lt; 0,05, <b>rejeitamos H₀</b>: os dados são pouco compatíveis com “nenhum efeito”. Isso <b>não</b> diz que o efeito é grande, nem que não erramos: é o que veremos a seguir (erros, tamanho de efeito e IC).` },
     ], (svg, i) => {
       if (i === 0) {
         boxT(svg, 60, 50, 400, 130, "H₀ (hipótese nula)", ["μ = 70", "o método não muda a nota média"], COL.a, AS);
@@ -1258,15 +1413,91 @@
       }
       const P = plot(svg, { x: 60, y: 40, w: 880, h: 270, xmin: -4.2, xmax: 4.2, ymin: 0, ymax: 0.42, xt: [-4, -3, -2, -1, 0, 1, 2, 3, 4], xl: "estatística t" });
       const f = x => tpdf(x, gl);
-      if (i === 4) { area(svg, P, f, tc, 4.2, { fill: COL.k, opacity: 0.18 }); area(svg, P, f, -4.2, -tc, { fill: COL.k, opacity: 0.18 });
-        [-tc, tc].forEach(v => vline(svg, P.X(v), P.Y(0), P.Y(0.2), COL.k, { "stroke-width": 2, "stroke-dasharray": "5 4" }));
-        lab(svg, P.X(-3.3), P.Y(0.1), "rejeita H₀", COL.k, "middle"); lab(svg, P.X(3.6), P.Y(0.1), "rejeita H₀", COL.k, "middle"); }
+      if (i >= 3) { [[-4.2, -tc, ES, "rejeita H₀", COL.e], [-tc, tc, AS, "não rejeita H₀ (95%)", COL.a], [tc, 4.2, ES, "rejeita H₀", COL.e]].forEach(([a, b, fl, tt, c], k) => {
+          el("rect", { x: P.X(a), y: P.Y(0.42), width: P.X(b) - P.X(a), height: P.Y(0) - P.Y(0.42), fill: fl, opacity: 0.85, class: i === 3 ? "in" : null }, svg);
+          lab(svg, (P.X(a) + P.X(b)) / 2, k === 1 ? P.Y(0.04) : P.Y(0.36), tt, c, "middle"); });
+        [-tc, tc].forEach(v => vline(svg, P.X(v), P.Y(0), P.Y(0.42), COL.k, { "stroke-width": 2, "stroke-dasharray": "5 4" })); }
       if (i >= 3) { area(svg, P, f, t, 4.2, { fill: COL.e, opacity: 0.55, class: "in" }); area(svg, P, f, -4.2, -t, { fill: COL.e, opacity: 0.55, class: "in" }); }
       curve(svg, P, f, -4.2, 4.2, { stroke: COL.a });
       lab(svg, P.X(0), P.Y(0.395) - 4, `Distribuição de t se H₀ for verdadeira (${gl} gl)`, COL.a, "middle");
       if (i >= 2) { vline(svg, P.X(t), P.Y(0), P.Y(0.3), COL.e, { "stroke-width": 3, class: "in" }); lab(svg, P.X(t) + 8, P.Y(0.3) + 4, `t observado = ${fmt(t, 1)}`, COL.e);
         if (i === 2) { vline(svg, P.X(-t), P.Y(0), P.Y(0.2), COL.e, { "stroke-width": 2, "stroke-dasharray": "4 4", opacity: 0.6 }); lab(svg, P.X(-t) - 8, P.Y(0.2), `−${fmt(t, 1)}`, COL.e, "end"); } }
       if (i >= 3) lab(svg, P.X(3.45), P.Y(0.2), pfmt(p), COL.e, "middle", "big");
+    });
+  });
+
+  // ===== Bloco 4 · erros e poder =====
+  block("poder", () => {
+    const cfg = [null, [2.5, 1.645], [2.5, 1.645], [2.5, 1.645], [2.5, 1.645], [2.5 * Math.SQRT2, 1.645], [2.5, 2.326]];
+    stepper("poder", [
+      { chip: "Decisão × realidade", text: "Toda decisão de um teste pode errar de dois jeitos. <b>Erro tipo I (α)</b>: <b>falso positivo</b> — “achamos” um efeito que não existe. <b>Erro tipo II (β)</b>: <b>falso negativo</b> — deixamos passar um efeito real." },
+      { chip: "Dois mundos", text: "Azul: como a estatística do teste se distribui se <b>H₀ é verdadeira</b>. Verde: se existe um <b>efeito real</b> (H₁). A linha tracejada é o limite de decisão (valor crítico, com α = 0,05)." },
+      { chip: "α · erro tipo I", text: "<b>α = 0,05</b>: a área da curva de H₀ além do limite. Mesmo sem efeito nenhum, rejeitamos H₀ em 5% dos estudos (<b>falso positivo</b>). Nós escolhemos α antes da análise." },
+      { chip: "β · erro tipo II", text: () => `<b>β ≈ ${fmt(1 - Phi(2.5 - 1.645))}</b>: a área da curva de H₁ <b>antes</b> do limite. O efeito existe, mas o estudo não o detecta (<b>falso negativo</b>).` },
+      { chip: "Poder (1 − β)", text: () => `<b>Poder = 1 − β ≈ ${fmt(Phi(2.5 - 1.645))}</b>: a probabilidade de detectar um efeito que existe. Convenção usual: planejar o estudo para poder ≥ 0,80.` },
+      { chip: "Dobrar n", text: () => `<b>Dobrando o tamanho amostral</b>, as curvas se afastam e o poder sobe para ≈ <b>${fmt(Phi(2.5 * Math.SQRT2 - 1.645))}</b>. É assim que se calcula o n de um estudo.` },
+      { chip: "α mais rígido (0,01)", text: () => `Com <b>α = 0,01</b> (menos falsos positivos), o limite se desloca e o poder cai para ≈ <b>${fmt(Phi(2.5 - 2.326))}</b>: há um <b>compromisso</b> entre os dois erros.` },
+    ], (svg, i) => {
+      if (i === 0) {
+        const x0 = 260, y0 = 70, cw = 300, rh = 110;
+        lab(svg, x0 + cw, y0 - 30, "Realidade", COL.ink, "middle");
+        lab(svg, x0 + cw / 2, y0 - 6, "H₀ verdadeira (sem efeito)", COL.m, "middle"); lab(svg, x0 + cw * 1.5, y0 - 6, "H₀ falsa (efeito real)", COL.m, "middle");
+        lab(svg, x0 - 16, y0 + rh / 2 + 6, "Não rejeita H₀", COL.m, "end"); lab(svg, x0 - 16, y0 + rh * 1.5 + 6, "Rejeita H₀", COL.m, "end");
+        txt(svg, 60, y0 + rh + 6, "Decisão", { class: "lbl", fill: COL.ink, transform: `rotate(-90 60 ${y0 + rh})`, "text-anchor": "middle" });
+        const cell = (c, r, fill, stroke, t1, t2, k) => { const g = el("g", { class: "in", style: `animation-delay:${k * 120}ms` }, svg);
+          el("rect", { x: x0 + c * cw + 4, y: y0 + 8 + r * rh, width: cw - 8, height: rh - 8, rx: 12, fill, stroke, "stroke-width": 2 }, g);
+          lab(g, x0 + c * cw + cw / 2, y0 + r * rh + 50, t1, stroke, "middle"); txt(g, x0 + c * cw + cw / 2, y0 + r * rh + 78, t2, { "text-anchor": "middle", class: "lg" }); };
+        cell(0, 0, SS, COL.s, "✓ Correto", "probabilidade 1 − α", 0); cell(1, 0, GS, COL.g, "Erro tipo II (β)", "falso negativo", 1);
+        cell(0, 1, ES, COL.e, "Erro tipo I (α)", "falso positivo", 2); cell(1, 1, SS, COL.s, "✓ Poder (1 − β)", "detecta o efeito real", 3);
+        return;
+      }
+      const [dl, cr] = cfg[i];
+      const P = plot(svg, { x: 60, y: 40, w: 880, h: 280, xmin: -3.5, xmax: 7.5, ymin: 0, ymax: 0.44, xt: [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7], xl: "estatística do teste" });
+      const h0 = x => npdf(x), h1 = x => npdf(x, dl);
+      if (i === 2 || i === 6) area(svg, P, h0, cr, 7.5, { fill: COL.e, opacity: 0.6, class: "in" });
+      if (i === 3) area(svg, P, h1, -3.5, cr, { fill: COL.g, opacity: 0.5, class: "in" });
+      if (i >= 4) area(svg, P, h1, cr, 7.5, { fill: COL.s, opacity: 0.3, class: "in" });
+      if (i >= 5) area(svg, P, h1, -3.5, cr, { fill: COL.g, opacity: 0.4 });
+      curve(svg, P, h0, -3.5, 7.5, { stroke: COL.a }); curve(svg, P, h1, -3.5, 7.5, { stroke: COL.s });
+      vline(svg, P.X(cr), P.Y(0), P.Y(0.44), COL.ink, { "stroke-width": 2, "stroke-dasharray": "6 5" });
+      lab(svg, P.X(cr) + 6, P.Y(0.43), `limite (α = ${i === 6 ? "0,01" : "0,05"})`, COL.ink);
+      lab(svg, P.X(0), P.Y(0.405) + 26, "H₀", COL.a, "middle", "big"); lab(svg, P.X(dl), P.Y(0.405) + 26, "H₁", COL.s, "middle", "big");
+      if (i >= 4) lab(svg, P.X(dl + 1.6), P.Y(0.2), `poder ≈ ${fmt(Phi(dl - cr))}`, COL.s, "middle", "mid");
+      if (i === 3 || i >= 5) lab(svg, P.X(cr) - 10, P.Y(0.012), `β ≈ ${fmt(1 - Phi(dl - cr))}`, COL.g, "end");
+      if (i === 2 || i === 6) lab(svg, P.X(cr + 0.4), P.Y(0.035), `α = ${i === 6 ? "0,01" : "0,05"}`, COL.e);
+    });
+  });
+
+  // ===== Bloco 4 · tamanho de efeito =====
+  block("efe", () => {
+    const pA = pT2(0.03 * Math.sqrt(50000 / 2), 99998), pB = pT2(0.8 * Math.sqrt(10 / 2), 18);
+    const pair = (svg, x0, w, d, top, opt = {}) => { const P = plot(svg, { x: x0, y: top, w, h: opt.h || 250, xmin: 20, xmax: 100, ymin: 0, ymax: 0.045, xt: opt.xt || [20, 40, 60, 80, 100], xl: opt.xl });
+      area(svg, P, x => npdf(x, 60, 10), 20, 100, { fill: COL.a, opacity: 0.15 }); area(svg, P, x => npdf(x, 60 + 10 * d, 10), 20, 100, { fill: COL.e, opacity: 0.15 });
+      curve(svg, P, x => npdf(x, 60, 10), 20, 100, { stroke: COL.a }); curve(svg, P, x => npdf(x, 60 + 10 * d, 10), 20, 100, { stroke: COL.e, class: "in" }); return P; };
+    stepper("efe", [
+      { chip: "O que é d", text: "O p-valor responde “é compatível com H₀?”. O <b>tamanho de efeito</b> responde “<b>quanto?</b>”. Para duas médias, o mais usado é o <b>d de Cohen</b> = diferença de médias ÷ desvio padrão: a diferença medida em “DPs”." },
+      { chip: "Pequeno · médio · grande", text: "Referência de Cohen: <b>0,2 pequeno</b> · <b>0,5 médio</b> · <b>0,8 grande</b>. Mesmo um efeito “grande” tem muita sobreposição entre os grupos. O que é relevante depende da sua área." },
+      { chip: "Estudo A", text: `Estudo A: <b>n = 50.000</b> por grupo, diferença de 0,3 ponto (DP = 10) → <b>d = 0,03</b>, mas <b>${pfmt(pA)}</b>. Com n gigante, uma diferença minúscula vira “significativa”: <b>significativo, mas irrelevante</b>.` },
+      { chip: "Estudo B", text: `Estudo B: <b>n = 10</b> por grupo, diferença de 8 pontos → <b>d = 0,8</b> (grande), mas <b>p ≈ ${fmt(pB, 2)}</b>. Estudo pequeno, pouco poder: <b>não significativo ≠ sem efeito</b>.` },
+      { chip: "Reporte o trio", text: "Por isso, reporte sempre o trio: <b>tamanho de efeito</b> (quanto?) + <b>IC 95%</b> (com que precisão?) + <b>p-valor</b> (compatível com H₀?)." },
+    ], (svg, i) => {
+      if (i === 0) { const P = pair(svg, 60, 560, 0.8, 30, { xl: "nota" }), y = P.Y(0.0435);
+        vline(svg, P.X(60), P.Y(0), P.Y(0.04), COL.a, { "stroke-width": 2, "stroke-dasharray": "5 4" }); vline(svg, P.X(68), P.Y(0), P.Y(0.04), COL.e, { "stroke-width": 2, "stroke-dasharray": "5 4" });
+        el("line", { x1: P.X(60), x2: P.X(68), y1: y, y2: y, stroke: COL.ink, "stroke-width": 2.5, "marker-end": arrowDefs(svg, COL.ink), "marker-start": arrowDefs(svg, COL.ink) }, svg);
+        lab(svg, P.X(64), y - 14, "diferença = 8", COL.ink, "middle");
+        const yy = P.Y(npdf(70, 60, 10)); el("line", { x1: P.X(60), x2: P.X(50), y1: yy, y2: yy, stroke: COL.a, "stroke-width": 2.5, "marker-end": arrowDefs(svg, COL.a) }, svg); lab(svg, P.X(50) - 6, yy + 5, "DP = 10", COL.a, "end");
+        const g = el("g", { class: "in" }, svg); el("rect", { x: 660, y: 70, width: 300, height: 170, rx: 14, fill: AS, stroke: COL.a, "stroke-width": 2 }, g);
+        lab(g, 810, 112, "d de Cohen", COL.a, "middle"); lab(g, 810, 162, "d = 8 / 10", COL.ink, "middle", "big"); lab(g, 810, 210, "= 0,8 (grande)", COL.e, "middle", "mid"); return; }
+      if (i === 1) { [[0.2, "pequeno"], [0.5, "médio"], [0.8, "grande"]].forEach(([d, t], k) => { const x0 = 40 + k * 325;
+          pair(svg, x0, 280, d, 50, { h: 230, xt: [20, 60, 100] }); lab(svg, x0 + 140, 34, `d = ${fmt(d, 1)} · ${t}`, COL.ink, "middle"); }); return; }
+      if (i === 2 || i === 3) { const d = i === 2 ? 0.03 : 0.8, p = i === 2 ? pA : pB; pair(svg, 60, 560, d, 30, { xl: "nota" });
+        const g = el("g", { class: "in" }, svg), good = i === 3; el("rect", { x: 660, y: 60, width: 300, height: 200, rx: 14, fill: good ? GS : ES, stroke: good ? COL.g : COL.e, "stroke-width": 2 }, g);
+        lab(g, 810, 98, i === 2 ? "Estudo A · n = 50.000" : "Estudo B · n = 10", COL.ink, "middle"); lab(g, 810, 150, `d = ${fmt(d, d < 0.1 ? 2 : 1)}`, COL.a, "middle", "big");
+        lab(g, 810, 196, p < 0.001 ? "p < 0,001" : `p ≈ ${fmt(p, 2)}`, COL.e, "middle", "big"); txt(g, 810, 236, i === 2 ? "significativo, irrelevante" : "relevante, não significativo", { "text-anchor": "middle", class: "lg" }); return; }
+      [["Tamanho de efeito", "quanto?", "ex.: d = 0,8", COL.e, ES], ["IC 95%", "com que precisão?", "ex.: [0,1; 1,5]", COL.a, AS], ["p-valor", "compatível com H₀?", "ex.: p = 0,03", COL.s, SS]].forEach(([t, q, e, c, f], k) => {
+        const g = el("g", { class: "in", style: `animation-delay:${k * 150}ms` }, svg), x = 40 + k * 320;
+        el("rect", { x, y: 80, width: 290, height: 200, rx: 16, fill: f, stroke: c, "stroke-width": 2.5 }, g); lab(g, x + 145, 140, t, c, "middle", "mid"); txt(g, x + 145, 186, q, { "text-anchor": "middle", class: "lg" }); txt(g, x + 145, 230, e, { "text-anchor": "middle", class: "sm" });
+        if (k < 2) lab(g, x + 305, 190, "+", COL.ink, "middle", "big"); });
     });
   });
 
@@ -1334,16 +1565,15 @@
     const z = a => { const m = mean(a), s = sd(a); return a.map(v => (v - m) / s).sort((p, q) => p - q); };
     const N1 = z(Array.from({ length: n }, () => gauss(r))), N2 = z(Array.from({ length: n }, () => Math.exp(0.8 * gauss(r))));
     const th = Array.from({ length: n }, (_, i) => qnorm((i + 0.5) / n));
-    const fx = Array.from({ length: 60 }, () => 10 * r()), e1 = fx.map(() => gauss(r)), e2 = fx.map(v => gauss(r) * (0.15 + 0.3 * v));
-    const panels = [["Q-Q: ≈ Normal ✓", COL.s], ["Q-Q: assimétrico ✗", COL.e], ["Resíduos sem padrão ✓", COL.s], ["Resíduos em funil ✗", COL.e]];
-    panels.forEach(([t, c], k) => {
-      const x0 = 40 + k * 245, qq = k < 2;
-      const P = plot(svg, qq ? { x: x0, y: 38, w: 200, h: 190, xmin: -3, xmax: 3, ymin: -3, ymax: 4, yaxis: true, xl: "teórico (Normal)" } : { x: x0, y: 38, w: 200, h: 190, xmin: 0, xmax: 10, ymin: -4.2, ymax: 4.2, yaxis: true, xl: "valor ajustado" });
+    const panels = [["Histograma: sino ✓", COL.s, N1, false], ["Q-Q: sobre a reta ✓", COL.s, N1, true], ["Histograma: cauda longa ✗", COL.e, N2, false], ["Q-Q: curva nas pontas ✗", COL.e, N2, true]];
+    panels.forEach(([t, c, D, qq], k) => {
+      const x0 = 40 + k * 245;
       txt(svg, x0 + 100, 24, t, { class: "ttl", "text-anchor": "middle", fill: c });
-      if (qq) { el("line", { x1: P.X(-3), y1: P.Y(-3), x2: P.X(3), y2: P.Y(3), stroke: COL.ink, "stroke-width": 2, "stroke-dasharray": "6 4" }, svg);
-        (k === 0 ? N1 : N2).forEach((v, i) => el("circle", { cx: P.X(th[i]), cy: P.Y(Math.min(4, v)), r: 4, fill: c, opacity: 0.85 }, svg)); }
-      else { hline(svg, P.X(0), P.X(10), P.Y(0), COL.ink, { "stroke-width": 1.5, "stroke-dasharray": "6 4" });
-        fx.forEach((v, i) => el("circle", { cx: P.X(v), cy: P.Y(Math.max(-4.2, Math.min(4.2, (k === 2 ? e1 : e2)[i]))), r: 4, fill: c, opacity: 0.8 }, svg)); }
+      if (qq) { const P = plot(svg, { x: x0, y: 38, w: 200, h: 180, xmin: -3, xmax: 3, ymin: -3, ymax: 4, yaxis: true, xl: "previsto pela Normal" });
+        el("line", { x1: P.X(-3), y1: P.Y(-3), x2: P.X(3), y2: P.Y(3), stroke: COL.ink, "stroke-width": 2, "stroke-dasharray": "6 4" }, svg);
+        D.forEach((v, i) => el("circle", { cx: P.X(th[i]), cy: P.Y(Math.min(4, v)), r: 4, fill: c, opacity: 0.85 }, svg)); }
+      else { const dd = dens(D, -3, 4, 0.5), P = plot(svg, { x: x0, y: 38, w: 200, h: 180, xmin: -3, xmax: 4, ymin: 0, ymax: 0.75, xl: "valor (padronizado)" });
+        bars(svg, P, dd, -3, 0.5); curve(svg, P, npdf, -3, 4, { stroke: c, "stroke-width": 2.5 }, 80); }
     });
   });
 
@@ -1386,18 +1616,29 @@
     const H = (svg, s) => lab(svg, 500, 34, s, COL.ink, "middle", "big");
     stepper("h2", [
       { chip: "t de Student", text: `<b>t de Student</b> (2 grupos independentes). <b>H₀: as médias são iguais</b>. O teste compara a distância entre as médias com a variação dentro dos grupos: t = ${fmt(tS, 2)}, ${pfmt(pS)}.` },
-      { chip: "Mann-Whitney", text: `<b>Mann-Whitney</b>: junta tudo, ordena e olha só os <b>postos</b>. <b>H₀: as duas distribuições são iguais</b> — sorteando um valor de cada grupo, cada um tem 50% de chance de ser o maior. Aqui os postos de B se concentram à direita (soma A = ${rkA}, B = ${rkB}).` },
+      { chip: "Mann-Whitney", text: `<b>Mann-Whitney</b>: junta tudo, ordena e trabalha só com as <b>posições</b> (postos). <b>H₀: as duas distribuições são iguais</b> — e, se têm a mesma forma, isso é o mesmo que <b>medianas iguais</b> (Md<sub>A</sub> = Md<sub>B</sub>). Falar de posições é falar de <b>mediana</b>. Aqui os postos de B se concentram à direita (soma A = ${rkA}, B = ${rkB}).` },
       { chip: "t pareado", text: `<b>t pareado</b>: os mesmos 10 pacientes medidos antes e depois. Analisamos as <b>diferenças</b> (depois − antes). <b>H₀: a média das diferenças é 0</b>. Aqui: média = ${fmt(mean(dif), 1)} mmHg, ${pfmt(pP)}.` },
-      { chip: "Wilcoxon", text: `<b>Wilcoxon</b>: ordena as diferenças pelo tamanho (sem sinal) e soma os postos das positivas e das negativas. <b>H₀: as diferenças se distribuem simetricamente em torno de 0</b> (mediana = 0) — as duas somas deveriam se equilibrar. Aqui: W₊ = ${Wp}, W₋ = ${Wm}.` },
+      { chip: "Wilcoxon", text: `<b>Wilcoxon</b>: ordena as diferenças pelo tamanho (sem sinal) e soma os postos das positivas e das negativas. <b>H₀: as diferenças se distribuem simetricamente em torno de 0</b> (mediana das diferenças = 0) — as duas somas deveriam se equilibrar. Aqui: W₊ = ${Wp}, W₋ = ${Wm}.` },
+      { chip: "Como aparece no artigo", text: "Num artigo, isso vira uma <b>tabela</b>: o teste <b>paramétrico</b> vem com <b>média ± DP</b>; o <b>não-paramétrico</b>, com <b>mediana [IQR]</b> — o resumo combina com a hipótese de cada teste." },
     ], (svg, i) => {
+      if (i === 4) { const UA = rkA - 78, U = Math.min(UA, 144 - UA), pU = 2 * (1 - Phi(Math.abs(UA - 72) / Math.sqrt(300)));
+        const W = Math.min(Wp, Wm), pW = 2 * (1 - Phi(Math.abs(Wp - 27.5) / Math.sqrt(96.25)));
+        paperTable(svg, "Tabela 1. Nota por grupo e pressão antes × depois do tratamento", [30, 330, 530, 740, 975], [
+          { head: ["", "Grupo A (n = 12)", "Grupo B (n = 12)", "Teste", "p"], rows: [["Nota · média ± DP", COL.a, mSd(A), mSd(B), `t(22) = ${fmt(tS, 2)}`, pnum(pS)], ["Nota · mediana [IQR]", COL.s, mdIqr(A), mdIqr(B), `U = ${U}`, pnum(pU)]] },
+          { head: ["", "Antes (n = 10)", "Depois (n = 10)", "Teste", "p"], rows: [["Pressão · média ± DP", COL.a, mSd(pre), mSd(post), `t(9) = ${fmt(tP, 2)}`, pnum(pP)], ["Pressão · mediana [IQR]", COL.s, mdIqr(pre), mdIqr(post), `W = ${W}`, pnum(pW)]] }],
+          ["t: teste t de Student / pareado · U: Mann-Whitney · W: Wilcoxon (aproximação normal) · IQR: intervalo interquartil.", "Azul = paramétrico (média ± DP) · verde = não-paramétrico (mediana [IQR])."]);
+        return; }
       if (i <= 1) {
-        H(svg, i === 0 ? "H₀: μ_A = μ_B" : "H₀: P(A > B) = 0,5");
+        H(svg, i === 0 ? "H₀: μ_A = μ_B" : "H₀: mesma distribuição (⇒ Md_A = Md_B)");
         const P = plot(svg, { x: 120, y: 60, w: 820, h: 200, xmin: 35, xmax: 95, ymin: 0, ymax: 1, xt: [40, 50, 60, 70, 80, 90] });
         [[A, jA, 110, "Grupo A", COL.a], [B, jB, 200, "Grupo B", COL.e]].forEach(([D, J, y0, nm, c]) => { lab(svg, 30, y0 + 6, nm, c);
           D.forEach((v, k) => el("circle", { cx: P.X(v), cy: y0 + J[k], r: 7, fill: c, opacity: i === 1 ? 0.25 : 0.85 }, svg));
           if (i === 0) { vline(svg, P.X(mean(D)), y0 - 28, y0 + 28, COL.ink, { "stroke-width": 3.5 }); } });
         if (i === 0) { const g = el("g", { class: "in" }, svg); el("line", { x1: P.X(mean(A)), x2: P.X(mean(B)), y1: 155, y2: 155, stroke: COL.ink, "stroke-width": 2.5, "marker-end": arrowDefs(svg, COL.ink), "marker-start": arrowDefs(svg, COL.ink) }, g);
           lab(g, (P.X(mean(A)) + P.X(mean(B))) / 2, 148, "diferença de médias", COL.ink, "middle"); }
+        if (i === 1) { [[A, 110, COL.a, "Md_A"], [B, 200, COL.e, "Md_B"]].forEach(([D, y0, c, t]) => { vline(svg, P.X(median(D)), y0 - 30, y0 + 30, c, { "stroke-width": 4, class: "in" }); lab(svg, P.X(median(D)) + 8, y0 - 18, `${t} = ${fmt(median(D), 1)}`, c); });
+          const g = el("g", { class: "in" }, svg); el("line", { x1: P.X(median(A)), x2: P.X(median(B)), y1: 155, y2: 155, stroke: COL.ink, "stroke-width": 2.5, "marker-end": arrowDefs(svg, COL.ink), "marker-start": arrowDefs(svg, COL.ink) }, g);
+          lab(g, (P.X(median(A)) + P.X(median(B))) / 2, 148, "diferença de medianas", COL.ink, "middle"); }
         if (i === 1) { const y0 = 320; lab(svg, 30, y0 + 6, "postos", COL.ink);
           allv.forEach(([v, g], k) => { const x = 140 + k * 33.5, c = g ? COL.e : COL.a, gg = el("g", { class: "in", style: `animation-delay:${k * 30}ms` }, svg);
             el("rect", { x: x - 15, y: y0 - 15, width: 30, height: 30, rx: 6, fill: c }, gg); txt(gg, x, y0 + 5, String(k + 1), { "text-anchor": "middle", fill: "#fff", style: "font-size:13px;font-weight:700" }); }); }
@@ -1437,15 +1678,22 @@
       { chip: "A pergunta", text: "Três grupos (ex.: três dietas). <b>H₀: as três médias são iguais</b> (μ₁ = μ₂ = μ₃). H₁: <b>pelo menos uma</b> média difere. Por que não fazer vários testes t? Porque cada teste extra aumenta o risco de um falso positivo." },
       { chip: "Variação entre grupos", text: "Variação <b>entre</b> grupos: quão longe as médias dos grupos (traços pretos) estão da <b>média geral</b> (linha tracejada). É o “sinal”." },
       { chip: "Variação dentro", text: "Variação <b>dentro</b> dos grupos: quão espalhados os dados estão em torno da média do <b>seu</b> grupo. É o “ruído”." },
-      { chip: "F = entre ÷ dentro", text: () => `<b>F = variação entre ÷ variação dentro</b>. Se H₀ é verdadeira, F fica perto de 1. À esquerda, grupos sobrepostos: F = ${fmt(R0.F, 1)} (${pfmt(R0.p)}). À direita, médias bem separadas: F = ${fmt(RA.F, 1)} (${pfmt(RA.p)}) → rejeitamos H₀.` },
-      { chip: "Kruskal-Wallis", text: "<b>Kruskal-Wallis</b>: a mesma ideia com <b>postos</b> (1 a 30). <b>H₀: os três grupos vêm da mesma distribuição</b> (postos médios iguais). Se as mesmas pessoas são medidas em 3+ condições, as versões pareadas são a <b>ANOVA de medidas repetidas</b> e o teste de <b>Friedman</b>." },
+      { chip: "Dois cenários", text: () => `A estatística <b>F</b> resume sinal e ruído num número: quanto o sinal (entre) supera o ruído (dentro). Se H₀ é verdadeira, F fica perto de 1. Compare dois cenários. <b>Esquerda</b>, grupos sobrepostos: F = ${fmt(R0.F, 1)} (${pfmt(R0.p)}). <b>Direita</b>, médias bem separadas: F = ${fmt(RA.F, 1)} (${pfmt(RA.p)}) → rejeitamos H₀.` },
+      { chip: "Kruskal-Wallis", text: "<b>Kruskal-Wallis</b> troca os valores pelas <b>posições</b> (postos 1 a 30) e trabalha nesse espaço. <b>H₀: os três grupos vêm da mesma distribuição</b> — se as formas são parecidas, isso significa <b>medianas iguais</b>. Postos médios muito diferentes → rejeitamos H₀." },
+      { chip: "Como aparece no artigo", text: "No artigo: média ± DP com a ANOVA, mediana [IQR] com o Kruskal-Wallis, e a estatística com seus graus de liberdade: <b>F(2, 27)</b> e <b>H(2)</b>." },
     ], (svg, i) => {
+      if (i === 5) { const N = 30, H = 12 / (N * (N + 1)) * sum(RG.map(g => sum(g) ** 2 / g.length)) - 3 * (N + 1), pH = pChi(H, 2);
+        const y = paperTable(svg, "Tabela 2. Resposta por dieta", [30, 260, 360, 600, 975], [
+          { head: ["Dieta", "n", "média ± DP", "mediana [IQR]", "posto médio"], rows: G.map((g, k) => [`Dieta ${k + 1}`, KC[k], "10", mSd(g), mdIqr(g), fmt(mean(RG[k]), 1)]) }], []);
+        lab(svg, 30, y + 40, `ANOVA: F(2, 27) = ${fmt(RA.F, 1)}, p ${RA.p < 0.001 ? "< 0,001" : "= " + fmt(RA.p, 3)}`, COL.a); lab(svg, 520, y + 40, `Kruskal-Wallis: H(2) = ${fmt(H, 1)}, p ${pH < 0.001 ? "< 0,001" : "= " + fmt(pH, 3)}`, COL.s);
+        txt(svg, 30, y + 74, "Próximo passo (lâmina seguinte): quais dietas diferem? → post-hoc.", { class: "lg" }); return; }
       if (i === 3) { [[G0, R0, 70, "Grupos sobrepostos"], [G, RA, 560, "Médias separadas"]].forEach(([GG, RR, x0, t]) => {
           const P = plot(svg, { x: x0, y: 40, w: 380, h: 280, xmin: 0.4, xmax: 3.6, ymin: 30, ymax: 90, yaxis: true, yt: [40, 60, 80], xt: [[1, "1"], [2, "2"], [3, "3"]] });
-          txt(svg, x0, 26, t, { class: "ttl" }); strip(svg, P, GG, { r: 5 }); lab(svg, x0 + 370, 64, `F = ${fmt(RR.F, 1)}`, RR.F > 5 ? COL.e : COL.s, "end", "big"); }); return; }
+          txt(svg, x0, 26, t + (RR.F > 5 ? " → F grande" : " → F pequeno"), { class: "ttl" }); strip(svg, P, GG, { r: 5 }); lab(svg, x0 + 370, 64, `F = ${fmt(RR.F, 1)}`, RR.F > 5 ? COL.e : COL.s, "end", "big"); }); return; }
       if (i === 4) { const P = plot(svg, { x: 120, y: 20, w: 620, h: 300, xmin: 0.4, xmax: 3.6, ymin: 0, ymax: 31, yaxis: true, yt: [1, 10, 20, 30], xt: [[1, "Grupo 1"], [2, "Grupo 2"], [3, "Grupo 3"]], yl: "posto" });
         strip(svg, P, RG); RG.forEach((g, k) => lab(svg, P.X(k + 1.3), P.Y(mean(g)) + 6, `posto médio ${fmt(mean(g), 1)}`, KC[k]));
-        lab(svg, 960, 60, "H₀: mesma distribuição", COL.ink, "end", "mid"); return; }
+        lab(svg, 975, 60, "H₀: mesma distribuição", COL.ink, "end", "mid"); txt(svg, 975, 90, "(⇒ medianas iguais)", { "text-anchor": "end", class: "lg" });
+        txt(svg, 975, 130, "espaço das posições:", { "text-anchor": "end", class: "lg" }); txt(svg, 975, 154, "só importa a ordem", { "text-anchor": "end", class: "lg" }); return; }
       const P = plot(svg, { x: 120, y: 20, w: 620, h: 300, xmin: 0.4, xmax: 3.6, ymin: 30, ymax: 90, yaxis: true, yt: [30, 40, 50, 60, 70, 80, 90], xt: [[1, "Grupo 1"], [2, "Grupo 2"], [3, "Grupo 3"]], yl: "resposta" });
       if (i >= 1) { hline(svg, P.X(0.4), P.X(3.6), P.Y(RA.gm), COL.k, { "stroke-width": 2, "stroke-dasharray": "7 5" }); lab(svg, P.X(3.6), P.Y(RA.gm) - 8, "média geral", COL.k, "end"); }
       strip(svg, P, G, { within: i === 2 });
@@ -1469,7 +1717,20 @@
       { chip: "Por que corrigir", text: "Com 3 pares, cada um com 5% de risco de falso positivo, o risco de <b>pelo menos um</b> chega a ~14% (com 6 grupos, 15 pares → ~54%). Os testes <i>post-hoc</i> <b>ajustam</b> para manter o risco total em 5%." },
       { chip: "Resultado", text: () => `Resultado (Tukey): ${pairs.map(p => `${names[p.a]}–${names[p.b]} ${p.sig ? "<b>diferem</b>" : "não diferem"}`).join(" · ")}. Convenção das <b>letras</b>: grupos com a mesma letra não diferem entre si.` },
       { chip: "Tukey × Dunn", text: "Depois de uma <b>ANOVA</b> → teste de <b>Tukey</b> (compara médias). Depois de um <b>Kruskal-Wallis</b> → teste de <b>Dunn</b> (compara postos, com correção de Holm ou Bonferroni). A lógica é a mesma: H₀ de igualdade para cada par." },
+      { chip: "As letras no artigo", text: "Nos artigos, o <i>post-hoc</i> aparece como <b>letras</b>: grupos que <b>compartilham</b> uma letra não diferem. Quem tem “<b>ab</b>” não difere nem dos “a” nem dos “b”; já “a” e “b” diferem entre si." },
     ], (svg, i) => {
+      if (i === 5) {
+        paperTable(svg, "Tabela 3. Resposta por grupo", [30, 150, 250, 430], [
+          { head: ["Grupo", "n", "média ± DP", ""], rows: G.map((g, k) => [names[k], KC[k], "10", mSd(g) + "  " + letters[k], ""]) }],
+          ["Médias seguidas da mesma letra não", "diferem entre si (Tukey, α = 0,05)."]);
+        // exemplo ilustrativo com “ab”: gráfico de barras como nas figuras de artigos
+        const Q = plot(svg, { x: 560, y: 40, w: 400, h: 260, xmin: 0.4, xmax: 4.6, ymin: 0, ymax: 25, yaxis: true, yt: [0, 5, 10, 15, 20, 25], xt: [[1, "T1"], [2, "T2"], [3, "T3"], [4, "T4"]], yl: "resposta (exemplo)" });
+        [[12.1, 1.4, "a"], [13.6, 1.5, "ab"], [15.2, 1.3, "b"], [19.4, 1.6, "c"]].forEach(([m, e, l], k) => { const g = el("g", { class: "in", style: `animation-delay:${k * 120}ms` }, svg);
+          el("rect", { x: Q.X(k + 0.7), y: Q.Y(m), width: Q.X(0.6) - Q.X(0), height: Q.Y(0) - Q.Y(m), fill: l === "ab" ? AL : KC[k], rx: 3, opacity: 0.85 }, g);
+          vline(g, Q.X(k + 1), Q.Y(m - e), Q.Y(m + e), COL.ink, { "stroke-width": 2 }); hline(g, Q.X(k + 0.9), Q.X(k + 1.1), Q.Y(m + e), COL.ink, { "stroke-width": 2 });
+          lab(g, Q.X(k + 1), Q.Y(m + e) - 10, l, COL.ink, "middle", "mid"); });
+        txt(svg, 760, 368, "T2 (ab) não difere de T1 (a) nem de T3 (b)", { "text-anchor": "middle", class: "lg" });
+        return; }
       const P = plot(svg, { x: 90, y: 30, w: 380, h: 300, xmin: 0.4, xmax: 3.6, ymin: 35, ymax: 75, yaxis: true, yt: [40, 50, 60, 70], xt: [[1, "A"], [2, "B"], [3, "C"]] });
       G.forEach((g, k) => { g.forEach((v, j) => el("circle", { cx: P.X(k + 1 + J[k][j]), cy: P.Y(v), r: 5.5, fill: KC[k], opacity: 0.8 }, svg)); hline(svg, P.X(k + 0.75), P.X(k + 1.25), P.Y(mean(g)), COL.ink, { "stroke-width": 3.5 });
         if (i >= 3) lab(svg, P.X(k + 1), P.Y(Math.max(...g)) - 14, letters[k], COL.ink, "middle", "big"); });
@@ -1644,7 +1905,7 @@
     stepper("rm", [
       { chip: "Tudo junto", text: `Cinco pessoas, cada uma medida <b>6 vezes</b> (ex.: horas de sono × desempenho). Juntando os 30 pontos, a correlação global é <b>r = ${fmt(rg)}</b>: parece que mais x significa menos y…` },
       { chip: "Por sujeito", text: "Colorindo por pessoa, vemos que os pontos <b>não são independentes</b>: cada pessoa forma o seu próprio “aglomerado”. A correlação global mistura diferenças <b>entre</b> pessoas com a relação <b>dentro</b> de cada pessoa." },
-      { chip: "Dentro do sujeito", text: `A <b>correlação de medidas repetidas</b> (rmcorr) remove as diferenças entre pessoas e mede a relação comum <b>dentro</b> de cada uma (retas paralelas): <b>r<sub>rm</sub> = ${fmt(rrm)}</b> — o sinal se inverteu!` },
+      { chip: "Dentro do sujeito", text: `A <b>correlação de medidas repetidas</b> (rmcorr) remove as diferenças entre pessoas e mede a relação comum <b>dentro</b> de cada uma: uma reta por pessoa, todas com a mesma inclinação (como na regressão): <b>r<sub>rm</sub> = ${fmt(rrm)}</b> — o sinal se inverteu!` },
       { chip: "Moral", text: "Correlação <b>entre</b> sujeitos ≠ correlação <b>dentro</b> do sujeito (paradoxo de Simpson). Dados pareados pedem métodos pareados. Para <b>concordância</b> entre dois métodos que medem a mesma coisa, use ICC ou Bland-Altman — não r." },
     ], (svg, i) => {
       const P = plot(svg, { x: 120, y: 20, w: 560, h: 320, xmin: 0, xmax: 10, ymin: 2, ymax: 15, yaxis: true, xl: "x (ex.: horas de sono)", yl: "y (ex.: desempenho)" });
@@ -1688,17 +1949,27 @@
       { chip: "Predição ŷ", text: `Subimos até a curva e lemos o valor: <b>ŷ = ${fmt(y0, 1)}</b>. Essa é a <b>predição</b> pontual.` },
       { chip: "IC 95%", text: `Mas ŷ tem incerteza. O <b>IC 95%</b> para o crescimento <b>médio</b> com essa dose é <b>[${fmt(y0 - ci(x0), 1)}; ${fmt(y0 + ci(x0), 1)}]</b>. A faixa azul mostra esse IC ao longo de x: mais estreita onde há mais dados, mais larga nas pontas.` },
       { chip: "Planta individual", text: `Para prever uma <b>planta individual</b> (não a média), somamos a variação natural entre plantas: o <b>intervalo de predição</b> é bem mais largo, <b>[${fmt(y0 - pi(x0), 1)}; ${fmt(y0 + pi(x0), 1)}]</b>.` },
+      { chip: "Resíduos", text: "<b>Resíduo</b> = observado − previsto (y − ŷ): a distância vertical de cada ponto até a curva. É a parte que o modelo <b>não</b> explicou." },
+      { chip: "Checar resíduos", text: "Os resíduos devem formar uma <b>nuvem sem padrão</b> em torno de 0 (esquerda). Curvas ou “funis” (direita) indicam que o modelo ou seus pressupostos falharam. Vale também para a ANOVA, que é um modelo do mesmo tipo." },
     ], (svg, i) => {
+      if (i === 7) { const rr = R(37), fx = Array.from({ length: 60 }, () => 10 * rr()), e2 = fx.map(v => gauss(rr) * (0.1 + 0.19 * v));
+        [[80, "Resíduos sem padrão ✓", COL.s, x.map(v => fit(v)), y.map((v, k) => (v - fit(x[k])) / Math.sqrt(s2)), [20, 100]], [560, "Resíduos em funil ✗", COL.e, fx, e2, [0, 10]]].forEach(([x0, t, c, X, E, [a, b]]) => {
+          txt(svg, x0 + 380, 22, t, { class: "ttl", fill: c, "text-anchor": "end" });
+          const Q = plot(svg, { x: x0, y: 46, w: 380, h: 274, xmin: a, xmax: b, ymin: -4.2, ymax: 4.2, yaxis: true, yt: [-4, -2, 0, 2, 4], xl: "valor previsto (ŷ)", yl: "resíduo" });
+          hline(svg, Q.X(a), Q.X(b), Q.Y(0), COL.ink, { "stroke-width": 1.5, "stroke-dasharray": "6 4" });
+          X.forEach((v, k) => el("circle", { cx: Q.X(v), cy: Q.Y(Math.max(-4.2, Math.min(4.2, E[k]))), r: 5, fill: c, opacity: 0.8, class: "in" }, svg)); });
+        return; }
       const P = plot(svg, { x: 80, y: 20, w: 860, h: 290, xmin: 0, xmax: 10, ymin: 0, ymax: 100, yaxis: true, xt: [0, 2, 4, 6, 8, 10], yt: [0, 20, 40, 60, 80, 100], grid: [20, 40, 60, 80, 100], xl: "dose de fertilizante", yl: "crescimento" });
       if (i === 5) el("path", { d: bandPath(P, v => fit(v) - pi(v), v => fit(v) + pi(v), 0, 10), fill: COL.a, opacity: 0.08, class: "in" }, svg);
-      if (i >= 4) el("path", { d: bandPath(P, v => fit(v) - ci(v), v => fit(v) + ci(v), 0, 10), fill: COL.a, opacity: 0.22, class: i === 4 ? "in" : null }, svg);
+      if (i === 4 || i === 5) el("path", { d: bandPath(P, v => fit(v) - ci(v), v => fit(v) + ci(v), 0, 10), fill: COL.a, opacity: 0.22, class: i === 4 ? "in" : null }, svg);
+      if (i === 6) x.forEach((v, k) => el("line", { x1: P.X(v), x2: P.X(v), y1: P.Y(y[k]), y2: P.Y(fit(v)), stroke: COL.e, "stroke-width": 2.5, class: "in" }, svg));
       x.forEach((v, k) => el("circle", { cx: P.X(v), cy: P.Y(y[k]), r: 6, fill: "#495057", opacity: 0.75 }, svg));
       if (i >= 1) curve(svg, P, fit, 0, 10, { stroke: COL.a, "stroke-width": 3.5, class: i === 1 ? "in" : null });
-      if (i >= 2) { vline(svg, P.X(x0), P.Y(0), P.Y(98), COL.e, { "stroke-width": 2, "stroke-dasharray": "6 5" }); lab(svg, P.X(x0) + 8, P.Y(6), `x₀ = ${fmt(x0, 1)}`, COL.e); }
+      if (i >= 2 && i <= 5) { vline(svg, P.X(x0), P.Y(0), P.Y(98), COL.e, { "stroke-width": 2, "stroke-dasharray": "6 5" }); lab(svg, P.X(x0) + 8, P.Y(6), `x₀ = ${fmt(x0, 1)}`, COL.e); }
       if (i === 2) lab(svg, P.X(x0), P.Y(95), "?", COL.e, "middle", "big");
-      if (i >= 3) { hline(svg, P.X(0), P.X(x0), P.Y(y0), COL.e, { "stroke-width": 2, "stroke-dasharray": "6 5" }); el("circle", { cx: P.X(x0), cy: P.Y(y0), r: 9, fill: COL.e, class: i === 3 ? "in" : null }, svg);
+      if (i >= 3 && i <= 5) { hline(svg, P.X(0), P.X(x0), P.Y(y0), COL.e, { "stroke-width": 2, "stroke-dasharray": "6 5" }); el("circle", { cx: P.X(x0), cy: P.Y(y0), r: 9, fill: COL.e, class: i === 3 ? "in" : null }, svg);
         lab(svg, P.X(0.2), P.Y(y0) - 10, `ŷ = ${fmt(y0, 1)}`, COL.e); }
-      if (i >= 4) { const g = el("g", { class: "in" }, svg), xx = P.X(x0) + 26;
+      if (i === 4 || i === 5) { const g = el("g", { class: "in" }, svg), xx = P.X(x0) + 26;
         [[ci(x0), COL.a, 0, "IC 95%"], ...(i === 5 ? [[pi(x0), COL.p, 26, "predição individual"]] : [])].forEach(([h, c, off, t]) => {
           vline(g, xx + off, P.Y(y0 - h), P.Y(y0 + h), c, { "stroke-width": 4 }); hline(g, xx + off - 7, xx + off + 7, P.Y(y0 - h), c, { "stroke-width": 3 }); hline(g, xx + off - 7, xx + off + 7, P.Y(y0 + h), c, { "stroke-width": 3 });
           lab(g, P.X(0.3), P.Y(off ? 88 : 96), `${t}: [${fmt(y0 - h, 1)}; ${fmt(y0 + h, 1)}]`, c); }); }
@@ -1900,7 +2171,7 @@
       { chip: "PC2", text: "A <b>PC2</b> é perpendicular (não correlacionada) à PC1 e captura a variância que sobrou." },
       { chip: "Projetar", text: "Cada ponto é <b>projetado</b> na PC1: trocamos 2 números por 1 (o <b>escore</b> na componente), perdendo pouca informação." },
       { chip: "Variância explicada", text: `A PC1 sozinha explica <b>${fmt(e1 * 100, 0)}%</b> da variância total; a PC2, ${fmt(e2 * 100, 0)}%. Com 2 variáveis o ganho é modesto…` },
-      { chip: "Dezenas de variáveis", text: "…mas com dezenas de variáveis correlacionadas (questionários, genes, sinais), poucas componentes costumam reter a maior parte da variância (exemplo: <b>3 de 10 ≈ 71%</b>). Atenção: a PCA <b>resume</b> variância; ela <b>não</b> modela construtos latentes — isso é a análise fatorial (próxima lâmina)." },
+      { chip: "Dezenas de variáveis", text: "…mas com dezenas de variáveis correlacionadas (questionários, genes, sinais), poucas componentes costumam reter a maior parte da variância (exemplo: <b>3 de 10 ≈ 71%</b>). Lembre: a PCA <b>resume</b> variância; quem <b>modela</b> construtos latentes é a análise fatorial (próxima lâmina)." },
     ], (svg, i) => {
       const P = plot(svg, { x: 40, y: 15, w: 350, h: 350, xmin: -3.3, xmax: 3.3, ymin: -3.3, ymax: 3.3, noX: true });
       el("line", { x1: P.X(-3.3), x2: P.X(3.3), y1: P.Y(0), y2: P.Y(0), stroke: "#ced4da" }, svg); el("line", { x1: P.X(0), x2: P.X(0), y1: P.Y(-3.3), y2: P.Y(3.3), stroke: "#ced4da" }, svg);
@@ -1939,6 +2210,85 @@
     ys.forEach((y, k) => { arrow(svg, 712, 142 + (y - 142) * 0.25, 828, y, COL.s, 2.5); el("rect", { x: 830, y: y - 20, width: 70, height: 40, rx: 6, fill: "#fff", stroke: COL.ink, "stroke-width": 2 }, svg);
       txt(svg, 865, y + 6, `item ${k + 1}`, { "text-anchor": "middle", class: "lg" }); arrow(svg, 958, y, 903, y, COL.k, 2); el("circle", { cx: 970, cy: y, r: 13, fill: "#fff", stroke: COL.k, "stroke-width": 2 }, svg); txt(svg, 970, y + 5, `e${k + 1}`, { "text-anchor": "middle", class: "sm" }); });
     txt(svg, 760, 262, "cada item = fator + erro próprio (e)", { "text-anchor": "middle", class: "albl" });
+  });
+
+  // ===== Bloco 8 · variáveis latentes (figura fixa) =====
+  block("lat", () => {
+    const svg = $("lat-svg"), soft = { style: "paint-order:stroke;stroke:#fff;stroke-width:5px" };
+    lab(svg, 20, 26, "Uma causa escondida, várias “sombras” medidas", COL.ink);
+    const O = [300, 150], ro = 26, wx = 420, lamps = [75, 150, 225];
+    lamps.forEach((yl, k) => { const ys = yl + (O[1] - yl) * (wx - 40) / (O[0] - 40), rs = ro * (wx - 40) / (O[0] - 40);
+      el("path", { d: `M40 ${yl}L${wx} ${ys - rs}L${wx} ${ys + rs}Z`, fill: COL.g, opacity: 0.1 }, svg);
+      el("circle", { cx: 40, cy: yl, r: 13, fill: GS, stroke: COL.g, "stroke-width": 2.5 }, svg);
+      el("rect", { x: wx, y: ys - rs, width: 16, height: 2 * rs, rx: 4, fill: KC[k], opacity: 0.85 }, svg);
+      lab(svg, wx + 26, ys + 6, `medida ${k + 1}`, KC[k]); });
+    el("rect", { x: wx - 2, y: 40, width: 2, height: 240, fill: "#adb5bd" }, svg);
+    el("circle", { cx: O[0], cy: O[1], r: ro, fill: SS, stroke: COL.s, "stroke-width": 2.5, "stroke-dasharray": "5 4" }, svg);
+    txt(svg, O[0], O[1] + 8, "?", { "text-anchor": "middle", class: "big", fill: COL.s });
+    lab(svg, O[0], O[1] + 52, "latente", COL.s, "middle", null); txt(svg, O[0], O[1] + 72, "(não se vê)", Object.assign({ "text-anchor": "middle", class: "sm" }, soft));
+    txt(svg, 40, 290, "luzes = ângulos de medição", { class: "sm" });
+    vline(svg, 535, 20, 285, "#e3e1da", { "stroke-width": 2 });
+    lab(svg, 560, 26, "Projetar: de muitas variáveis a poucas dimensões", COL.ink);
+    const r = R(97), cl = [[-1.2, 0.8], [1.3, 0.9], [0, -1.1]];
+    for (let j = 0; j < 8; j++) { const x = 570 + j * 20; vline(svg, x, 60, 240, "#dee2e6", { "stroke-width": 1.5 }); for (let k = 0; k < 9; k++) el("circle", { cx: x, cy: 70 + k * 20, r: 4, fill: KC[k % 3], opacity: 0.75 }, svg);
+      txt(svg, x, 262, `x${"₁₂₃₄₅₆₇₈"[j]}`, { "text-anchor": "middle", class: "sm" }); }
+    txt(svg, 640, 286, "8 variáveis medidas", { "text-anchor": "middle", class: "lg" });
+    arrow(svg, 735, 150, 790, 150, COL.a, 3); txt(svg, 762, 138, "projetar", { "text-anchor": "middle", class: "sm" });
+    const P = plot(svg, { x: 805, y: 50, w: 175, h: 190, xmin: -2.6, xmax: 2.6, ymin: -2.6, ymax: 2.6, yaxis: true });
+    cl.forEach(([cx, cy], k) => { for (let i = 0; i < 12; i++) el("circle", { cx: P.X(cx + 0.38 * gauss(r)), cy: P.Y(cy + 0.38 * gauss(r)), r: 4, fill: KC[k], opacity: 0.85 }, svg); });
+    txt(svg, 892, 270, "dimensão latente 1 →", { "text-anchor": "middle", class: "sm" }); txt(svg, 892, 290, "2 dimensões resumem as 8", { "text-anchor": "middle", class: "lg" });
+  });
+
+  // ===== Bloco 8 · análise fatorial passo a passo =====
+  block("afx", () => {
+    const ITEMS = ["Fico nervoso sem motivo", "Tenho dificuldade de relaxar", "Preocupo-me demais", "Acordo cansado", "Falta-me energia de dia", "Preciso de pausas frequentes"];
+    const L = [[0.80, 0.10], [0.75, 0.05], [0.70, 0.15], [0.10, 0.80], [0.05, 0.72], [0.12, 0.65]], p = 6, n = 200;
+    const Rm = L.map((a, i) => L.map((b, j) => i === j ? 1 : a[0] * b[0] + a[1] * b[1]));
+    const det = M => { const A = M.map(r => r.slice()); let d = 1; for (let i = 0; i < A.length; i++) { d *= A[i][i]; for (let k = i + 1; k < A.length; k++) { const f = A[k][i] / A[i][i]; for (let j = i; j < A.length; j++) A[k][j] -= f * A[i][j]; } } return d; };
+    const chi = -(n - 1 - (2 * p + 5) / 6) * Math.log(det(Rm)), pB = pChi(chi, 15);
+    const FN = [["Ansiedade", COL.a, AS], ["Fadiga", COL.e, ES]];
+    const heat = (svg, x0, y0, c, M, title, cls) => { const g = el("g", { class: cls || null }, svg); if (title) lab(g, x0 + c * 3, y0 - 24, title, COL.ink, "middle");
+      M.forEach((row, i) => row.forEach((v, j) => { el("rect", { x: x0 + j * c, y: y0 + i * c, width: c - 2, height: c - 2, rx: 4, fill: i === j ? "#adb5bd" : COL.a, opacity: i === j ? 0.5 : Math.max(0.06, Math.abs(v)) }, g);
+        txt(g, x0 + j * c + c / 2 - 1, y0 + i * c + c / 2 + 5, i === j ? "1" : fmt(v, 2).replace("0,", ","), { "text-anchor": "middle", style: `font-size:${c > 40 ? 14 : 11}px;font-weight:600`, fill: Math.abs(v) > 0.45 && i !== j ? "#fff" : COL.ink }); }));
+      M.forEach((_, i) => { txt(g, x0 - 8, y0 + i * c + c / 2 + 5, String(i + 1), { "text-anchor": "end", class: "sm" }); txt(g, x0 + i * c + c / 2, y0 - 2, String(i + 1), { "text-anchor": "middle", class: "sm" }); }); return g; };
+    const I6 = Rm.map((r, i) => r.map((_, j) => i === j ? 1 : 0));
+    stepper("afx", [
+      { chip: "Os itens", text: "Um questionário com <b>6 itens</b> (escala de 1 a 5), respondido por 200 pessoas. A pergunta da análise fatorial: <b>quantas dimensões escondidas</b> explicam essas respostas — e quais itens vão juntos?" },
+      { chip: "Matriz de correlações", text: "Primeiro passo: correlacionar cada item com cada outro. Cada célula vai de −1 a 1 (mais escura = mais forte). Itens que medem a mesma coisa “andam juntos”: aparecem <b>dois blocos</b>." },
+      { chip: "Há o que fatorar?", text: `<b>Teste de esfericidade de Bartlett</b> — <b>H₀: os itens não se correlacionam</b> (só a diagonal, matriz identidade) → não haveria nada para fatorar. Aqui χ²(15) = ${fmt(chi, 0)}, ${pfmt(pB)} → rejeitamos: há estrutura. (O índice <b>KMO</b> complementa: ≥ 0,6 é aceitável.)` },
+      { chip: "Fatores e cargas", text: "O modelo supõe <b>2 fatores latentes</b> que <b>causam</b> as respostas. A <b>carga fatorial</b> (número na seta) diz quanto cada item depende de cada fator, como uma correlação item–fator. Setas fracas (tracejadas) quase não importam." },
+      { chip: "Hipótese do modelo", text: "<b>H₀: 2 fatores bastam</b> para reproduzir as correlações observadas. As cargas “recriam” a matriz (direita); se ela fica parecida com a observada (p &gt; 0,05 no teste de ajuste), 2 fatores são suficientes. Se não, testamos 3." },
+      { chip: "Exploratória × confirmatória", text: "<b>AFE (exploratória)</b>: descobre quantos fatores existem e quais itens vão juntos. <b>AFC (confirmatória)</b>: parte de uma teoria (“itens 1–3 = ansiedade”) e testa se o modelo se ajusta aos dados." },
+    ], (svg, i) => {
+      if (i === 0) { ITEMS.forEach((t, k) => { const y = 30 + k * 56, g = el("g", { class: "in", style: `animation-delay:${k * 80}ms` }, svg);
+          el("rect", { x: 60, y, width: 470, height: 44, rx: 10, fill: "#fff", stroke: "#adb5bd", "stroke-width": 1.5 }, g); lab(g, 80, y + 29, `${k + 1}.`, COL.a); txt(g, 110, y + 29, t, { class: "lg" });
+          [1, 2, 3, 4, 5].forEach(v => { el("circle", { cx: 570 + v * 34, cy: y + 22, r: 12, fill: v === [4, 4, 5, 2, 2, 3][k] ? COL.a : "#fff", stroke: COL.a, "stroke-width": 1.5 }, g);
+            txt(g, 570 + v * 34, y + 27, String(v), { "text-anchor": "middle", style: "font-size:12px;font-weight:700", fill: v === [4, 4, 5, 2, 2, 3][k] ? "#fff" : COL.a }); }); });
+        txt(svg, 672, 368, "1 = nunca · 5 = sempre", { "text-anchor": "middle", class: "sm" }); return; }
+      if (i === 1) { heat(svg, 90, 40, 52, Rm, null);
+        [[0, COL.a, "itens 1–3: andam juntos"], [3, COL.e, "itens 4–6: andam juntos"]].forEach(([o, c, t]) => { el("rect", { x: 90 + o * 52 - 4, y: 40 + o * 52 - 4, width: 3 * 52 + 6, height: 3 * 52 + 6, rx: 8, fill: "none", stroke: c, "stroke-width": 3, "stroke-dasharray": "7 4", class: "in" }, svg); });
+        lab(svg, 470, 110, "bloco 1 → itens 1–3 andam juntos", COL.a); lab(svg, 470, 270, "bloco 2 → itens 4–6 andam juntos", COL.e);
+        txt(svg, 470, 190, "entre os blocos: correlações fracas", { class: "lg" }); return; }
+      if (i === 2) { heat(svg, 90, 66, 40, I6, "H₀: matriz identidade", "in"); heat(svg, 560, 66, 40, Rm, "nossos dados");
+        lab(svg, 440, 190, "×", COL.ink, "middle", "big");
+        const g = el("g", { class: "in" }, svg); el("rect", { x: 260, y: 318, width: 480, height: 48, rx: 10, fill: GS, stroke: COL.g, "stroke-width": 2 }, g);
+        lab(g, 500, 349, `Bartlett: χ²(15) = ${fmt(chi, 0)}, ${pfmt(pB)} → há o que fatorar`, COL.g, "middle"); return; }
+      if (i === 3) { const fy = [110, 270], iy = k => 34 + k * 60;
+        L.forEach((l, k) => { l.forEach((w, f) => { const strong = w > 0.3, c = FN[f][1];
+            el("line", { x1: 330, y1: fy[f], x2: 600, y2: iy(k) + 18, stroke: c, "stroke-width": strong ? 1 + 6 * w : 1.2, opacity: strong ? 0.85 : 0.35, "stroke-dasharray": strong ? null : "4 4", "marker-end": strong ? arrowDefs(svg, c) : null, class: "in" }, svg);
+            if (strong) { const tx = 330 + 0.62 * 270, ty = fy[f] + 0.62 * (iy(k) + 18 - fy[f]); lab(svg, tx, ty + 6, fmt(w, 2), c, "middle").style.cssText += ";paint-order:stroke;stroke:#fff;stroke-width:6px"; } });
+          el("rect", { x: 604, y: iy(k), width: 290, height: 36, rx: 8, fill: "#fff", stroke: COL.ink, "stroke-width": 1.5 }, svg); txt(svg, 616, iy(k) + 24, `${k + 1}. ${ITEMS[k]}`, { style: "font-size:14px", fill: COL.ink });
+          arrow(svg, 945, iy(k) + 18, 898, iy(k) + 18, COL.k, 1.8); el("circle", { cx: 958, cy: iy(k) + 18, r: 12, fill: "#fff", stroke: COL.k, "stroke-width": 1.5 }, svg); txt(svg, 958, iy(k) + 23, `e${k + 1}`, { "text-anchor": "middle", class: "sm" }); });
+        FN.forEach(([t, c, f], k) => { el("ellipse", { cx: 250, cy: fy[k], rx: 88, ry: 40, fill: f, stroke: c, "stroke-width": 2.5 }, svg); lab(svg, 250, fy[k] + 2, t, c, "middle"); txt(svg, 250, fy[k] + 22, "fator latente", { "text-anchor": "middle", class: "sm" }); });
+        return; }
+      if (i === 4) { const Rh = L.map((a, x) => L.map((b, y) => x === y ? 1 : a[0] * b[0] + a[1] * b[1]));
+        heat(svg, 90, 66, 40, Rm, "observada"); heat(svg, 560, 66, 40, Rh, "reproduzida pelas cargas", "in"); lab(svg, 440, 190, "≈ ?", COL.ink, "middle", "big");
+        const g = el("g", { class: "in" }, svg); el("rect", { x: 260, y: 318, width: 480, height: 48, rx: 10, fill: AS, stroke: COL.a, "stroke-width": 2 }, g);
+        lab(g, 500, 349, "H₀: 2 fatores bastam para reproduzir as correlações", COL.a, "middle"); return; }
+      boxT(svg, 50, 50, 430, 230, "AFE · exploratória", ["Não sei quantos fatores existem.", "Os dados sugerem: quantos fatores", "e quais itens vão juntos.", "(scree plot, análise paralela)"], COL.a, AS);
+      boxT(svg, 520, 50, 430, 230, "AFC · confirmatória", ["Tenho uma teoria prévia.", "H₀: o modelo teórico reproduz", "as covariâncias observadas.", "(χ², CFI, RMSEA)"], COL.s, SS);
+      txt(svg, 500, 330, "Comum: explorar numa amostra e confirmar em outra.", { "text-anchor": "middle", class: "lg" });
+    });
   });
 
   // ===== Navegação das diapositivas (mesmo motor da Expo 1) =====
